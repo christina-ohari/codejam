@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os.path
 from django.utils import simplejson
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.decorators.http import require_GET, require_POST
@@ -7,6 +8,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 
 from codejam.apps.contest.models import Answer
+from codejam.apps.contest.models import Score
 from codejam.apps.problem.models import Problem
 from codejam.apps.problem.models import IO
 
@@ -81,23 +83,26 @@ def dashboard_do(request, id):
             data_output += chunk
 
         data_source = ''
-        for chunk in answer.chunks():
+        for chunk in source.chunks():
             data_source += chunk
+            
+        owner = request.user
         
         points = 0
         problem = Problem.objects.get(id=id)
         if data_output == io.output:
             points = problem.points
 
-        owner = request.user
+        ext = os.path.splitext(source.name)[1]
         try:
             ans = Answer.objects.get(owner=owner, problem=problem)
             ans.output = data_output
             ans.source = data_source
+            ans.type = ext
             ans.points = points
             ans.save()
         except Answer.DoesNotExist:
-            Answer.objects.create(owner=owner, problem=problem, output=data_output, source=data_source, points=points)
+            Answer.objects.create(owner=owner, problem=problem, output=data_output, source=data_source, type=ext, points=points)
 
     except:
         raise Http404
@@ -128,3 +133,17 @@ def input(request, id):
     # response['Content-Disposition'] = 'attachment; filename="input.txt"'
     response['Content-Disposition'] = 'attachment; filename="%s"' % name
     return response
+
+
+
+@require_GET
+def score(request, id):
+    from django.db.models import Sum, Max
+    from django.contrib.auth.models import User
+    q = User.objects.annotate(points=Sum('answer__points'))
+    q = q.annotate(updated=Max('answer__updated'))
+    q = q.order_by('-points', 'updated')
+    scores = q.values('email', 'points', 'updated')
+
+    variables = RequestContext(request, {'scors': scores})
+    return render_to_response('contest/dashboard_score.html', variables)

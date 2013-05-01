@@ -1,0 +1,149 @@
+{% extends "base_lgcj.html" %}
+
+{% block head_scripts %}
+<script type="text/javascript" src="/static/js/dashboard.js"></script>
+{% endblock %}
+
+{% block content %}
+<!-- Problem Title -->
+<h3 id="dsb-problem-title-area">
+  <span id="dsb-problem-title-div" class="problem-title after-start-only" style="display: block;">
+    <span style="color:#666">Problem {{problem.deco}}. </span> {{problem.name}}
+  </span>
+</h3>
+
+<div id="dsb-problem-pages">
+{% autoescape off %}
+<div id="dsb-problem-page0" class="dsb-content-pages" style="display: block;">
+	
+	{% if user.is_authenticated %}
+	{% endif %}
+
+	<table>
+		<tbody id="dsb-input-form-table0">
+			<tr>
+				<td class="dsb-input-table-description"><span style="color:#666"><b>Problem {{problem.deco}}. </b></span><br />{{problem.name}}<br>{{problem.points}} points</td>
+				<td class="dsb-input-table-linktd">
+					<div id="dsb-action-box-wrap0-0" class="dsb-action-box-open">
+						<div class="dsb-input-wrapper" style="display: inline;">
+							<span class="dsb-input-link-span" style="display: block;"><img class="dsb-input-link-img" src="/static/images/pdf.png"><a target="_new" href="/codejam/problem/pdf?p={{problem.id}}&name={{problem.deco}}-problem-description.pdf">Download {{problem.deco}}-problem-description.pdf</a></span>
+						</div>
+						<div class="dsb-input-wrapper" style="display: inline;">
+						  {% if io %}
+              <span class="dsb-input-link-span" style="display: block;"><img class="dsb-input-link-img" src="/static/images/file.gif"><a target="_new" href="/codejam/contest/0/input?p={{problem.id}}&io={{io}}&name={{problem.deco}}-input-data.txt">Download {{problem.deco}}-input-data.txt</a></span>
+              {% else %}
+              <span class="dsb-input-link-span" style="display: block;"><img class="dsb-input-link-img" src="/static/images/file.gif">No input data(s).</span>
+              {% endif %}
+            </div>
+						<div>
+							<div class="dsb-submit-form-div" style="display: block;">
+								<form id="submit-formio_timer_0" action="/codejam/contest/0/dashboard/do" enctype="multipart/form-data" method="post">
+									<input type="hidden" name="csrfmiddlewaretoken" value="ZDI3OTBiNzYwYWE0ODY1OTUzNjk4NTUzY2QwN2FlOTR8fDEzNjcyMDUzOTI4NjQ3NzI=">
+									<div class="dsb-submit-form-separator">your output file:<input id="answer_output" type="file" name="answer" class="submitFormFile"></div>
+									<div class="dsb-submit-form-separator">source file:<input id="answer_source" type="file" name="source" class="submitFormFile"></div>
+									<div class="dsb-submit-form-separator" style="text-align:center">
+									  {% if io and user.is_authenticated %}
+										<input id="submit-buttonio_timer_0" type="submit" value="Submit file">
+										{% endif %}
+									</div>
+									{% csrf_token %}
+									<input type="hidden" name="cmd" value="SubmitAnswer">
+									<input type="hidden" name="problem" value="{{problem.id}}">
+									<input type="hidden" name="index" value="{{index}}">
+									<input type="hidden" name="input_id" value="{{io}}">
+								</form>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	
+	<div id="dsb-problem-content-div0" class="dsb-problem-content-div" style="width: 40em;">
+		{{problem.body}}
+	</div>
+</div>
+{% endautoescape %}
+</div>
+
+<div id="dsb-clarification-page" class="dsb-content-pages">
+  <!-- The clarifications table -->
+  <div id="clarTableDiv" class="clarTableWrapper"></div><div>
+    <table id="dsb-clarification-table">
+      <colgroup span="9">
+        <col width="16%" /><col width="2%" />
+        <col width="10%" /><col width="2%" />
+        <col width="28%" /><col width="2%" />
+        <col width="10%" /><col width="2%" />
+        <col width="28%" />
+      </colgroup>
+      <thead>
+        <tr>
+        <th>Category</th><th>&nbsp;</th>
+        <th class="clarTimeColumn">Asked</th><th>&nbsp;</th>
+        <th>Question</th><th>&nbsp;</th>
+        <th class="clarTimeColumn">Answered</th><th>&nbsp;</th>
+        <th>Answer</th>
+        </tr>
+      </thead>
+      <tbody id="dsb-clarification-tbody">
+      </tbody>
+    </table>
+  </div>
+  <div id="dsb-submit-clarification">
+    <!-- The link to ask a clarification -->
+    <div style="padding: 0.5em 0 0.3em 0;">
+      <b>Ask a question:</b>
+    </div>
+    <!-- The form for asking clarification -->
+    <div>
+      <form onsubmit="return GCJ.submitClarification(this);"><div style="display:none;"><input type="hidden" name="csrfmiddlewaretoken" value="NWU5NDA3OTUyOTQ2YmM0NzZhOTk0NDAwN2ZkMmI3Yzh8fDEzNjcxOTM3NDg3NDY2NzE=" /></div>
+        <div><textarea rows="5" cols="60" name="q"></textarea></div>
+        <div style="padding-top: 0.3em">
+          <select id="dsb-clarification-problem-select" name="problem">
+            <option value="_" selected>[General]</option>
+          </select>
+          &nbsp;
+          <input id="dsb-submit-clarification-button" type="submit"
+                 value="Ask" />
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Too many pending clarifications -->
+  <div id="dsb-cannot-ask-question-text"
+    style="font-weight: bold; padding: 0.5em 0 0.3em 0">
+    
+    There is a maximum of 8 pending questions.
+    You can ask more questions as soon as we have responded to some of your
+    questions.
+    
+  </div>
+
+</div>
+
+<div id="dsb-submissions-page" class="dsb-content-pages">
+  <div id="dsb-submissions-status" class="dsb-sub-status-msg">
+    You have 0 submissions.
+  </div>
+  <table id="dsb-submissions-table" class="dsb-sub-main-table"
+         style="display:none">
+  <thead>
+    <tr id="dsb-sub-main-table-header">
+      <th class="dsb-sub-row-id-width">ID</th>
+      <th class="dsb-sub-name-width">Problem</th>
+      <th class="dsb-sub-difficulty-width">Size</th>
+      <th class="dsb-sub-input-width">Input</th>
+      <th class="dsb-sub-output-width">Output</th>
+      <th class="dsb-sub-source-width">Solution</th>
+      <th class="dsb-sub-status-width">Status</th>
+      <th class="dsb-sub-time-width">Time</th>
+    </tr>
+  </thead>
+  <tbody id="dsb-submissions-rows">
+  </tbody>
+  </table>
+</div>
+{% endblock %}

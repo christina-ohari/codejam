@@ -35,6 +35,7 @@ urlpatterns = patterns('',
     url(r'^codejam/contest/(?P<id>\d+?)/dashboard$', Contest.dashboard),
     url(r'^codejam/contest/(?P<id>\d+?)/dashboard/do$', Contest.dashboard_do),
     url(r'^codejam/contest/(?P<id>\d+?)/input', Contest.input),
+    url(r'^codejam/contest/(?P<id>\d+?)/score', Contest.score),
     
     url(r'^codejam/problem$', Problem.list),
     url(r'^codejam/problem/modify', Problem.modify),
