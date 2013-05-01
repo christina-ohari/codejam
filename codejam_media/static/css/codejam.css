@@ -1,0 +1,71 @@
+th, td {
+	height:30px;
+	vertical-align:middle;
+}
+
+.problem_box {
+	margin:10px;
+	padding:15px;
+	border:2px solid #ccc;
+}
+.error {
+  padding:3px;
+  text-align:center;
+  height:25px;
+  border:2px solid orange;
+  background-color:red;
+  color:white;
+}
+
+#problem_create th {
+	text-align:right;
+	padding-right:10px;
+	min-width:60px;
+}
+#problem_create > td,
+#problem_io_form td {
+  min-width:300px;
+}
+
+#problem_list th, #problem_io_form th, #problem_io_list th,
+#problem_list td, #problem_io_form td, #problem_io_list td {
+	border:1px solid #ccc;
+	text-align:center;
+	height: 30px;
+}
+
+#problem_list td:nth-child(2) {
+  min-width:250px;
+  padding: 0 15px;
+}
+#problem_list td:nth-child(2) > b {
+  float:left;
+}
+#problem_list td:nth-child(2) > span {
+  float:right;
+}
+
+#problem_io_form th, #problem_io_form td {
+  width:50%;
+}
+#problem_io_form textarea {
+  margin:5px;
+  padding:5px;
+  min-height:100px;
+  width:80%;
+}
+
+#problem_io_list th:nth-child(2) {
+  min-width:250px;
+}
+#problem_io_list th:nth-child(3) {
+  min-width:250px;
+}
+#problem_io_list td {
+  vertical-align:top;
+}
+#problem_io_list pre {
+  padding:5px 10px;
+  text-align:left;
+  width:80%;
+}

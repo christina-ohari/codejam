@@ -1,0 +1,7 @@
+.DS_Store
+*.pyc
+.settings
+.project
+.pydevproject
+codejam.sqlite
+upload_to/*

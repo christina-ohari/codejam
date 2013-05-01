@@ -1,0 +1,91 @@
+{% extends "base_lgcj.html" %}
+
+
+{% block head_scripts %}
+<script type="text/javascript" src="/static/js/problem.js"></script>
+<script type="text/javascript">
+  var modify = true;
+</script>
+{% endblock %}
+
+
+{% block content %}
+<div id="problem_create" id="dsb-problem-pages">
+	<br />
+	<div><a href="/codejam/problem">목록으로 돌아가기</a></div>
+
+	<br />
+	<h3>* Problem Description.</h3>
+	<form action="/codejam/problem/modify?p={{id}}" method="post" enctype="multipart/form-data" class="problem_box" id="problem_create">
+		<table>
+			<tr><th>Name: </td><td>{{name}}</td></tr>
+			<tr>
+			  <th>PDF: </td>
+			  <td>
+			    <a id="pdf_name">{{pdf}}</a>
+			    <span id="problem_pdf_block" style="display:none">
+			      <input type="file" name="pdf" accept="application/pdf" id="problem_pdf">
+			      <button id="problem_pdf_cancel">파일변경 취소</button>
+			    </span>
+			  </td>
+			</tr>
+			<tr><th>Points: </td><td><input type="text" id="problem_name" name="points" value="{{points}}"> Points</td></tr>
+		</table>
+		<div>
+			{% csrf_token %}
+			<input type="hidden" name="p" value="{{id}}" />
+			<input type="submit" value="문제 수정" />
+		</div>
+	</form>
+
+	<br />
+	<h3>* Upload Input/Ouput files.</h3>
+	<div class="problem_box">
+  	<form action="/codejam/problem/io?p={{id}}" method="post" id="problem_io_form">
+  		<table>
+  			<tr><th>Input</th><th>Output</th></tr>
+  			<tr>
+  				<td><textarea name="input"></textarea></td>
+  				<td><textarea name="output"></textarea></td>
+  			</tr>
+  		</table>
+  		<br />
+  		<div>
+  		  {% csrf_token %}
+  		  <input type="hidden" name="cmd" value="Insert" />
+  			<input type="submit" value="입출력 저장" />
+  		</div>
+  	</form>
+	</div>
+
+	{% if ios %}
+	<br />
+	<h3>* Input/Output List.</h3>
+  <div id="problem_io_list" class="problem_box">
+    <table>
+      <tbody>
+        <tr>
+          <th>NO.</th>
+          <th>Input</th>
+          <th>Ouput</th>
+          <th>Preview</th>
+          <th>Delete</th>
+        </tr>
+        {% for io in ios %}
+        <tr>
+          <td height="25px">{{forloop.counter}}</td>
+          <td><pre>{{io.input}}</pre></td>
+          <td><pre>{{io.output}}</pre></td>
+          <td><a target="_new" href="/codejam/problem/io?p={{id}}&io={{io.id}}&cmd=Preview">[Open]</a></td>
+          <td><a href="/codejam/problem/io?p={{id}}&io={{io.id}}&cmd=Delete" onclick="return confirm_delete();">[Delete]</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+	
+	<br />
+	<br />
+</div>
+{% endblock %}

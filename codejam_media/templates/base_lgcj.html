@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head><meta http-equiv="refresh" content="172795" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>
+    Dashboard - LGE Public Code Jam 2013
+  </title>
+  <link rel="stylesheet" type="text/css"
+      href="/static/css/base.css" />
+  <link rel="stylesheet" type="text/css"
+      href="/static/css/dashboard.css" />
+
+  <!-- head scripts -->
+  <link rel="stylesheet" type="text/css" href="/static/css/codejam.css" />
+  {% block head_scripts %}
+  {% endblock %}
+</head>
+
+<body onLoad="LGCJ.main()">
+
+<div id="logo-div">
+  <a href="/codejam/">
+    <img src="/static/images/logo_image3.gif" id="logo"
+         alt="Google Code Jam" />
+  </a>
+</div>
+
+<div/>
+
+<div id="dsb-page-body">
+
+<div id="left-panel">
+  <div class="v-divider"></div>
+  <div class="v-divider"></div>
+  <div class="v-divider"></div>
+  <!-- Problem Selection Panel -->
+  <div id="dsb-contest-title">Qualification Round 2009</div>
+  <hr class="dsb-hr" />
+  <div id="dsb-problem-selection-area">
+    <div id="dsb-problem-selection-list" class="after-start-only" style="display: block;">
+{% for item in menu %}
+<div>
+	<div id="dsb-problem-tab{{forloop.counter}}" class="dsb-problem-tab-{% if item.id == problem.id %}open{% else %}close{% endif %}" tabindex="0" role="button">
+		<div id="dsb-problem-title{{forloop.counter}}" class="dynamic-link">
+		{% if item.id == problem.id %}
+				{{item.deco}}. {{item.name}}
+		{% else %}
+				<a href="/codejam/contest/0/dashboard?p={{forloop.counter0}}">{{item.deco}}. {{item.name}}</a>
+		{% endif %}
+		</div>
+	</div>
+</div>
+{% empty %}
+<div>
+	<div id="dsb-problem-tab{{forloop.counter}}" class="dsb-problem-tab-open" tabindex="0" role="button">
+		<div id="dsb-problem-title{{forloop.counter}}" class="dynamic-link">No Problems. </div>
+	</div>
+</div>
+{% endfor %}
+    </div>
+    <div id="dsb-problem-selection-list-pre-contest"
+         class="dsb-pre-contest-text before-start-only">
+      
+      The list of problems will appear here after the contest loads.
+      
+    </div>
+  </div>
+  <hr class="dsb-hr" />
+  <div class="v-divider"></div>
+  <div class="v-divider" class="after-start-only"></div>
+  <div id="dsb-analysis-button" class="dsb-anal-tab-close after-start-only"
+       tabindex="0" role="button">
+    <div class="dynamic-link">
+       <div id="dsb-analysis-tab">
+         Contest Analysis
+       </div>
+    </div>
+  </div>
+  <div id="dsb-ask-question-area">
+    <div id="dsb-ask-question-button"
+         class="dsb-clar-tab-close after-start-only" tabindex="0" role="button">
+      <div class="dynamic-link">
+        <div id="dsb-ask-question-tab">
+          Ask a question
+        </div>
+      </div>
+    </div>
+    <div class="dsb-pre-contest-text before-start-only">
+      
+      You'll be able to ask questions about the problems, and view your
+      submissions, here.
+      
+    </div>
+  </div>
+  <div id="dsb-submissions-button" class="dsb-submissions-tab-close after-start-only"
+       tabindex="0" role="button">
+    <div class="dynamic-link">
+      <div id="dsb-submissions-tab">
+        View my submissions
+      </div>
+    </div>
+  </div>
+  <div class="v-divider"></div>
+  <div class="v-divider"></div>
+  <div class="dsb-mini-tab-wrapper">
+  <div id="dsb-status-div-container">
+    <div id="dsb-status-header-div"
+         onMouseOver="this.style.cursor='pointer'"
+         onClick="GCJ.toggleStatusPanelVisibility();">
+      <img id="dsb-status-panel-button" src="/static/images/minus.gif" />
+      &nbsp; Submissions
+    </div>
+    <div id="dsb-status-tab" class="after-start-only">
+      <div id="dsb-status-tab-loading-text" class="dsb-pre-contest-text">
+        Loading...
+      </div>
+    </div>
+    <div id="dsb-status-tab-pre-contest" class="dsb-pre-contest-text before-start-only">
+      
+      Statistics about the problems will appear here.  They'll include your
+      status on each problem, and other contestants' attempts.
+      
+    </div>
+  </div>
+  </div>
+  <div class="v-divider"></div>
+  <div class="v-divider"></div>
+  <!-- Mini Scoreboard -->
+  <div class="dsb-mini-tab-wrapper">
+    <div id="dsb-scoreboard-div">
+      <div id="dsb-scoreboard-header-div"
+          onMouseOver="this.style.cursor='pointer'"
+          onClick="GCJ.toggleVisibility(
+              'dsb-scoreboard-table',
+              'dsb-scoreboard-panel-button',
+              '/static/images/minus.gif',
+              '/static/images/plus.gif')">
+          <img id="dsb-scoreboard-panel-button" src="/static/images/minus.gif" />
+          &nbsp; Top Scores
+      </div>
+      <div id="dsb-scoreboard-table-wrap" class="after-start-only">
+      </div>
+      <div id="dsb-scoreboard-tab-pre-contest"
+           class="dsb-pre-contest-text before-start-only">
+        
+        The scores of the top 10 contestants will appear here, with a link to
+        the contest's scoreboard.
+        
+      </div>
+      <div class="dsb-mini-tab-link" class="after-start-only">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="right-panel">
+  <div id="dsb-status-msg-wrapper" class="dsb-status-msg-wrapper" role="alert">
+    <div id="dsb-status-msg" class="dsb-status-msg">
+      <span id="dsb-status-msg-text"></span>
+      <span id="dsb-view-it-link">View it.</span>
+    </div>
+  </div>
+
+  <div id="dsb-contest-title-bar">
+    <div id="dsb-rank-etc">
+      <span id="dsb-time-remaining">
+        <span id="dsb-time-remaining-before" class="before-start-only-inline">
+          Contest begins in:
+        </span>
+        <span id="dsb-time-remaining-after" class="after-start-only-inline">
+          Time Remaining:
+        </span>
+        <span id="contestTimer"></span>
+      </span>
+      <span class="after-start-only-inline">
+        <span id="dsb-current-rank-div">
+          Rank: <span id="dsb-current-rank-span">--</span>
+        </span>
+        <span id="dsb-current-score-div">
+          Score: <span id="dsb-current-score-span">--</span>
+        </span>
+      </span>
+    </div>
+    <div id="dsb-title-links">&nbsp;
+    	{% if user.is_authenticated %}
+    	{% if user.is_staff %}
+    	<a target="new" href="/codejam/problem">Staff: Problems</a> |
+    	{% endif %}
+    	<b>{{user.email}}</b> | <a href="/accounts/logout/">Sign out</a>
+    	{% else %}
+    	<a href="/accounts/login/" target="_self">Sign in</a>
+    	{% endif %}
+    </div>
+  </div>
+  <!-- Problem Statement -->
+  <div id="main-panel-border" class="dsb-blue-border">
+  <div id="dsb-border-inner">
+{% block content %}
+{% endblock %}
+  </div>
+</div>
+
+</div>
+
+<div style="height: 3em; clear: both;"></div>
+
+<div id=footer>
+  <p>
+    All problem statements, input data and contest analyses are
+    licensed under the
+    <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution License</a>.
+  </p>
+  <span id="copyright">&copy; 2012-2013 LG Coding-Expert</span>
+  <a href="http://www.lge.com/">LG Electronics Home</a> -
+  <a href="/codejam/terms.html">Terms and Conditions</a><br/><br/>
+  <a href="http://www.djangoproject.com/"><img src="https://www.djangoproject.com/m/img/badges/djangomade124x25.gif" border="0" alt="Made with Django." title="Made with Django." /></a>
+</div>
+
+<div style="height: 1em">&nbsp;</div>
+
+<!-- body scripts -->
+{% block body_scripts %}
+{% endblock %}
+
+</body>
+</html>

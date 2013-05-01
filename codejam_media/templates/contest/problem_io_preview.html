@@ -1,0 +1,34 @@
+{% extends "base_lgcj.html" %}
+
+
+{% block head_scripts %}
+<script type="text/javascript" src="/static/js/problem.js"></script>
+<script type="text/javascript">
+  var modify = true;
+</script>
+{% endblock %}
+
+
+{% block content %}
+<div id="problem_create" id="dsb-problem-pages">
+	<br />
+	<h3>* Input/Output Data.</h3>
+  <div id="problem_io_list" class="problem_box">
+    <table>
+      <tbody>
+        <tr>
+          <th width="350px">Input</th>
+          <th width="350px">Ouput</th>
+        </tr>
+        <tr>
+          <td><pre>{{io.input}}</pre></td>
+          <td><pre>{{io.output}}</pre></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+	
+	<br />
+	<br />
+</div>
+{% endblock %}
