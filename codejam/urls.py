@@ -5,8 +5,8 @@ from codejam.apps.contest import views as Contest
 from codejam.apps.problem import views as Problem
 
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 
 import os
 basepath = os.path.dirname(__file__)
@@ -22,7 +22,7 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 
     url(r'^$', 'codejam.apps.index'),
 
@@ -36,6 +36,9 @@ urlpatterns = patterns('',
     url(r'^codejam/contest/(?P<id>\d+?)/dashboard/do$', Contest.dashboard_do),
     url(r'^codejam/contest/(?P<id>\d+?)/input', Contest.input),
     url(r'^codejam/contest/(?P<id>\d+?)/score', Contest.score),
+    url(r'^codejam/contest/(?P<id>\d+?)/answer', Contest.answer), # all of answer list
+    url(r'^codejam/contest/(?P<id>\d+?)/source', Contest.source), # show or download source data
+    url(r'^codejam/contest/(?P<id>\d+?)/output', Contest.output), # download personal output data
     
     url(r'^codejam/problem$', Problem.list),
     url(r'^codejam/problem/modify', Problem.modify),

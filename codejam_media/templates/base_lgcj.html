@@ -21,7 +21,9 @@
 
 <div id="logo-div">
   <a href="/codejam/">
-    <img src="/static/images/logo_image3.gif" id="logo"
+    <!--<img src="/static/images/logo_image3.gif" id="logo"
+         alt="Google Code Jam" />-->
+    <img src="/static/images/logo_lge.png" id="logo"
          alt="Google Code Jam" />
   </a>
 </div>
@@ -35,7 +37,7 @@
   <div class="v-divider"></div>
   <div class="v-divider"></div>
   <!-- Problem Selection Panel -->
-  <div id="dsb-contest-title">Qualification Round 2009</div>
+  <div id="dsb-contest-title">LGE Code Jam 2013</div>
   <hr class="dsb-hr" />
   <div id="dsb-problem-selection-area">
     <div id="dsb-problem-selection-list" class="after-start-only" style="display: block;">
@@ -184,8 +186,13 @@
     </div>
     <div id="dsb-title-links">&nbsp;
     	{% if user.is_authenticated %}
-    	{% if user.is_staff %}
-    	<a target="new" href="/codejam/problem">Staff: Problems</a> |
+    	{% if user.is_superuser %}
+    	<a target="new" href="/admin">Admin</a> |
+    	{% endif %}
+    	{% if user.is_superuser or user.is_staff %}
+    	<a target="new" href="/codejam/contest/0/score">Staff: Score</a> |
+    	<a target="new" href="/codejam/contest/0/answer">Staff: Answers</a> | 
+    	<a target="new" href="/codejam/problem">Staff: Problems</a> | 
     	{% endif %}
     	<b>{{user.email}}</b> | <a href="/accounts/logout/">Sign out</a>
     	{% else %}

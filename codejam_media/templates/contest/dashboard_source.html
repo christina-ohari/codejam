@@ -1,0 +1,149 @@
+{% extends "base_lgcj.html" %}
+
+{% block head_scripts %}
+<!-- BEGIN: SyntaxHighlighter 3.0.83 -->
+<link rel="stylesheet" type="text/css" href="/static/third_party/syntaxhighlighter_3.0.83/styles/shCore.css">
+<link rel="stylesheet" type="text/css" href="/static/third_party/syntaxhighlighter_3.0.83/styles/shCoreDefault.css">
+<link rel="stylesheet" type="text/css" href="/static/third_party/syntaxhighlighter_3.0.83/styles/shThemeDefault.css">
+<!-- END: SyntaxHighlighter 3.0.83 -->
+<script type="text/javascript" src="/static/js/dashboard.js"></script>
+{% endblock %}
+
+{% block content %}
+<!-- Problem Title -->
+<h3 id="dsb-problem-title-area">
+  <span id="dsb-problem-title-div" class="problem-title after-start-only" style="display: block;">
+    <span style="color:#666">{{owner}}. </span>{{problem}}
+  </span>
+</h3>
+
+<div id="dsb-problem-pages">
+
+<div class="problem_box">
+	<b><a href="/codejam/contest/0/source?s={{id}}&cmd=Download">{{filename}}</a></b>
+	<div>
+	<div>
+	<pre class="brush: {{brush}}">
+{{src}}
+	</pre>
+	</div>
+	</div>
+</div>
+
+</div>
+
+<div id="dsb-clarification-page" class="dsb-content-pages">
+  <!-- The clarifications table -->
+  <div id="clarTableDiv" class="clarTableWrapper"></div><div>
+    <table id="dsb-clarification-table">
+      <colgroup span="9">
+        <col width="16%" /><col width="2%" />
+        <col width="10%" /><col width="2%" />
+        <col width="28%" /><col width="2%" />
+        <col width="10%" /><col width="2%" />
+        <col width="28%" />
+      </colgroup>
+      <thead>
+        <tr>
+        <th>Category</th><th>&nbsp;</th>
+        <th class="clarTimeColumn">Asked</th><th>&nbsp;</th>
+        <th>Question</th><th>&nbsp;</th>
+        <th class="clarTimeColumn">Answered</th><th>&nbsp;</th>
+        <th>Answer</th>
+        </tr>
+      </thead>
+      <tbody id="dsb-clarification-tbody">
+      </tbody>
+    </table>
+  </div>
+  <div id="dsb-submit-clarification">
+    <!-- The link to ask a clarification -->
+    <div style="padding: 0.5em 0 0.3em 0;">
+      <b>Ask a question:</b>
+    </div>
+    <!-- The form for asking clarification -->
+    <div>
+      <form onsubmit="return GCJ.submitClarification(this);"><div style="display:none;"><input type="hidden" name="csrfmiddlewaretoken" value="NWU5NDA3OTUyOTQ2YmM0NzZhOTk0NDAwN2ZkMmI3Yzh8fDEzNjcxOTM3NDg3NDY2NzE=" /></div>
+        <div><textarea rows="5" cols="60" name="q"></textarea></div>
+        <div style="padding-top: 0.3em">
+          <select id="dsb-clarification-problem-select" name="problem">
+            <option value="_" selected>[General]</option>
+          </select>
+          &nbsp;
+          <input id="dsb-submit-clarification-button" type="submit"
+                 value="Ask" />
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Too many pending clarifications -->
+  <div id="dsb-cannot-ask-question-text"
+    style="font-weight: bold; padding: 0.5em 0 0.3em 0">
+    
+    There is a maximum of 8 pending questions.
+    You can ask more questions as soon as we have responded to some of your
+    questions.
+    
+  </div>
+
+</div>
+
+<div id="dsb-submissions-page" class="dsb-content-pages">
+  <div id="dsb-submissions-status" class="dsb-sub-status-msg">
+    You have 0 submissions.
+  </div>
+  <table id="dsb-submissions-table" class="dsb-sub-main-table"
+         style="display:none">
+  <thead>
+    <tr id="dsb-sub-main-table-header">
+      <th class="dsb-sub-row-id-width">ID</th>
+      <th class="dsb-sub-name-width">Problem</th>
+      <th class="dsb-sub-difficulty-width">Size</th>
+      <th class="dsb-sub-input-width">Input</th>
+      <th class="dsb-sub-output-width">Output</th>
+      <th class="dsb-sub-source-width">Solution</th>
+      <th class="dsb-sub-status-width">Status</th>
+      <th class="dsb-sub-time-width">Time</th>
+    </tr>
+  </thead>
+  <tbody id="dsb-submissions-rows">
+  </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block body_scripts %}
+<!-- BEGIN: SyntaxHighlighter 3.0.83 -->
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shAutoloader.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushAppleScript.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushAS3.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushBash.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushColdFusion.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushCpp.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushCSharp.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushCss.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushDelphi.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushDiff.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushErlang.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushGroovy.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushJava.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushJavaFX.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushObjC.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushPerl.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushPlain.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushPowerShell.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushPython.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushRuby.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushSass.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushScala.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushSql.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushVb.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
+<script type="text/javascript" src="/static/third_party/syntaxhighlighter_3.0.83/scripts/shLegacy.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.all();
+</script>
+{% endblock %}

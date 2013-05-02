@@ -45,8 +45,8 @@
   		<table>
   			<tr><th>Input</th><th>Output</th></tr>
   			<tr>
-  				<td><textarea name="input"></textarea></td>
-  				<td><textarea name="output"></textarea></td>
+  				<td><textarea id="io_input" name="input"></textarea></td>
+  				<td><textarea id="io_output" name="output"></textarea></td>
   			</tr>
   		</table>
   		<br />
@@ -88,4 +88,23 @@
 	<br />
 	<br />
 </div>
+{% endblock %}
+
+
+
+{% block body_scripts %}
+<script type="text/javascript">
+    document.getElementById('problem_io_form').onsubmit = function () {
+    	var i = document.getElementById('io_input').value;
+    	var o = document.getElementById('io_output').value;
+    	if (!i || i.length === 0) {
+    		alert("[Error] there is no input data");
+    		return false;
+    	}
+    	if (!o || o.length === 0) {
+    		alert("[Error] there is no output data");
+    		return false;
+    	}
+    }
+</script>
 {% endblock %}

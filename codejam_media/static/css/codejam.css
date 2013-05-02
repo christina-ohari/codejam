@@ -69,3 +69,38 @@ th, td {
   text-align:left;
   width:80%;
 }
+
+.score_box th, 
+.score_box td {
+	border:1px solid #ccc;
+	padding:3px 10px;
+	text-align:center;
+	vertical-align:middle;	
+}
+.score_box th:first-child {
+	min-width:50px;
+	padding:3px;
+}
+
+.dsb-action-box-open-success {
+  background-color: lime;
+  padding: 0.5em;
+  max-width: 31em;
+  border-right: 1px solid green;
+  border-bottom: 1px solid green;
+  -moz-border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+  -khtml-border-radius: 0.5em;
+  border-radius: 0.5em;
+}
+.dsb-action-box-open-failed {
+  background-color: red;
+  padding: 0.5em;
+  max-width: 31em;
+  border-right: 1px solid orange;
+  border-bottom: 1px solid orange;
+  -moz-border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+  -khtml-border-radius: 0.5em;
+  border-radius: 0.5em;
+}

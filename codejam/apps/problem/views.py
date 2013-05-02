@@ -14,7 +14,6 @@ from codejam.apps.problem.models import IO
 
 
 
-@require_POST
 def Create(request):
 
     post = request.POST.copy()
@@ -54,7 +53,10 @@ def Create(request):
     p = Problem.objects.create(name=name, pdf=rel_path, points=points)
     return (True, p.id)
 
+@login_required
 def list(request):
+    if not request.user.is_superuser and not request.user.is_staff:
+        raise Http404
     
     result = {}
 
@@ -71,7 +73,21 @@ def list(request):
 
 
 
+def MakeShortString(string):
+    pos = 0
+    for i in range(0, 4):
+        pos = string.find('\n', pos+1)
+        if pos == -1:
+            break
+    if pos != -1:
+        string = string[:pos] + '\n......'
+    return string
+
+@login_required
 def modify(request):
+    if not request.user.is_superuser and not request.user.is_staff:
+        raise Http404
+    
     r = request.REQUEST.copy()
     
     id = r.get('p', False)
@@ -85,9 +101,14 @@ def modify(request):
     result = {'id': id, 
               'name': p.name, 
               'pdf': os.path.split(p.pdf)[1],
-              'points': p.points,
-              'ios': IO.objects.filter(problem__id=id).values()}
-    print result['ios']
+              'points': p.points}
+    
+    ios = IO.objects.filter(problem__id=id).values()
+    for i in range(0, len(ios)):
+        ios[i]['input'] = MakeShortString(ios[i]['input'])
+        ios[i]['output'] = MakeShortString(ios[i]['output'])
+    result['ios'] = ios
+    
     if request.method == 'GET':
         variables = RequestContext(request, result)
         return render_to_response('contest/problem_modify.html', variables)
@@ -140,7 +161,11 @@ def RemoveAll(root):
         os.rmdir(root)
     
 @require_GET
+@login_required
 def delete(request):
+    if not request.user.is_superuser and not request.user.is_staff:
+        raise Http404
+    
     get = request.GET.copy()
     try:
         p = Problem.objects.get(id=get['p'])
@@ -172,7 +197,11 @@ def pdf(request):
 
 
 @require_POST
+@login_required
 def IOInsert(request, id):
+    if not request.user.is_superuser and not request.user.is_staff:
+        raise Http404
+    
     post = request.POST.copy()
     try:
         p = Problem.objects.get(id=id)
@@ -199,7 +228,11 @@ def IOInsert(request, id):
     return True
 
 @require_GET
+@login_required
 def IOPreview(request, id):
+    if not request.user.is_superuser and not request.user.is_staff:
+        raise Http404
+    
     get = request.GET.copy()
     try:
         io = IO.objects.get(problem__id=id, id=get['io'])
@@ -208,7 +241,11 @@ def IOPreview(request, id):
     return io
 
 @require_GET
+@login_required
 def IODelete(request, id):
+    if not request.user.is_superuser and not request.user.is_staff:
+        raise Http404
+    
     get = request.GET.copy()
     try:
         IO.objects.get(problem__id=id, id=get['io']).delete()

@@ -22,15 +22,19 @@
 	<table>
 		<tbody id="dsb-input-form-table0">
 			<tr>
-				<td class="dsb-input-table-description"><span style="color:#666"><b>Problem {{problem.deco}}. </b></span><br />{{problem.name}}<br>{{problem.points}} points</td>
+				<td class="dsb-input-table-description">
+					<span style="color:#666"><b>Problem {{problem.deco}}. </b></span>
+					<br />{{problem.name}}<br>{{problem.points}} points
+					{% if success %}<br /><br />{% if success.value %}<b style="color:green;">PASS</b>{% else %}<b style="color:red;">FAILED</b>{% endif %}{% endif %}
+				</td>
 				<td class="dsb-input-table-linktd">
-					<div id="dsb-action-box-wrap0-0" class="dsb-action-box-open">
+					<div id="dsb-action-box-wrap0-0" class="dsb-action-box-open{% if success %}-{% if success.value %}success{% else %}failed{% endif %}{% endif %}">
 						<div class="dsb-input-wrapper" style="display: inline;">
-							<span class="dsb-input-link-span" style="display: block;"><img class="dsb-input-link-img" src="/static/images/pdf.png"><a target="_new" href="/codejam/problem/pdf?p={{problem.id}}&name={{problem.deco}}-problem-description.pdf">Download {{problem.deco}}-problem-description.pdf</a></span>
+							<span class="dsb-input-link-span" style="display: block;"><img class="dsb-input-link-img" src="/static/images/pdf.png"><a href="/codejam/problem/pdf?p={{problem.id}}&name={{problem.deco}}-problem-description.pdf">Download {{problem.deco}}-problem-description.pdf</a></span>
 						</div>
 						<div class="dsb-input-wrapper" style="display: inline;">
 						  {% if io %}
-              <span class="dsb-input-link-span" style="display: block;"><img class="dsb-input-link-img" src="/static/images/file.gif"><a target="_new" href="/codejam/contest/0/input?p={{problem.id}}&io={{io}}&name={{problem.deco}}-input-data.txt">Download {{problem.deco}}-input-data.txt</a></span>
+              <span class="dsb-input-link-span" style="display: block;"><img class="dsb-input-link-img" src="/static/images/file.gif"><a href="/codejam/contest/0/input?p={{problem.id}}&io={{io}}&name={{problem.deco}}-input-data.txt">Download {{problem.deco}}-input-data.txt</a></span>
               {% else %}
               <span class="dsb-input-link-span" style="display: block;"><img class="dsb-input-link-img" src="/static/images/file.gif">No input data(s).</span>
               {% endif %}

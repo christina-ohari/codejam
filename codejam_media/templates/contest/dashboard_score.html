@@ -8,64 +8,27 @@
 <!-- Problem Title -->
 <h3 id="dsb-problem-title-area">
   <span id="dsb-problem-title-div" class="problem-title after-start-only" style="display: block;">
-    <span style="color:#666">Problem {{problem.deco}}. </span> {{problem.name}}
+    <span style="color:#666">Scores. </span>
   </span>
 </h3>
 
 <div id="dsb-problem-pages">
-{% autoescape off %}
-<div id="dsb-problem-page0" class="dsb-content-pages" style="display: block;">
-	
-	{% if user.is_authenticated %}
-	{% endif %}
 
-	<table>
-		<tbody id="dsb-input-form-table0">
-			<tr>
-				<td class="dsb-input-table-description"><span style="color:#666"><b>Problem {{problem.deco}}. </b></span><br />{{problem.name}}<br>{{problem.points}} points</td>
-				<td class="dsb-input-table-linktd">
-					<div id="dsb-action-box-wrap0-0" class="dsb-action-box-open">
-						<div class="dsb-input-wrapper" style="display: inline;">
-							<span class="dsb-input-link-span" style="display: block;"><img class="dsb-input-link-img" src="/static/images/pdf.png"><a target="_new" href="/codejam/problem/pdf?p={{problem.id}}&name={{problem.deco}}-problem-description.pdf">Download {{problem.deco}}-problem-description.pdf</a></span>
-						</div>
-						<div class="dsb-input-wrapper" style="display: inline;">
-						  {% if io %}
-              <span class="dsb-input-link-span" style="display: block;"><img class="dsb-input-link-img" src="/static/images/file.gif"><a target="_new" href="/codejam/contest/0/input?p={{problem.id}}&io={{io}}&name={{problem.deco}}-input-data.txt">Download {{problem.deco}}-input-data.txt</a></span>
-              {% else %}
-              <span class="dsb-input-link-span" style="display: block;"><img class="dsb-input-link-img" src="/static/images/file.gif">No input data(s).</span>
-              {% endif %}
-            </div>
-						<div>
-							<div class="dsb-submit-form-div" style="display: block;">
-								<form id="submit-formio_timer_0" action="/codejam/contest/0/dashboard/do" enctype="multipart/form-data" method="post">
-									<input type="hidden" name="csrfmiddlewaretoken" value="ZDI3OTBiNzYwYWE0ODY1OTUzNjk4NTUzY2QwN2FlOTR8fDEzNjcyMDUzOTI4NjQ3NzI=">
-									<div class="dsb-submit-form-separator">your output file:<input id="answer_output" type="file" name="answer" class="submitFormFile"></div>
-									<div class="dsb-submit-form-separator">source file:<input id="answer_source" type="file" name="source" class="submitFormFile"></div>
-									<div class="dsb-submit-form-separator" style="text-align:center">
-									  {% if io and user.is_authenticated %}
-										<input id="submit-buttonio_timer_0" type="submit" value="Submit file">
-										{% endif %}
-									</div>
-									{% csrf_token %}
-									<input type="hidden" name="cmd" value="SubmitAnswer">
-									<input type="hidden" name="problem" value="{{problem.id}}">
-									<input type="hidden" name="index" value="{{index}}">
-									<input type="hidden" name="input_id" value="{{io}}">
-								</form>
-							</div>
-						</div>
-					</div>
-				</td>
-			</tr>
-		</tbody>
+<div class="problem_box">
+	<table class="score_box">
+		<tr>
+			<th>NO.</th><th>E-Mail</th><th>Points</th><th>Time</th>
+		</tr>
+	{% for s in scores %}
+		<tr>
+			<td>{{forloop.counter}}</td><td>{{s.email}}</td><td>{{s.points}}</td><td>{{s.updated|date:"A g:i s.0 T"}}</td>
+		</tr>
+	{% empty %}
+		<tr><td colspan="4"><b>No scores.</b></td></tr>
+	{% endfor %}
 	</table>
-
-	
-	<div id="dsb-problem-content-div0" class="dsb-problem-content-div" style="width: 40em;">
-		{{problem.body}}
-	</div>
 </div>
-{% endautoescape %}
+
 </div>
 
 <div id="dsb-clarification-page" class="dsb-content-pages">

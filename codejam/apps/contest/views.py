@@ -31,6 +31,12 @@ def dashboard(request, id):
         if len(inputs) > 0:
             import random
             result['io'] = inputs[random.randrange(len(inputs))]['id']
+        
+        try:
+            ans = Answer.objects.get(owner=request.user, problem__id=p['id'])
+            result['success'] = {'value': (ans.points > 0)}
+        except Answer.DoesNotExist:
+            pass
 
         deco = ord('A')
         for p in problems:
@@ -64,7 +70,7 @@ def dashboard_do(request, id):
     if not input:
         # return HttpResponseBadRequest()
         raise Http404
-    
+
     answer = files.get('answer', False)
     if not answer:
         # return HttpResponseBadRequest()
@@ -81,11 +87,11 @@ def dashboard_do(request, id):
         data_output = ''
         for chunk in answer.chunks():
             data_output += chunk
-
+            
         data_source = ''
         for chunk in source.chunks():
             data_source += chunk
-            
+
         owner = request.user
         
         points = 0
@@ -138,12 +144,106 @@ def input(request, id):
 
 @require_GET
 def score(request, id):
+    get = request.GET.copy()
+    
     from django.db.models import Sum, Max
     from django.contrib.auth.models import User
     q = User.objects.annotate(points=Sum('answer__points'))
     q = q.annotate(updated=Max('answer__updated'))
+    q = q.filter(points__gt=0)
     q = q.order_by('-points', 'updated')
     scores = q.values('email', 'points', 'updated')
+    end = get.get('max', -1)
+    if end != -1 and end < len(scores):
+        scores = scores[:end]
 
-    variables = RequestContext(request, {'scors': scores})
+    variables = RequestContext(request, {'scores': scores})
     return render_to_response('contest/dashboard_score.html', variables)
+
+
+
+@require_GET
+def answer(request, id):
+    answers = Answer.objects.all().order_by('-points', '-updated')
+    answers = answers.values('owner__email', 'problem__name', 'id', 'points', 'updated')
+    variables = RequestContext(request, {'answers': answers})
+    return render_to_response('contest/dashboard_answer.html', variables)
+
+
+
+
+@require_GET
+@login_required
+def source(request, id):
+    if not request.user.is_superuser and not request.user.is_staff:
+        raise Http404
+    
+    get = request.GET.copy()
+
+    cmd = get.get('cmd', False)
+    if not cmd:
+        raise Http404
+    
+    id = get.get('s', False)
+    if not id:
+        raise Http404
+    
+    try:
+        ans = Answer.objects.get(id=id)
+    except Answer.DoesNotExist:
+        raise Http404
+    
+    name = ans.owner.email
+    name = name[:name.find('@')]
+    filename = '%s-%s-source%s' % (name, ans.problem.name, ans.type)
+
+    if cmd == 'Show':
+        brush = {'.c': 'c',
+                 '.cpp': 'cpp',
+                 '.cxx': 'cpp',
+                 '.js' : 'java',
+                 '.py' : 'py',
+                 '.rb' : 'ruby',
+                 '.rbw': 'ruby'}
+        result = {'id': ans.id,
+                  'owner':ans.owner.email,
+                  'problem': ans.problem.name,
+                  'filename': filename, 
+                  'src': ans.source,
+                  'brush': brush.get(ans.type, 'text')}
+        variables = RequestContext(request, result)
+        return render_to_response('contest/dashboard_source.html', variables)
+    elif cmd == 'Download':
+        
+        response = HttpResponse(ans.source, mimetype='application/octet-stream', content_type='application/octet-stream')
+        response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+        return response
+    else:
+        raise Http404
+
+
+
+@require_GET
+@login_required
+def output(request, id):
+    if not request.user.is_superuser and not request.user.is_staff:
+        raise Http404
+    
+    get = request.GET.copy()
+
+    id = get.get('s', False)
+    if not id:
+        raise Http404
+    
+    try:
+        ans = Answer.objects.get(id=id)
+    except Answer.DoesNotExist:
+        raise Http404
+    
+    name = ans.owner.email
+    name = name[:name.find('@')]
+    filename = '%s-%s-output.txt' % (name, ans.problem.name)
+    
+    response = HttpResponse(ans.output, mimetype='application/octet-stream', content_type='application/octet-stream')
+    response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+    return response
