@@ -71,11 +71,13 @@ def dashboard_do(request, id):
         # return HttpResponseBadRequest()
         raise Http404
 
-    answer = files.get('answer', False)
+    #answer = files.get('answer', False)
+    answer = post.get('answer', False)
     if not answer:
         # return HttpResponseBadRequest()
         raise Http404
-    source = files.get('source', False)
+    #source = files.get('source', False)
+    source = post.get('source', False)
     if not source:
         # return HttpResponseBadRequest()
         raise Http404
@@ -84,20 +86,22 @@ def dashboard_do(request, id):
     try:
         io = IO.objects.get(id=input, problem__id=id)
 
-        data_output = ''
-        for chunk in answer.chunks():
-            data_output += chunk
-            
-        data_source = ''
-        for chunk in source.chunks():
-            data_source += chunk
-
         owner = request.user
         
         points = 0
         problem = Problem.objects.get(id=id)
-        if data_output == io.output:
-            points = problem.points
+        lhs = answer.replace('\r', ' ').replace('\n', ' ').split(' ')
+        try:
+            while True:
+                lhs.remove('')
+        except:
+            pass
+        rhs = io.output.replace('\r', ' ').replace('\n', ' ').split(' ')
+        try:
+            while True:
+                rhs.remove('')
+        except:
+            pass
 
         ext = os.path.splitext(source.name)[1]
         try:
