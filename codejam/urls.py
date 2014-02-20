@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     url(r'^$', 'codejam.apps.index'),
 
     url(r'^accounts/signup/$', Account.signup),
+    url(r'^accounts/signup/confirm/(?P<username>[a-zA-Z0-9]{10}?)$', Account.signup_confirm),
     url(r'^accounts/login/$', Account.signin),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout_then_login'),
     url(r'^accounts/profile/$', Account.profile),
@@ -34,14 +35,14 @@ urlpatterns = patterns('',
     
     url(r'^codejam/contest/(?P<id>\d+?)/dashboard$', Contest.dashboard),
     url(r'^codejam/contest/(?P<id>\d+?)/dashboard/do$', Contest.dashboard_do),
-    url(r'^codejam/contest/(?P<id>\d+?)/input', Contest.input),
-    url(r'^codejam/contest/(?P<id>\d+?)/score', Contest.score),
-    url(r'^codejam/contest/(?P<id>\d+?)/answer', Contest.answer), # all of answer list
-    url(r'^codejam/contest/(?P<id>\d+?)/source', Contest.source), # show or download source data
-    url(r'^codejam/contest/(?P<id>\d+?)/output', Contest.output), # download personal output data
+    url(r'^codejam/contest/(?P<id>\d+?)/input$', Contest.input),
+    url(r'^codejam/contest/(?P<id>\d+?)/score$', Contest.score),
+    url(r'^codejam/contest/(?P<id>\d+?)/answer$', Contest.answer), # all of answer list
+    url(r'^codejam/contest/(?P<id>\d+?)/source$', Contest.source), # show or download source data
+    url(r'^codejam/contest/(?P<id>\d+?)/output$', Contest.output), # download personal output data
     
     url(r'^codejam/problem$', Problem.list),
-    url(r'^codejam/problem/modify', Problem.modify),
+    url(r'^codejam/problem/modify$', Problem.modify),
     url(r'^codejam/problem/delete$', Problem.delete),
     
     url(r'^codejam/problem/pdf$', Problem.pdf),

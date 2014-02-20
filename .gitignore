@@ -1,8 +1,8 @@
 .DS_Store
 *.pyc
-*.sqlite
 .settings
 .project
 .pydevproject
+codejam.sqlite
 codejam/settings.py
 upload_to/*

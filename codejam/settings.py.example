@@ -6,14 +6,6 @@ import os.path
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-# from django.core.mail import send_mail
-# send_mail('subject', 'message', 'from@email', ['to@email'])
-
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
     ('admin', 'ghilbut@gmail.com'),
@@ -179,3 +171,9 @@ LOGGING = {
 
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 1024*1024*1024
+
+
+
+DEFAULT_FROM_EMAIL = 'no-reply@lgecodejam.com'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 25
