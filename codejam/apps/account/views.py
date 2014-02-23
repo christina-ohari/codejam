@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 # Create your views here.
+import string
+import random
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -70,84 +72,45 @@ def __check_password(password1, password2):
 
 
 
-def __create_user(email, first_name, last_name):
-  import random
-  import string
+def __make_username():
   c = string.letters + string.digits
   loop = True
   while loop:
     username = ''.join(random.sample(c, 10))
     loop = User.objects.filter(username=username).exists()
+  return username
+
+
+def __create_user(email, first_name, last_name):
+  username = __make_username()
   user = User.objects.create_user(username, email)
   user.first_name = first_name
   user.last_name = last_name
+  user.set_unusable_password()
+  user.is_active = False
   user.save()
   return user
 
 
 
-def __get_conform_email_body(host, username):
+def __get_reg_password_email_body(host, username, recover=False):
   from django.template import Context, loader
   t = loader.get_template('account/signup_confirm_email.txt')
-  c = Context({'host': host, 'username': username})
+  c = Context({'host': host, 'username': username, 'recover': recover})
   return t.render(c)
 
 
 
-def signup(request):
-  if request.user.is_authenticated():
-    return HttpResponseRedirect('/')
-        
-  result = {}
-  if request.method == 'POST':
-    post = request.POST.copy()
-
-    f = post['first_name']
-    l = post['last_name']
-    ok, result = __check_name(f, l)
-
-    if ok:
-      e1 = post['reg_email1']
-      e2 = post['reg_email2']
-      ok, result = __check_email(e1, e2)
-
-    if ok:
-      user = __create_user(e1, f, l)
-      host = request.META['HTTP_HOST']
-      message = __get_conform_email_body(host, user.username)
-      subject = 'codejam 가입을 완료해 주세요.'
-      user.email_user(subject, message)
-      # TODO(ghilbut): redirect confirm email waiting page
-        
-    result['last_name'] = l
-    result['first_name'] = f
-    result['reg_email1'] = e1
-    result['reg_email2'] = e2
-
-    variables = RequestContext(request, result)
-    return render_to_response('account/signup.html', variables)
-
-
-
-def signup_confirm(request, username):
-
-  def __get_valid_user(username):
-    try:
-      u = User.objects.get(username=username)
-      if not u.email.startswith(username):
-        return u
-    except:
-      pass
-    return None
+def __reg_password(request, username, get_valid_user, action):
   
-  user = __get_valid_user(username)  
-  if user is None:
+  user = get_valid_user(username)
+  if user == None:
     raise Http404
 
-  variables = {'username': username}
+  variables = {'username': username, 'action': action}
 
   if request.method == 'GET':
-    return render(request, 'account/signup_confirm.html', variables)
+    return render(request, 'account/reg_password.html', variables)
   
   if request.method == 'POST':
     post = request.POST.copy()
@@ -158,27 +121,72 @@ def signup_confirm(request, username):
 
     if not ok:
       variables.update(result)
-      return render(request, 'account/signup_confirm.html', variables)
+      return render(request, 'account/reg_password.html', variables)
 
-    username = user.email.split('@')[0]
-    user.username = username
+    user.username = __make_username()
     user.set_password(p1)
     user.is_active = True
     user.save()
+    
+    return HttpResponseRedirect('/')
 
-    print username, p1
-    user = authenticate(username=username, password=p1)
-    print user
-    if user is not None and user.is_active:
-      login(request, user)
-      return HttpResponseRedirect('/codejam/contest/0/dashboard')
+
+
+def signup(request):
+  if request.user.is_authenticated():
+    return HttpResponseRedirect('/')
+  
+  result = {}
+  if request.method == 'POST':
+    post = request.POST.copy()
+
+    f = post['first_name']
+    l = post['last_name']
+    e1 = post['reg_email1']
+    e2 = post['reg_email2']
+  
+    ok, result = __check_name(f, l)
+    if ok:
+      ok, result = __check_email(e1, e2)
+    if ok:
+      user = __create_user(e1, f, l)
+      host = request.META['HTTP_HOST']
+      message = __get_reg_password_email_body(host, user.username)
+      subject = 'codejam 가입을 완료해 주세요.'
+      user.email_user(subject, message)
+      return render(request, 'account/signup_confirm.html')
+        
+    result['last_name'] = l
+    result['first_name'] = f
+    result['reg_email1'] = e1
+    result['reg_email2'] = e2
+
+  variables = RequestContext(request, result)
+  return render_to_response('account/signup.html', variables)
+
+
+
+def signup_confirm(request, username):
+
+  def __get_valid_user(username):
+    try:
+      u = User.objects.get(username=username)
+      if not u.has_usable_password():
+        return u
+    except:
+      pass
+    return None
+
+  action = '/accounts/signup/confirm/'
+  return __reg_password(request, username, __get_valid_user, action)
 
 
 
 def signin(request):
+
   if request.user.is_authenticated():
     return HttpResponseRedirect('/codejam/contest/0/dashboard')
-   
+
   result ={}
   if request.method == 'POST':
     post = request.POST.copy()
@@ -193,14 +201,16 @@ def signin(request):
         request.POST = post
         login(request, user)
         return HttpResponseRedirect('/codejam/contest/0/dashboard')
+      else:
+        result['error'] = '비밀번호를 다시 확인해 주세요.'
     except User.DoesNotExist:
-      pass
+      result['error'] = '등록되지 않은 이메일 입니다.'
+
     result['email'] = post['email']
     result['persist'] = persist
+
   variables = RequestContext(request, result)
-  return render_to_response('account/login.html', variables)
-
-
+  return render_to_response('account/signin.html', variables)
 
 
 
@@ -208,5 +218,44 @@ def signin(request):
 def profile(request):
   pass
 
+
+
 def recover(request):
-  pass
+
+  result = {'recover': True}
+
+  if request.method == 'POST':
+    e = request.POST['email']
+    result['email'] = e
+    try:
+      u = User.objects.get(email=e)
+      u.username = __make_username()
+      u.save()
+
+      host = request.META['HTTP_HOST']
+      message = __get_reg_password_email_body(host, u.username, True)
+      subject = 'codejam 비밀번호를 변경해 주세요.'
+      u.email_user(subject, message)
+      
+      return render(request, 'account/signup_confirm.html', result)
+    except User.DoesNotExist:
+      result['error'] = True
+
+  variables = RequestContext(request, result)
+  return render_to_response('account/recover.html', variables)
+
+
+
+def reg_password(request, username):
+  
+  def __get_valid_user(username):
+    try:
+      u = User.objects.get(username=username)
+      if u.has_usable_password() and u.is_active:
+        return u 
+    except User.DoesNotExist:
+      pass
+    return None
+
+  action = '/accounts/password/'
+  return __reg_password(request, username, __get_valid_user, action)

@@ -10,31 +10,46 @@
 
 
 {% block content %}
-<form id="signup" method="POST" action="/accounts/signup/confirm/{{username}}">
-	{% csrf_token %}
-	<table>
-		<tr>
-		  <th><label for="reg_password1">새 비밀번호:</label></th>
-		  <td><input id="reg_password1" name="reg_password1" type="password"></input></td>
-		  <td>{{reg_password_error1}}</td>
-		</tr>
-		<tr>
-		  <th><label for="reg_password2">새 비밀번호 (확인):</label></th>
-		  <td><input id="reg_password2" name="reg_password2" type="password"></input></td></td>
-		  <td>{{reg_password_error2}}</td>
-		</tr>
-		<tr>
-		  <td></td>
-			<td><button type="submit">비밀번호 입력</button></td>
-			<td></td>
-		</tr>
-	</table>
-</form>
+<p>
+{% if recover %}
+  {{email}}님의 비밀번호 변경 메일이 발송되었습니다.
+  메일 확인 후 비밀번호 변경 절차를 완료해 주세요.  
+{% else %}
+  가입 승인 이메일이 발송되었습니다.
+  메일 확인 후 최종 승인 절차를 완료해 주세요.
+{% endif %}
+</p>
+<a id="countdown"></a> 초 후 홈으로 이동합니다. 바로 이동 하시려면, <a href="/">이곳</a>을 클릭하세요.
 {% endblock %}
 
 
 
 <!-- body scripts -->
 {% block body_scripts %}
-<script src="/static/account.js" type="text/javascript"></script>
+<script type="text/javascript">
+  var countdown = 5;
+  
+  function refresh_countdown() {
+    document.getElementById('countdown').textContent = countdown;
+  }
+  
+  function do_countdown() {
+    setTimeout(function () {
+      --countdown;
+      refresh_countdown();
+      if (countdown > 0) {
+        do_countdown();
+      } else {
+        setTimeout(function () {
+          window.location.href = '/';
+        }, 500);
+      }
+    }, 1000);
+  } 
+  
+  window.onload = function () {
+    refresh_countdown();
+    do_countdown();
+  };
+</script>
 {% endblock %}
