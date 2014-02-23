@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # Create your views here.
+import re
 import string
 import random
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core import urlresolvers
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.template.context import RequestContext
@@ -35,9 +35,11 @@ def __check_email(email1, email2):
     from django.core.validators import validate_email
     validate_email(email1)
 
-    import re
-    #p = re.compile('^(?P<name>.*)@lge.com$')
-    p = re.compile('^(?P<name>.*)@([^@]+)$')
+    from codejam.settings import LGEMAIL_ONLY
+    if LGEMAIL_ONLY:
+      p = re.compile('^(?P<name>.*)@lge.com$')
+    else:
+      p = re.compile('^(?P<name>.*)@([^@]+)$')
     m = p.match(email1)
 
     if m == None:
