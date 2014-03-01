@@ -1,7 +1,0 @@
-open below page
-
-{% if recover %}
-http://{{host}}/accounts/password/{{username}}/
-{% else %}
-http://{{host}}/accounts/signup/confirm/{{username}}/
-{% endif %}

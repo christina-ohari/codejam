@@ -83,13 +83,14 @@ def __make_username():
   return username
 
 
+
 def __create_user(email, first_name, last_name):
   username = __make_username()
   user = User.objects.create_user(username, email)
   user.first_name = first_name
   user.last_name = last_name
   user.set_unusable_password()
-  user.is_active = False
+  user.is_active = True
   user.save()
   return user
 
@@ -97,40 +98,9 @@ def __create_user(email, first_name, last_name):
 
 def __get_reg_password_email_body(host, username, recover=False):
   from django.template import Context, loader
-  t = loader.get_template('account/signup_confirm_email.txt')
+  t = loader.get_template('account/change_password_email.body')
   c = Context({'host': host, 'username': username, 'recover': recover})
   return t.render(c)
-
-
-
-def __reg_password(request, username, get_valid_user, action):
-  
-  user = get_valid_user(username)
-  if user == None:
-    raise Http404
-
-  variables = {'username': username, 'action': action}
-
-  if request.method == 'GET':
-    return render(request, 'account/reg_password.html', variables)
-  
-  if request.method == 'POST':
-    post = request.POST.copy()
-
-    p1 = post['reg_password1']
-    p2 = post['reg_password2']
-    ok, result = __check_password(p1, p2)
-
-    if not ok:
-      variables.update(result)
-      return render(request, 'account/reg_password.html', variables)
-
-    user.username = __make_username()
-    user.set_password(p1)
-    user.is_active = True
-    user.save()
-    
-    return HttpResponseRedirect('/')
 
 
 
@@ -156,7 +126,7 @@ def signup(request):
       message = __get_reg_password_email_body(host, user.username)
       subject = 'codejam 가입을 완료해 주세요.'
       user.email_user(subject, message)
-      return render(request, 'account/signup_confirm.html')
+      return render(request, 'account/email_delivery_complete.html')
         
     result['last_name'] = l
     result['first_name'] = f
@@ -165,22 +135,6 @@ def signup(request):
 
   variables = RequestContext(request, result)
   return render_to_response('account/signup.html', variables)
-
-
-
-def signup_confirm(request, username):
-
-  def __get_valid_user(username):
-    try:
-      u = User.objects.get(username=username)
-      if not u.has_usable_password():
-        return u
-    except:
-      pass
-    return None
-
-  action = '/accounts/signup/confirm/'
-  return __reg_password(request, username, __get_valid_user, action)
 
 
 
@@ -239,7 +193,7 @@ def recover(request):
       subject = 'codejam 비밀번호를 변경해 주세요.'
       u.email_user(subject, message)
       
-      return render(request, 'account/signup_confirm.html', result)
+      return render(request, 'account/email_delivery_complete.html', result)
     except User.DoesNotExist:
       result['error'] = True
 
@@ -248,16 +202,31 @@ def recover(request):
 
 
 
-def reg_password(request, username):
-  
-  def __get_valid_user(username):
-    try:
-      u = User.objects.get(username=username)
-      if u.has_usable_password() and u.is_active:
-        return u 
-    except User.DoesNotExist:
-      pass
-    return None
+def change_password(request, username):
 
-  action = '/accounts/password/'
-  return __reg_password(request, username, __get_valid_user, action)
+  try:
+    user = User.objects.get(username=username)
+  except:
+    raise Http404
+
+  variables = {'username': username}
+
+  if request.method == 'POST':
+    post = request.POST.copy()
+
+    p1 = post['reg_password1']
+    p2 = post['reg_password2']
+    ok, result = __check_password(p1, p2)
+
+    if not ok:
+      variables.update(result)
+      return render(request, 'account/change_password.html', variables)
+
+    user.username = __make_username()
+    user.set_password(p1)
+    user.is_active = True
+    user.save()
+    
+    return HttpResponseRedirect('/')
+  
+  return render(request, 'account/change_password.html', variables)
