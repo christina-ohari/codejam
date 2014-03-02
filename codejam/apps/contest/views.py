@@ -7,11 +7,26 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.shortcuts import render_to_response, render
 
-from codejam.apps.contest.models import Answer
-from codejam.apps.contest.models import Score
-from codejam.apps.problem.models import Problem
-from codejam.apps.problem.models import IO
+from codejam.apps.contest.models import Contest
+#from codejam.apps.contest.models import Answer
+#from codejam.apps.contest.models import Score
+#from codejam.apps.problem.models import Problem
+#from codejam.apps.problem.models import IO
 
+
+
+
+@require_GET
+@login_required
+def list(request):
+  
+  if not request.user.is_staff:
+    raise Http404
+
+  contests = Contest.objects.all().values()
+  return render(request, 'contest/list.html', {'contests': contests})
+
+"""
 def dashboard(request, id):
     result = {}
     get = request.GET.copy()
@@ -251,3 +266,4 @@ def output(request, id):
     response = HttpResponse(ans.output, mimetype='application/octet-stream', content_type='application/octet-stream')
     response['Content-Disposition'] = 'attachment; filename="%s"' % filename
     return response
+"""

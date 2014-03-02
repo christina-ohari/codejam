@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
-from codejam.apps.problem.models import Problem
+#from codejam.apps.problem.models import Problem
 
 
 class Contest(models.Model):
   title = models.CharField(max_length=512)
-  year = models.SmallIntegerField(null=False)
-  index = models.SmallIntegerField(null=False)
-  opened = models.DateTimeField(null=False)
-  closed = models.DateTimeField(null=False)
+  opened_at = models.DateTimeField(null=False)
+  closed_at = models.DateTimeField(null=False)
+  visible = models.BooleanField(default=False)
+  history = models.TextField(null=True)
   class Meta:
     db_table = u'codejam_contest'
 
-
+"""
 class Answer(models.Model):
   owner = models.ForeignKey(User)
   problem = models.ForeignKey(Problem)
@@ -32,3 +32,4 @@ class Score(models.Model):
   updated = models.DateTimeField(auto_now=True)
   class Meta:
     db_table = u'codejam_score'
+"""

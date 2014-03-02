@@ -26,15 +26,19 @@ urlpatterns = patterns('',
 
     url(r'^$', 'codejam.apps.index'),
 
-    url(r'^accounts/signup/$', Account.signup),
-    url(r'^accounts/login/$', Account.signin),
-    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout_then_login', {'login_url': '/'}),
+    url(r'^accounts/signup/$',  Account.signup),
+    url(r'^accounts/login/$',   Account.signin),
+    url(r'^accounts/logout/$',  'django.contrib.auth.views.logout_then_login', {'login_url': '/'}),
     url(r'^accounts/profile/$', Account.profile),
     url(r'^accounts/recover/$', Account.recover),
     url(r'^accounts/password/(?P<username>[a-zA-Z0-9]{10}?)/$', Account.change_password),
     
     url(r'^codejam/schedule/', 'codejam.apps.schedule'),
-    url(r'^codejam/terms/', 'codejam.apps.terms'),
+    url(r'^codejam/terms/',    'codejam.apps.terms'),
+    
+    url(r'^codejam/manager/contests/', Contest.list),
+    
+    #url(r'^codejam/problem/', Problem.list),
     
     #url(r'^codejam/contest/(?P<id>\d+?)/dashboard$', Contest.dashboard),
     #url(r'^codejam/contest/(?P<id>\d+?)/dashboard/do$', Contest.dashboard_do),
@@ -45,12 +49,12 @@ urlpatterns = patterns('',
     #url(r'^codejam/contest/(?P<id>\d+?)/output$', Contest.output), # download personal output data
 
     
-    url(r'^codejam/problem$', Problem.list),
-    url(r'^codejam/problem/modify$', Problem.modify),
-    url(r'^codejam/problem/delete$', Problem.delete),
     
-    url(r'^codejam/problem/pdf$', Problem.pdf),
-    url(r'^codejam/problem/io$', Problem.io),
+    #url(r'^codejam/problem/modify$', Problem.modify),
+    #url(r'^codejam/problem/delete$', Problem.delete),
+    
+    #url(r'^codejam/problem/pdf$', Problem.pdf),
+    #url(r'^codejam/problem/io$', Problem.io),
 )
 
 from codejam import settings

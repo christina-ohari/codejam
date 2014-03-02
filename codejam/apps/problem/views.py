@@ -9,10 +9,30 @@ from django.views.decorators.http import require_GET, require_POST
 from django.contrib.auth.decorators import login_required
 
 from codejam.settings import MEDIA_ROOT
-from codejam.apps.problem.models import Problem
-from codejam.apps.problem.models import IO
+#from codejam.apps.problem.models import Problem
+#from codejam.apps.problem.models import IO
 
 
+"""
+@login_required
+def list(request):
+    if not request.user.is_superuser and not request.user.is_staff:
+        raise Http404
+    
+    result = {}
+
+    if request.method == 'POST':
+        success, value = Create(request)
+        if success:
+            return HttpResponseRedirect('/codejam/problem/modify?p=%d' % value)
+        else:
+            result['error'] = value
+
+    result['problems'] = Problem.objects.all().values()
+    variables = RequestContext(request, result)
+    return render_to_response('problem/list.html', variables)
+  
+  
 
 def Create(request):
 
@@ -53,23 +73,7 @@ def Create(request):
     p = Problem.objects.create(name=name, pdf=rel_path, points=points)
     return (True, p.id)
 
-@login_required
-def list(request):
-    if not request.user.is_superuser and not request.user.is_staff:
-        raise Http404
-    
-    result = {}
 
-    if request.method == 'POST':
-        success, value = Create(request)
-        if success:
-            return HttpResponseRedirect('/codejam/problem/modify?p=%d' % value)
-        else:
-            result['error'] = value
-
-    result['problems'] = Problem.objects.all().values()
-    variables = RequestContext(request, result)
-    return render_to_response('contest/problem_list.html', variables)
 
 
 
@@ -278,3 +282,4 @@ def io(request):
     else:
         raise Http404
     return res
+"""

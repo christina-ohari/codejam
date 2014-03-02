@@ -2,7 +2,7 @@
 import os.path
 from django.db import models
 
-
+"""
 class Problem(models.Model):
     name   = models.CharField(max_length=256, null=True)
     pdf    = models.CharField(max_length=256, null=True)
@@ -16,3 +16,4 @@ class IO(models.Model):
     output  = models.TextField()
     class Meta:
         db_table = u'codejam_problem_io'
+"""
