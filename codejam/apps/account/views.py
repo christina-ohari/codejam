@@ -141,7 +141,7 @@ def signup(request):
 def signin(request):
 
   if request.user.is_authenticated():
-    return HttpResponseRedirect('/codejam/contest/0/dashboard')
+    return HttpResponseRedirect('/')
 
   result ={}
   if request.method == 'POST':
@@ -156,7 +156,7 @@ def signin(request):
         post.update({'username': username})
         request.POST = post
         login(request, user)
-        return HttpResponseRedirect('/codejam/contest/0/dashboard')
+        return HttpResponseRedirect('/')
       else:
         result['error'] = '비밀번호를 다시 확인해 주세요.'
     except User.DoesNotExist:

@@ -33,13 +33,17 @@ urlpatterns = patterns('',
     url(r'^accounts/recover/$', Account.recover),
     url(r'^accounts/password/(?P<username>[a-zA-Z0-9]{10}?)/$', Account.change_password),
     
-    url(r'^codejam/contest/(?P<id>\d+?)/dashboard$', Contest.dashboard),
-    url(r'^codejam/contest/(?P<id>\d+?)/dashboard/do$', Contest.dashboard_do),
-    url(r'^codejam/contest/(?P<id>\d+?)/input$', Contest.input),
-    url(r'^codejam/contest/(?P<id>\d+?)/score$', Contest.score),
-    url(r'^codejam/contest/(?P<id>\d+?)/answer$', Contest.answer), # all of answer list
-    url(r'^codejam/contest/(?P<id>\d+?)/source$', Contest.source), # show or download source data
-    url(r'^codejam/contest/(?P<id>\d+?)/output$', Contest.output), # download personal output data
+    url(r'^codejam/schedule/', 'codejam.apps.schedule'),
+    url(r'^codejam/terms/', 'codejam.apps.terms'),
+    
+    #url(r'^codejam/contest/(?P<id>\d+?)/dashboard$', Contest.dashboard),
+    #url(r'^codejam/contest/(?P<id>\d+?)/dashboard/do$', Contest.dashboard_do),
+    #url(r'^codejam/contest/(?P<id>\d+?)/input$', Contest.input),
+    #url(r'^codejam/contest/(?P<id>\d+?)/score$', Contest.score),
+    #url(r'^codejam/contest/(?P<id>\d+?)/answer$', Contest.answer), # all of answer list
+    #url(r'^codejam/contest/(?P<id>\d+?)/source$', Contest.source), # show or download source data
+    #url(r'^codejam/contest/(?P<id>\d+?)/output$', Contest.output), # download personal output data
+
     
     url(r'^codejam/problem$', Problem.list),
     url(r'^codejam/problem/modify$', Problem.modify),
