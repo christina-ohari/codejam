@@ -1,0 +1,130 @@
+{% extends "manager_base.html" %}
+
+{% block head_scripts %}
+<style>
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+<!-- Problem Title -->
+<h3 id="dsb-problem-title-area">
+  <span id="dsb-problem-title-div" class="problem-title after-start-only" style="display: block;">
+  	<span style="color:#666">Contest List</span>
+  </span>
+</h3>
+
+<br />
+<h3>* Create New Contest.</h3>
+<form id="contest_create">
+	{% csrf_token %}
+	<table>
+	  {% if error %}
+      <tr><td class="error" colspan="2"><b>[ Error !! ]</b>&nbsp;&nbsp;&nbsp;{{error}}</td></tr>
+    {% endif %}
+    <thead>
+      <tr></tr>
+    </thead>
+    <tbody>
+  		<tr>
+  		  <th>
+  		    <label for="title">Title: </label> 
+  		  </th>
+  		  <td>
+  		    <input type="text" id="contest_title" name="contest_title" maxlength="512">
+  		  </td>
+  		</tr>
+  		<tr>
+  		  <th>
+  		    <label for="contest_opened">Open: </label>
+  		  </th>
+  		  <td>
+  		    <input type="text" id="contest_opened" name="contest_opened"/> KST [UCT + 9:00] (EX: 2014-03-28 17:00)
+  		  </td>
+  		</tr>
+  		<tr>
+        <th>
+          <label for="contest_expired">Expired: </label>
+        </th>
+        <td>
+          <input type="text" id="contest_expired" name="contest_expired"/> KST [UCT + 9:00] (EX: 2014-03-30 17:00)
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td><input type="submit" value="Make Contest"></td>
+      </tr>
+    </tfoot>
+	</table>
+</form>
+
+<br />
+
+{% if contests %}
+<h3>* Contest List.</h3>
+<div id="problem_list" class="problem_box">
+	<table>
+		<tbody>
+			<tr>
+				<th width="50px">NO.</th>
+				<th>Title</th>
+				<th width="80px">visible</th>
+				<th width="200px">opened</th>
+				<th width="200px">expired</th>
+				<th width="200px">closed</th>
+				<th width="80px">hostory</th>
+			</tr>
+			{% for c in contests %}
+			<tr>
+				<td height="25px">{{forloop.counter}}</td>
+				<td>{{c.title}}</td>
+				<td>{{c.visible}}</td>
+				<td>{{c.opened_at|date:"Y-m-d H:i"}}</td>
+				<td>{{c.expired_at|date:"Y-m-d H:i"}}</td>
+				<td>{{c.closed_at|date:"Y-m-d H:i"}}</td>
+				<td>{{c.history}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endif %}
+
+{% endblock %}
+
+
+
+{% block body_scripts %}
+<script>
+document.getElementById('contest_create').onsubmit = function () {
+  
+  var title = document.getElementById('contest_title').value;
+  var opened = document.getElementById('contest_opened').value;
+  var expired = document.getElementById('contest_expired').value;
+  console.log(JSON.stringify({
+    title: title,
+    opened: opened,
+    expired: expired
+  }));
+  
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === xhr.DONE) {
+      if (xhr.status === 200) {
+        
+      } else {
+        
+      }
+    }
+  };
+  //xhr.open('POST', '/codejam/manager/contests/');
+  xhr.open('POST', '/codejam/manager/contests/ajax/create/');
+  xhr.send(new FormData(document.getElementById('contest_create')));
+  
+  return false;
+};
+</script>
+{% endblock %}

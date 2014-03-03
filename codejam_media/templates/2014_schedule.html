@@ -1,0 +1,73 @@
+{% extends "base_lgcj.html" %}
+
+{% block head_scripts %}
+<style>
+#schedule_table {
+  margin-left: 30px;
+}
+#schedule_table th {
+  background-color: #ddd;
+}
+#schedule_table th
+, #schedule_table td {
+  padding: 10px 30px;
+  border: #bbb solid 3px;
+  text-align: center;
+  font-size: large;
+}
+#schedule_table tfoot td {
+  padding-top: 30px;
+  border: none;
+  font-size: medium;
+}
+#result_notify {
+  padding: 5px 10px;
+  font-size: medium;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Problem Title -->
+<h3 id="dsb-problem-title-area">
+  <span id="dsb-problem-title-div" class="problem-title after-start-only" style="display: block;">
+  	<span style="color:#666">2014년도 공개 코드잼 일정</span>
+  </span>
+</h3>
+
+<br />
+<table id="schedule_table">
+  <thead>
+    <tr>
+      <th>차수</th>
+      <th>경연 일시</th>
+      <th>결과 공지</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>03.28 17:00 ~ 03.30 17:00</td>
+      <td>04.04 12:00</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>06.14 17:00 ~ 06.16 17:00</td>
+      <td>06.20 12:00</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>08.29 17:00 ~ 08.31 17:00</td>
+      <td>09.04 12:00</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3">
+        결과는 collab 사이트의 <a href="http://collab.lge.com/main/x/Ktk7B" target="_blank">코딩 전문가 페이지</a>에 게시됩니다.
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+{% endblock %}

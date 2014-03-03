@@ -6,9 +6,10 @@ from django.contrib.auth.models import User
 
 class Contest(models.Model):
   title = models.CharField(max_length=512)
-  opened_at = models.DateTimeField(null=False)
-  closed_at = models.DateTimeField(null=False)
   visible = models.BooleanField(default=False)
+  opened_at = models.DateTimeField(null=False)
+  expired_at = models.DateTimeField(null=False)
+  closed_at = models.DateTimeField(null=True)
   history = models.TextField(null=True)
   class Meta:
     db_table = u'codejam_contest'

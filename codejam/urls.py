@@ -2,6 +2,7 @@
 from django.conf.urls import patterns, include, url
 from codejam.apps.account import views as Account
 from codejam.apps.contest import views as Contest
+from codejam.apps.contest import ajax as ContestAjax
 from codejam.apps.problem import views as Problem
 
 # Uncomment the next two lines to enable the admin:
@@ -33,10 +34,11 @@ urlpatterns = patterns('',
     url(r'^accounts/recover/$', Account.recover),
     url(r'^accounts/password/(?P<username>[a-zA-Z0-9]{10}?)/$', Account.change_password),
     
-    url(r'^codejam/schedule/', 'codejam.apps.schedule'),
-    url(r'^codejam/terms/',    'codejam.apps.terms'),
+    url(r'^codejam/schedule/$', 'codejam.apps.schedule'),
+    url(r'^codejam/terms/$',    'codejam.apps.terms'),
     
-    url(r'^codejam/manager/contests/', Contest.list),
+    url(r'^codejam/manager/contests/$', Contest.list),
+    url(r'^codejam/manager/contests/ajax/create/$', ContestAjax.create)
     
     #url(r'^codejam/problem/', Problem.list),
     
