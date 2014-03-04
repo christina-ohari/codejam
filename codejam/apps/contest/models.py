@@ -13,7 +13,7 @@ class Contest(models.Model):
   closed_at = models.DateTimeField(null=True)
   history = models.TextField(null=True)
   class Meta:
-    app_label = u'Contest'
+    app_label = u'contest'
     db_table = u'codejam_contest'
     #order_with_respect_to = 'contest'
     verbose_name = u'Contest'

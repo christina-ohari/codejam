@@ -15,7 +15,7 @@ class Problem(models.Model):
   large_point = models.IntegerField(default=0)
   created_at = models.DateTimeField(auto_now_add=True)
   class Meta:
-    app_label = u'Contest'
+    app_label = u'contest'
     db_table = u'codejam_problem'
     #order_with_respect_to = 'contest'
     verbose_name = u'Problem'
@@ -30,7 +30,7 @@ class IO(models.Model):
   output   = models.TextField()
   created_at = models.DateTimeField(auto_now_add=True)
   class Meta:
-    app_label = u'Contest'
+    app_label = u'contest'
     db_table = u'codejam_problem_io'
     #order_with_respect_to = 'problem'
     verbose_name = u'Problem Input/Output'
