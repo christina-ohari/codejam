@@ -2,6 +2,10 @@
 
 {% block head_scripts %}
 <style>
+#contest_create_error {
+	/*background-color: red;*/
+	color: white;
+}
 </style>
 {% endblock %}
 
@@ -20,11 +24,10 @@
 <form id="contest_create">
 	{% csrf_token %}
 	<table>
-	  {% if error %}
-      <tr><td class="error" colspan="2"><b>[ Error !! ]</b>&nbsp;&nbsp;&nbsp;{{error}}</td></tr>
-    {% endif %}
     <thead>
-      <tr></tr>
+      <tr>
+      	<td id="contest_create_error" colspan="2"><span></span></td>
+      </tr>
     </thead>
     <tbody>
   		<tr>
@@ -99,24 +102,79 @@
 
 {% block body_scripts %}
 <script>
+function isLeapYear(year) {
+	return (year % 400 === 0) || (year % 100 !== 0 && year % 4 === 0);
+}
+function isValidDate(date) {
+	var table = [false,31,28,31,30,31,30,31,31,30,31,30,31];
+	var year  = Number(date[0]);
+	var month = Number(date[1]);
+	var day   = Number(date[2]);
+	var max_d = Number(table[month] + (month === 2 && isLeapYear(year) ? 1 : 0));
+	var hour  = Number(date[3]);
+	var min   = Number(date[4]);
+	if (12 < month || month < 1) {
+		return false;
+	}
+	if (max_d < day || day < 1) {
+		return false;
+	}
+	if (23 < hour || hour < 0) {
+		return false;
+	}
+	if (60 < min || min < 0) {
+		return false;
+	}
+	return true;
+}
+function showCreateError(msg) {
+	document.getElementById('contest_create_error').firstChild.textContent = msg;
+  	document.getElementById('contest_create_error').style.backgroundColor = 'red';
+}
+
 document.getElementById('contest_create').onsubmit = function () {
   
-  var title = document.getElementById('contest_title').value;
-  var opened = document.getElementById('contest_opened').value;
-  var expired = document.getElementById('contest_expired').value;
-  console.log(JSON.stringify({
-    title: title,
-    opened: opened,
-    expired: expired
-  }));
+  var title = document.getElementById('contest_title').value,
+  	  opened = document.getElementById('contest_opened').value,
+  	  expired = document.getElementById('contest_expired').value,
+  	  p = /^(\d{4})-(\d{1,2})-(\d{1,2}) (\d{1,2}):(\d{1,2})$/,
+  	  d = false;
   
+  if (!title || title.length == 0) {
+  	showCreateError();
+  	document.getElementById('contest_create_error').firstChild.textContent = 'please write title.';
+  	document.getElementById('contest_create_error').style.backgroundColor = 'red';
+  	return false;
+  }
+
+  d = opened.match(p);
+  if (!d) {
+  	showCreateError('open date is out of format.');
+  	return false;
+  }
+  if (!isValidDate(d.slice(1))) {
+  	showCreateError('one of open date value is out of bound.');
+  	return false;
+  }
+  
+  d = expired.match(p);
+  if (!d) {
+  	showCreateError('expire date is out of format.');
+  	return false;
+  }
+  if (!isValidDate(d.slice(1))) {
+  	showCreateError('one of expire date value is out of bound.');
+  	return false;
+  }
+
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function () {
     if (xhr.readyState === xhr.DONE) {
       if (xhr.status === 200) {
-        
+      	
+        var html = xhr.responseText;
       } else {
-        
+        document.getElementById('contest_create_error').firstChild.textContent = xhr.responseText;
       }
     }
   };

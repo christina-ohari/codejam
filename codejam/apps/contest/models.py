@@ -9,10 +9,15 @@ class Contest(models.Model):
   visible = models.BooleanField(default=False)
   opened_at = models.DateTimeField(null=False)
   expired_at = models.DateTimeField(null=False)
+  created_at = models.DateTimeField(auto_now_add=True)
   closed_at = models.DateTimeField(null=True)
   history = models.TextField(null=True)
   class Meta:
+    app_label = u'Contest'
     db_table = u'codejam_contest'
+    #order_with_respect_to = 'contest'
+    verbose_name = u'Contest'
+    verbose_name_plural = u'01 Contest List'
 
 """
 class Answer(models.Model):
