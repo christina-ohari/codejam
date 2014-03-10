@@ -19,23 +19,17 @@ class Contest(models.Model):
     verbose_name = u'Contest'
     verbose_name_plural = u'01 Contest List'
 
-"""
-class Answer(models.Model):
-  owner = models.ForeignKey(User)
-  problem = models.ForeignKey(Problem)
-  output = models.TextField()
-  source = models.TextField()
-  type = models.CharField(max_length=10)
-  points = models.IntegerField(default=0)
-  updated = models.DateTimeField(auto_now=True)
-  class Meta:
-    db_table = u'codejam_answer'
 
 
 class Score(models.Model):
-  owner = models.ForeignKey(User)
-  points = models.IntegerField(default=0)
+  owner   = models.ForeignKey(User)
+  contest = models.ForeignKey(Contest)
+  points  = models.IntegerField(default=0)
+  created = models.DateTimeField(auto_now=True)
   updated = models.DateTimeField(auto_now=True)
   class Meta:
+    app_label = u'contest'
     db_table = u'codejam_score'
-"""
+    #order_with_respect_to = 'contest'
+    verbose_name = u'Score'
+    verbose_name_plural = u'02 Score List'

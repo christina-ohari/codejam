@@ -11,8 +11,11 @@
   <link rel="stylesheet" type="text/css"
       href="/static/css/dashboard.css" />
 
-  <!-- head scripts -->
   <link rel="stylesheet" type="text/css" href="/static/css/codejam.css" />
+  
+  <script type="text/javascript" src="/static/third_party/jquery-2.1.0.min.js"></script>
+
+  <!-- head scripts -->
   {% block head_scripts %}
   {% endblock %}
 </head>
@@ -213,7 +216,7 @@
     	{% if user.is_superuser or user.is_staff %}
     	<a target="new" href="/codejam/contest/0/score">Staff: Score</a> |
     	<a target="new" href="/codejam/contest/0/answer">Staff: Answers</a> | 
-    	<a target="new" href="/codejam/problem">Staff: Problems</a> | 
+    	<a target="new" href="/admin/contest/problem/">Staff: Problems</a> | 
     	{% endif %}
     	<b>{{user.email}}</b> | <a href="/accounts/logout/">Sign out</a>
     	{% else %}

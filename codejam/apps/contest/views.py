@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 import os.path
+from datetime import datetime
+from django.db.models import Q
 from django.utils import simplejson
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views.decorators.http import require_GET, require_POST
 from django.contrib.auth.decorators import login_required
-from django.template import RequestContext
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render
 
 from codejam.apps.contest.models import Contest
 #from codejam.apps.contest.models import Answer
@@ -15,58 +16,32 @@ from codejam.apps.contest.models import Contest
 
 
 
-
 @require_GET
 @login_required
-def list(request):
+def dashboard(request):
   
-  if not request.user.is_staff:
-    raise Http404
+  variables = {}
+  
+  try:
+    today = datetime.today()
+    q = Q(opened_at__lte=today) & Q(expired_at__gte=today) & Q(visible=True)
+    contest = Contest.objects.get(q)
+    problem_list = contest.problem_set.all().values()
+    variables.update({
+        'contest': contest,
+        'problems': problem_list
+      })
 
-  contests = Contest.objects.all().values()
-  return render(request, 'contest/list.html', {'contests': contests})
+    print problem_list
+    
+  except Contest.DoesNotExist:
+    print 'no-contest'
+    pass
+
+  return render(request, 'contest/dashboard.html', variables)
+
 
 """
-def dashboard(request, id):
-    result = {}
-    get = request.GET.copy()
-
-    problems = Problem.objects.all().values();
-    
-    menu = []
-    if len(problems) > 0:
-        index = 0
-        if get.has_key('p'):
-            index = int(get['p'])
-        p = problems[index]
-        result['index'] = index
-        result['problem'] = p
-        
-        inputs = IO.objects.filter(problem__id=p['id']).values()
-        if len(inputs) > 0:
-            import random
-            result['io'] = inputs[random.randrange(len(inputs))]['id']
-        
-        try:
-            ans = Answer.objects.get(owner=request.user, problem__id=p['id'])
-            result['success'] = {'value': (ans.points > 0)}
-        except Answer.DoesNotExist:
-            pass
-
-        deco = ord('A')
-        for p in problems:
-            info = {'id': p['id'], 'deco': chr(deco), 'name': p['name']}
-            menu.append(info)
-            if result['problem']['id'] == p['id']:
-                result['problem']['deco'] = chr(deco)
-            deco = deco + 1
-    result['menu'] = menu
-
-    variables = RequestContext(request, result)
-    return render_to_response('contest/dashboard.html', variables)
-
-
-
 @require_POST
 @login_required
 def dashboard_do(request, id):

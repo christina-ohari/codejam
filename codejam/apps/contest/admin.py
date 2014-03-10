@@ -2,7 +2,7 @@
 from datetime import datetime
 from django import forms
 from django.contrib import admin
-from codejam.apps.contest.models import Contest
+from codejam.apps.contest.models import Contest, Score
 
 
 
@@ -34,6 +34,10 @@ class ContestForm(forms.ModelForm):
 
 
 
+class Score_Inline(admin.StackedInline):
+  model = Score
+  extra = 1
+
 class ContestAdmin(admin.ModelAdmin):
   list_display = ['title', 'visible', 'opened_at', 'expired_at', 'closed_at']
   ordering = ['opened_at']
@@ -43,7 +47,17 @@ class ContestAdmin(admin.ModelAdmin):
       , ('코드잼 닫기 (visible이 Ture 일 경우 history가 공개됩니다.)', {'fields': ['closed_at']})
     ]
   form = ContestForm
-
+  inlines = [ Score_Inline ]
 
 
 admin.site.register(Contest, ContestAdmin)
+
+
+
+
+
+class ScoreAdmin(admin.ModelAdmin):
+  pass
+
+
+admin.site.register(Score, ScoreAdmin)
