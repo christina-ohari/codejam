@@ -13,63 +13,7 @@
 </h3>
 
 <div id="dsb-problem-pages">
-{% autoescape off %}
-<div id="dsb-problem-page0" class="dsb-content-pages" style="display: block;">
-	
-	{% if user.is_authenticated %}
-	{% endif %}
-
-	<table>
-		<tbody id="dsb-input-form-table0">
-			<tr>
-				<td class="dsb-input-table-description">
-					<span style="color:#666"><b>Problem {{problem.deco}}. </b></span>
-					<br />{{problem.name}}<br>{{problem.points}} points
-					{% if success %}<br /><br />{% if success.value %}<b style="color:green;">PASS</b>{% else %}<b style="color:red;">FAILED</b>{% endif %}{% endif %}
-				</td>
-				<td class="dsb-input-table-linktd">
-					<div id="dsb-action-box-wrap0-0" class="dsb-action-box-open{% if success %}-{% if success.value %}success{% else %}failed{% endif %}{% endif %}">
-						<div class="dsb-input-wrapper" style="display: inline;">
-							<span class="dsb-input-link-span" style="display: block;"><img class="dsb-input-link-img" src="/static/images/pdf.png"><a href="/codejam/problem/pdf?p={{problem.id}}&name={{problem.deco}}-problem-description.pdf">Download {{problem.deco}}-problem-description.pdf</a></span>
-						</div>
-						<div class="dsb-input-wrapper" style="display: inline;">
-						  {% if io %}
-              <span class="dsb-input-link-span" style="display: block;"><img class="dsb-input-link-img" src="/static/images/file.gif"><a href="/codejam/contest/0/input?p={{problem.id}}&io={{io}}&name={{problem.deco}}-input-data.txt">Download {{problem.deco}}-input-data.txt</a></span>
-              {% else %}
-              <span class="dsb-input-link-span" style="display: block;"><img class="dsb-input-link-img" src="/static/images/file.gif">No input data(s).</span>
-              {% endif %}
-            </div>
-						<div>
-							<div class="dsb-submit-form-div" style="display: block;">
-								<form id="submit-formio_timer_0" action="/codejam/contest/0/dashboard/do" enctype="multipart/form-data" method="post">
-									<input type="hidden" name="csrfmiddlewaretoken" value="ZDI3OTBiNzYwYWE0ODY1OTUzNjk4NTUzY2QwN2FlOTR8fDEzNjcyMDUzOTI4NjQ3NzI=">
-									<div class="dsb-submit-form-separator">your output file:<input id="answer_output" type="file" name="answer" class="submitFormFile"></div>
-									<div class="dsb-submit-form-separator">source file:<input id="answer_source" type="file" name="source" class="submitFormFile"></div>
-									<div class="dsb-submit-form-separator" style="text-align:center">
-									  {% if io and user.is_authenticated %}
-										<input id="submit-buttonio_timer_0" type="submit" value="Submit file">
-										{% endif %}
-									</div>
-									{% csrf_token %}
-									<input type="hidden" name="cmd" value="SubmitAnswer">
-									<input type="hidden" name="problem" value="{{problem.id}}">
-									<input type="hidden" name="index" value="{{index}}">
-									<input type="hidden" name="input_id" value="{{io}}">
-								</form>
-							</div>
-						</div>
-					</div>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-
-	
-	<div id="dsb-problem-content-div0" class="dsb-problem-content-div" style="width: 40em;">
-		{{problem.body}}
-	</div>
-</div>
-{% endautoescape %}
+  {% include "problem/list.html" %}
 </div>
 
 <div id="dsb-clarification-page" class="dsb-content-pages">
@@ -150,4 +94,118 @@
   </tbody>
   </table>
 </div>
+{% endblock %}
+
+
+
+{% block body_scripts %}
+<script>
+
+function initSolveButtons() {
+  var keyword = 'dsb-input-start-button'
+    , nodes = document.getElementsByClassName(keyword)
+    , node, i, len, tmp;
+
+  function show() {
+    var suffix = this.id.slice(keyword.length);
+    console.log(suffix);
+    document.getElementById('dsb-input-start-button' + suffix).style.display = 'none';
+    document.getElementById('dsb-input-link-plain' + suffix).style.display = 'inline';
+    document.getElementById('dsb-action-box-wrap' + suffix).className = 'dsb-action-box-open';
+    document.getElementById('dsb-input-table-caption' + suffix).style.display = 'inline';
+    //document.getElementById('dsb-resubmit-caption' + suffix).style.display = 'inline';
+    document.getElementById('dsb-submit-form-div' + suffix).style.display = 'block';
+  }
+  
+  function submit() {
+    var keyword = 'submit-buttonio_timer_'
+      , index = Number(this.id.slice(keyword.length))
+      , suffix = Math.floor(index / 2) + '-' + (index % 2);
+      alert(suffix);
+  }
+
+  function hide() {
+    var keyword = 'dsb-hide-submissionio_timer_'
+      , index = Number(this.id.slice(keyword.length))
+      , suffix = Math.floor(index / 2) + '-' + (index % 2);
+  
+    document.getElementById('dsb-input-start-button' + suffix).style.display = 'inline';
+    document.getElementById('dsb-input-link-plain' + suffix).style.display = 'none';
+    document.getElementById('dsb-action-box-wrap' + suffix).className = '';
+    document.getElementById('dsb-input-table-caption' + suffix).style.display = 'none';
+    //document.getElementById('dsb-resubmit-caption' + suffix).style.display = 'none';
+    document.getElementById('dsb-submit-form-div' + suffix).style.display = 'none';
+  }
+  
+  
+  
+  for (i = 0, len = nodes.length; i < len; ++i) {
+    node = nodes[i];
+    node.onclick = show;
+
+    tmp = node.id.slice(keyword.length);
+    tmp = Number(tmp.slice(0,1)) * 2 + Number(tmp.slice(2));
+    document.getElementById('submit-buttonio_timer_' + tmp).onclick = submit;
+    document.getElementById('dsb-hide-submissionio_timer_' + tmp).onclick = hide;
+  }
+}
+
+function initSubmitButtons() {
+  
+}
+
+
+
+
+
+function selectProblem(index, title) {
+  
+  var nodes, noed, i, len, tag;
+  
+  // side menu
+  nodes  = document.getElementsByClassName('dsb-problem-tab-open');
+  for (i=0, len = nodes.length; i < len; ++i) {
+    nodes[i].className = 'dsb-problem-tab-close';
+  }
+  node = document.getElementById('dsb-problem-tab' + index);
+  node.className = 'dsb-problem-tab-open';
+  
+  // main title
+  name = node.textContent;
+  name = name.slice(name.indexOf('.') + 2);
+  tag = '<span style="color:#666">Problem ' + String.fromCharCode(65+index) + '.</span>&nbsp' + name;
+  document.getElementById('dsb-problem-title-div').innerHTML = tag;
+  
+  // main content block
+  nodes = document.getElementsByClassName('dsb-content-pages');
+  for (i=0, len = nodes.length; i < len; ++i) {
+    nodes[i].style.display = 'none';
+  }
+  document.getElementById('dsb-problem-page' + index).style.display = 'block';
+}
+
+
+
+function initSelector() {
+  var nodes = document.getElementsByClassName('dynamic-link');
+  for (var i = 0, len = nodes.length; i < len; ++i) {
+    var node = nodes[i]
+        , id = node.id
+        , keyword = 'dsb-problem-title';
+    if (id && id.slice(0, keyword.length) === keyword) {
+      node.onclick = function () {
+        selectProblem(Number(this.id.slice(keyword.length)));
+      };
+    }
+  }
+}
+
+
+
+window.onload = function () {
+  initSelector();
+  initSolveButtons();
+	selectProblem(0);
+};
+</script>
 {% endblock %}

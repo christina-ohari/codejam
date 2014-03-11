@@ -38,6 +38,8 @@ urlpatterns = patterns('',
     
     url(r'^codejam/dashboard$', Contest.dashboard),
     
+    url(r'^codejam/(?P<contest>\d+?)/problem/list$', Problem.ajax_get_problem_list),
+    
     #url(r'^codejam/contest/(?P<id>\d+?)/dashboard$', Contest.dashboard),
     #url(r'^codejam/contest/(?P<id>\d+?)/dashboard/do$', Contest.dashboard_do),
     #url(r'^codejam/contest/(?P<id>\d+?)/input$', Contest.input),

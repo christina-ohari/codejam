@@ -13,7 +13,7 @@
 
   <link rel="stylesheet" type="text/css" href="/static/css/codejam.css" />
   
-  <script type="text/javascript" src="/static/third_party/jquery-2.1.0.min.js"></script>
+  <script type="text/javascript" src="/static/third_party/jquery/jquery-2.1.0.min.js"></script>
 
   <!-- head scripts -->
   {% block head_scripts %}
@@ -65,22 +65,11 @@
   <hr class="dsb-hr" />
   <div id="dsb-problem-selection-area">
     <div id="dsb-problem-selection-list" class="after-start-only" style="display: block;">
-{% for item in menu %}
+{% load extra %}
+{% for p in problems %}
 <div>
-	<div id="dsb-problem-tab{{forloop.counter}}" class="dsb-problem-tab-{% if item.id == problem.id %}open{% else %}close{% endif %}" tabindex="0" role="button">
-		<div id="dsb-problem-title{{forloop.counter}}" class="dynamic-link">
-		{% if item.id == problem.id %}
-				{{item.deco}}. {{item.name}}
-		{% else %}
-				<a href="/codejam/contest/0/dashboard?p={{forloop.counter0}}">{{item.deco}}. {{item.name}}</a>
-		{% endif %}
-		</div>
-	</div>
-</div>
-{% empty %}
-<div>
-	<div id="dsb-problem-tab{{forloop.counter}}" class="dsb-problem-tab-open" tabindex="0" role="button">
-		<div id="dsb-problem-title{{forloop.counter}}" class="dynamic-link">No Problems. </div>
+	<div id="dsb-problem-tab{{ forloop.counter0 }}" class="dsb-problem-tab-close" tabindex="0" role="button">
+		<div id="dsb-problem-title{{ forloop.counter0 }}" class="dynamic-link">{{ forloop.counter0|deco }}. {{ p.kr_name }}</div>
 	</div>
 </div>
 {% endfor %}

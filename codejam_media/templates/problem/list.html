@@ -1,71 +1,165 @@
-{% extends "base_lgcj.html" %}
+{% load extra %}
 
-{% block head_scripts %}
-<script type="text/javascript" src="/static/js/problem.js"></script>
-{% endblock %}
+{% autoescape off %}
+{% for p in problems %}
+<div id="dsb-problem-page{{ forloop.counter0 }}" class="dsb-content-pages" style="display: none;">
 
-{% block content %}
-<!-- Problem Title -->
-<h3 id="dsb-problem-title-area">
-  <span id="dsb-problem-title-div" class="problem-title after-start-only" style="display: block;">
-    <span style="color:#666">Problem List</span>
-  </span>
-</h3>
+	<table>
+		<tbody id="dsb-input-form-table{{ forloop.counter0 }}">
+			<tr>
+				<td class="dsb-input-table-description">Small input<br>{{ p.small_point }} points</td>
+				<td class="dsb-input-table-linktd">
+					<div id="dsb-action-box-wrap{{ forloop.counter0 }}-0" class="">
+						<div id="dsb-input-wrapper{{ forloop.counter0 }}-0" class="dsb-input-wrapper" style="display: inline;">
+							<button class="dsb-input-start-button" id="dsb-input-start-button{{ forloop.counter0 }}-0" style="display: inline;">Solve A-small</button>
+							<span class="dsb-input-link-span" id="dsb-input-link-plain{{ forloop.counter0 }}-0" style="display: none;">
+								<img class="dsb-input-link-img" src="/static/images/file.gif">
+								<span class="dsb-input-link-text" id="dsb-input-link-plain-text{{ forloop.counter0 }}-0">Download A-small-practice.in</span>
+							</span>
+						</div>
+						<span class="dsb-input-table-caption" id="dsb-input-table-caption{{ forloop.counter0 }}-0" style="display: none;"></span>
+						<span class="dsb-input-table-caption" id="dsb-resubmit-caption{{ forloop.counter0 }}-0" style="display: none;">Your submission was received. You can still <span class="dsb-input-link-text" id="dsb-resubmit-link{{ forloop.counter0 }}-0">resubmit</span> for <span id="dsb-resubmit-timer{{ forloop.counter0 }}-0"></span>.<br>Only your last submission counts. <span class="dsb-input-link-text" id="dsb-resubmit-view-sub-link{{ forloop.counter0 }}-0">View your last submission</span>.</span>
+						<div>
+							<div class="dsb-submit-form-div" id="dsb-submit-form-div{{ forloop.counter0 }}-0" style="display: none;">
+								<div style="display:none"><b>Time Remaining:</b> <span id="io_timer_0"></span>&nbsp;&nbsp;</div>
+								<div style="display:none"><b>Input:</b> A-small-practice.in.</div>
+								<form id="submit-formio_timer_0" action="/codejam/contest/351101/dashboard/do" enctype="multipart/form-data" method="post">
+									<input type="hidden" name="csrfmiddlewaretoken" value="ZTM1OWE1Y2MzYjNmY2U2OWZkYzVhNmY0NDVhZDJkNjl8fDEzOTQ1MDU1MjU4NzM5Njk=">
+									<div class="dsb-submit-form-separator">your output file:<input id="output-fileio_timer_0" type="file" name="answer" class="submitFormFile"></div>
+									<div style="display: none">
+										<table class="dsb-source-code-table">
+											<tbody>
+												<tr>
+													<td style="padding:0.4em 0.2em 0 0">source code:&nbsp;&nbsp;</td>
+													<td>
+														<div id="source-filesio_timer_0">
+															<div id="input-file-divio_timer_{{ forloop.counter0 }}-0">
+																<span id="source-fileio_timer_{{ forloop.counter0 }}-0"><input type="file" name="source-file0" class="submitFormFile"></span>
+																<span id="remove-source-fileio_timer_{{ forloop.counter0 }}-0" class="dsb-submit-form-links" style="visibility: hidden;">remove</span>
+															</div>
+														</div>
+														<span id="add-source-fileio_timer_0" class="dsb-submit-form-links">Add another file</span>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="dsb-submit-form-separator" style="color:gray">source file(s): &nbsp;&nbsp;&nbsp;not needed for the practice contest</div>
+									<div class="dsb-submit-form-separator" style="text-align:center">
+										<input id="submit-buttonio_timer_{{ forloop.counter0|suffix_small }}" type="button" value="Submit file">&nbsp;&nbsp;
+										<input id="dsb-hide-submissionio_timer_{{ forloop.counter0|suffix_small }}" type="button" value="Hide">
+									</div>
+									<div id="source-file-namesio_timer_0"></div>
+									<input type="hidden" name="cmd" value="SubmitAnswer">
+									<input type="hidden" name="problem" value="374101">
+									<input type="hidden" name="input_id" value="0">
+									<input type="hidden" name="num_source_files" id="num-source-filesio_timer_0" value="1">
+									<input type="hidden" name="agent" value="website">
+								</form>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="dsb-input-table-description">Large input<br>{{ p.large_point }} points</td>
+				<td class="dsb-input-table-linktd">
+					<div id="dsb-action-box-wrap{{ forloop.counter0 }}-1" class="">
+						<div id="dsb-input-wrapper{{ forloop.counter0 }}-1" class="dsb-input-wrapper" style="display: inline;">
+							<button class="dsb-input-start-button" id="dsb-input-start-button{{ forloop.counter0 }}-1" style="display: inline;">Solve A-large</button>
+							<span class="dsb-input-link-span" id="dsb-input-link-plain{{ forloop.counter0 }}-1" style="display: none;">
+								<img class="dsb-input-link-img" src="/static/images/file.gif">
+								<span class="dsb-input-link-text" id="dsb-input-link-plain-text{{ forloop.counter0 }}-1">Download A-large-practice.in</span>
+							</span>
+						</div>
+						<span class="dsb-input-table-caption" id="dsb-input-table-caption{{ forloop.counter0 }}-1" style="display: none;"></span>
+						<span class="dsb-input-table-caption" id="dsb-resubmit-caption{{ forloop.counter0 }}-1" style="display: none;">Your submission was received. You can still 
+							<span class="dsb-input-link-text" id="dsb-resubmit-link{{ forloop.counter0 }}-1">resubmit</span> for 
+							<span id="dsb-resubmit-timer{{ forloop.counter0 }}-"></span>.<br>Only your last submission counts. 
+							<span class="dsb-input-link-text" id="dsb-resubmit-view-sub-link{{ forloop.counter0 }}-1">View your last submission</span>.
+						</span>
+						<div>
+							<div class="dsb-submit-form-div" id="dsb-submit-form-div{{ forloop.counter0 }}-1" style="display: none;">
+								<div style="display:none"><b>Time Remaining:</b> <span id="io_timer_1"></span>&nbsp;&nbsp;</div>
+								<div style="display:none">You may resubmit this multiple times within the remaining time-frame. Only your last submission will count.</div>
+								<form id="submit-formio_timer_1" action="/codejam/contest/351101/dashboard/do" enctype="multipart/form-data" method="post">
+									<input type="hidden" name="csrfmiddlewaretoken" value="ZTM1OWE1Y2MzYjNmY2U2OWZkYzVhNmY0NDVhZDJkNjl8fDEzOTQ1MDU1MjU4NzM5Njk=">
+									<div class="dsb-submit-form-separator">your output file:<input id="output-fileio_timer_1" type="file" name="answer" class="submitFormFile"></div>
+									<div style="display: none">
+										<table class="dsb-source-code-table">
+											<tbody>
+												<tr>
+													<td style="padding:0.4em 0.2em 0 0">source code:&nbsp;&nbsp;</td>
+													<td>
+														<div id="source-filesio_timer_1">
+															<div id="input-file-divio_timer_1-0">
+																<span id="source-fileio_timer_1-0"><input type="file" name="source-file0" class="submitFormFile"></span>
+																<span id="remove-source-fileio_timer_1-0" class="dsb-submit-form-links" style="visibility: hidden;">remove</span>
+															</div>
+														</div>
+														<span id="add-source-fileio_timer_1" class="dsb-submit-form-links">Add another file</span>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="dsb-submit-form-separator" style="color:gray">source file(s): &nbsp;&nbsp;&nbsp;not needed for the practice contest</div>
+									<div class="dsb-submit-form-separator" style="text-align:center">
+										<input id="submit-buttonio_timer_{{ forloop.counter0|suffix_large }}" type="button" value="Submit file">&nbsp;&nbsp;
+										<input id="dsb-hide-submissionio_timer_{{ forloop.counter0|suffix_large }}" type="button" value="Hide">
+									</div>
+									<div id="source-file-namesio_timer_1"></div>
+									<input type="hidden" name="cmd" value="SubmitAnswer">
+									<input type="hidden" name="problem" value="374101">
+									<input type="hidden" name="input_id" value="1">
+									<input type="hidden" name="num_source_files" id="num-source-filesio_timer_1" value="1">
+									<input type="hidden" name="agent" value="website">
+								</form>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 
-<br />
-<h3>* Create New Problem.</h3>
-<form action="/codejam/problem" method="post" enctype="multipart/form-data" id="problem_create" class="problem_box">
-  {% csrf_token %}
-  <table>
-    {% if error %}
-      <tr><td class="error" colspan="2"><b>[ Error !! ]</b>&nbsp;&nbsp;&nbsp;{{error}}</td></tr>
-    {% endif %}
-    <tr>
-      <th>Name: </th>
-      <td>
-        <span id="problem_title">PDF File name will be problem name. </span>
-        <input type="hidden" name="name" id="problem_name">
-      </td>
-    </tr>
-    <tr><th>PDF: </th><td><input type="file" id="problem_pdf" name="pdf" accept="application/pdf"></td></tr>
-    <tr><th>Points: </th><td><input type="text" id="problem_points" name="points" value="10" style="width:100px;"> Points</td></tr>
-  </table>
-  <div>
-    <input type="submit" value="문제 만들기">
-  </div>
-</form>
+	
+	<div id="dsb-problem-content-div0" class="dsb-problem-content-div" style="width: 40em;">
 
-<br />
+		<div class="problem-io-wrapper">
+		<table>
+			<tbody>
+				<tr>
+					<td style="text-align: right;">
+						<br><span class="problem-item-gray">다운로드 (한국어):</span><br>
+					</td>
+					<td>
+						<br>
+							<span class="problem-item-gray">
+								<img class="dsb-input-link-img" src="/static/images/pdf.png">
+								<a id="problem_kr" href="#" target="_blank">{{ p.kr_pdf }}</a>
+							</span>
+						<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;">
+						<br><span class="problem-item-gray">Download (English):</span><br>
+					</td>
+					<td>
+						<br>
+							<span class="problem-item-gray">
+								<img class="dsb-input-link-img" src="/static/images/pdf.png">
+								<a id="problem_en" href="#" target="_blank">{{ p.en_pdf }}</a>
+							</span>
+						<br>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
 
-{% if problems %}
-<h3>* Problem List.</h3>
-<div id="problem_list" class="problem_box">
-  <table>
-    <tbody>
-      <tr>
-        <th width="50px">NO.</th>
-        <th>Problem</th>
-        <th width="100px">Points</th>
-        <th width="80px">Delete</th>
-      </tr>
-      {% for p in problems %}
-      <tr>
-        <td height="25px">{{forloop.counter}}</td>
-        <td>
-          <b>{{p.name}}</b>
-          <span>
-            &nbsp;&nbsp;
-            <a target="_new" href="/codejam/problem/pdf?p={{p.id}}">[PDF]</a>
-            <a href="/codejam/problem/modify?p={{p.id}}">[Modify]</a>
-          </span>
-        </td>
-        <td>{{p.points}}</td>
-        <td><a href="/codejam/problem/delete?p={{p.id}}" onclick="return confirm_delete();">Delete</a></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+	</div>
 </div>
-{% endif %}
-
-{% endblock %}
+{% endfor %}
+{% endautoescape %}

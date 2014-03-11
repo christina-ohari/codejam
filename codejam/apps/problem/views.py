@@ -1,16 +1,26 @@
 # -*- coding: utf-8 -*-
 import os
-from django.utils import simplejson
+from django.core.serializers import serialize
+from django.utils import simplejson as json
 from django.http import HttpResponse, HttpResponseRedirect, Http404, HttpResponseBadRequest
-from django.views.static import serve
 from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.views.decorators.http import require_GET, require_POST
 from django.contrib.auth.decorators import login_required
 
 from codejam.settings import MEDIA_ROOT
-#from codejam.apps.problem.models import Problem
+from codejam.apps.problem.models import Problem
 #from codejam.apps.problem.models import IO
+
+
+
+@require_GET
+@login_required
+def ajax_get_problem_list(request, contest):
+  pl = Problem.objects.filter(contest__id=contest).values('id', 'kr_name', 'en_name', 'small_point', 'large_point')
+  variables = {'problems': pl}
+  return render(request, 'problem/list.html', variables)
+
 
 
 """

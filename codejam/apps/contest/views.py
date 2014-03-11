@@ -16,6 +16,22 @@ from codejam.apps.contest.models import Contest
 
 
 
+def __get_problem_info__(p):
+  print p
+  return {
+      'kr_name': p['kr_name'],
+      'kr_pdf': os.path.split(p['kr_pdf'])[1],
+      'kr_url': '',
+      'en_name': p['en_name'],
+      'en_pdf': os.path.split(p['en_pdf'])[1],
+      'en_url': '',
+      'small_point': p['small_point'],
+      'large_point': p['large_point']
+    }
+  
+  
+
+
 @require_GET
 @login_required
 def dashboard(request):
@@ -24,15 +40,18 @@ def dashboard(request):
   
   try:
     today = datetime.today()
-    q = Q(opened_at__lte=today) & Q(expired_at__gte=today) & Q(visible=True)
+    q = Q(opened_at__lte=today) & Q(expired_at__gte=today)
     contest = Contest.objects.get(q)
     problem_list = contest.problem_set.all().values()
+    
+    ps = []
+    for p in problem_list:
+      ps.append(__get_problem_info__(p))
+    
     variables.update({
         'contest': contest,
-        'problems': problem_list
+        'problems': ps
       })
-
-    print problem_list
     
   except Contest.DoesNotExist:
     print 'no-contest'
