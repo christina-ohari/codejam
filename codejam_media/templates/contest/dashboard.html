@@ -1,7 +1,12 @@
 {% extends "base_lgcj.html" %}
 
 {% block head_scripts %}
-<script type="text/javascript" src="/static/js/dashboard.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/dashboard.js"></script>
+<style>
+textarea:disabled {
+  background-color: lightgray;
+}
+</style>
 {% endblock %}
 
 {% block content %}
@@ -101,14 +106,80 @@
 {% block body_scripts %}
 <script>
 
+var timerList = {};
+
+function Timer(index) {
+  
+  var index = index
+    , node = document.getElementById('io_timer_' + index)
+    , timer = false
+    , interval = 10 * 60;
+
+  function loop() {
+    var min, sec;
+
+    --interval;
+    
+    if (interval < 3*60) {
+      node.style.color = 'red';
+    }
+
+    if (interval === 0) {
+      stop();
+      node.innerHTML = '<br>입력 파일이 변경되었습니다.<br>다시 다운로드 받으세요.';
+    } else {
+      min = Math.floor(interval / 60);
+      sec = interval % 60;
+      node.textContent = min + ':' + (sec < 10 ? '0' : '') + sec;
+    }
+    
+  }
+  
+  function start() {
+    if (timer) {
+      stop();
+    }
+    node.style.color = 'green';
+    node.parentNode.style.display = 'inline';
+    document.getElementById('output-fileio_timer_' + index).disabled = false;
+    document.getElementById('submit-buttonio_timer_' + index).disabled = false;
+    timer = setInterval(loop, 1000);
+  }
+  
+  function stop() {
+    if (timer) {
+      timerList[index] = false;
+      clearInterval(timer);
+      
+      node.innerHTML = '';
+      node.parentNode.style.display = 'none';
+      document.getElementById('output-fileio_timer_' + index).disabled = true;
+      document.getElementById('submit-buttonio_timer_' + index).disabled = true;
+      $('#submit-formio_timer_' + index + ' input[name=input]')[0].value = null;
+    }
+  }
+  
+  this.start = start;
+  this.stop = stop;
+}
+
+
+if (!document.getElementsByClassName) {
+	document.getElementsByClassName = function (token) {
+		return $('.' + token);
+	};
+}
+
+
+
 function initSolveButtons() {
   var keyword = 'dsb-input-start-button'
     , nodes = document.getElementsByClassName(keyword)
     , node, i, len, tmp;
 
+  // show input/output data box
   function show() {
     var suffix = this.id.slice(keyword.length);
-    console.log(suffix);
     document.getElementById('dsb-input-start-button' + suffix).style.display = 'none';
     document.getElementById('dsb-input-link-plain' + suffix).style.display = 'inline';
     document.getElementById('dsb-action-box-wrap' + suffix).className = 'dsb-action-box-open';
@@ -117,13 +188,78 @@ function initSolveButtons() {
     document.getElementById('dsb-submit-form-div' + suffix).style.display = 'block';
   }
   
+  // download input data
+  function download() {
+    var keyword = 'dsb-input-link-plain-text'
+      , suffix  = this.id.slice(keyword.length)
+      , index   = Number(suffix.slice(0,1)) * 2 + Number(suffix.slice(2))
+      , formId  = 'submit-formio_timer_' + index
+      , inputId = $('#'+formId + ' input[name=input]')[0].value;
+      
+    function doDownload() {
+      var name = String.fromCharCode(65 + Math.floor(index/2)) + '-' + (index%2 == 0 ? 'small' : 'large') + '.in'
+        , timer = timerList[index];
+      document.location = '/codejam/problem/download/input/' + inputId + '/' + name;
+      
+      if (!timer) {
+        timer = new Timer(index);
+        timer.start();
+        timerList[index] = timer;
+      }
+    }
+    
+    // get id to download input data
+    function doGetInputId() {
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === xhr.DONE) {
+          if (xhr.status === 200) {
+            inputId = xhr.responseText;
+            $('#'+formId + ' input[name=input]')[0].value = inputId;
+            doDownload();
+          } else {
+            alert('error');
+          }
+        }
+      };
+      xhr.open('POST', '/codejam/problem/get/input/id');
+      xhr.send($('#'+formId).serialize());
+    }
+      
+    if (inputId) {
+      doDownload(inputId);
+    } else {
+      doGetInputId();
+    }
+  }
+  
+  // submit output
   function submit() {
     var keyword = 'submit-buttonio_timer_'
       , index = Number(this.id.slice(keyword.length))
-      , suffix = Math.floor(index / 2) + '-' + (index % 2);
-      alert(suffix);
+      , suffix = Math.floor(index / 2) + '-' + (index % 2)
+      , xhr = new XMLHttpRequest();
+      
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === xhr.DONE) {
+          if (xhr.status === 200) {
+            json = JSON.parse(xhr.responseText);
+            if (json.ok) {
+              timerList[index].stop();
+              alert('success');
+            } else {
+              alert(json.error);
+            }
+          } else {
+            alert('bad request. please refresh page.');
+          }
+        }
+      };
+      xhr.open('POST', '/codejam/problem/answer');
+      xhr.send($('#submit-formio_timer_' + index).serialize());
   }
 
+  // hide input/output data box
   function hide() {
     var keyword = 'dsb-hide-submissionio_timer_'
       , index = Number(this.id.slice(keyword.length))
@@ -139,22 +275,22 @@ function initSolveButtons() {
   
   
   
+  // intinialize interactions
   for (i = 0, len = nodes.length; i < len; ++i) {
     node = nodes[i];
     node.onclick = show;
 
     tmp = node.id.slice(keyword.length);
+    document.getElementById('dsb-input-link-plain-text' + tmp).onclick = download;
+    
     tmp = Number(tmp.slice(0,1)) * 2 + Number(tmp.slice(2));
+    document.getElementById('io_timer_' + tmp).innerHTML = '';
     document.getElementById('submit-buttonio_timer_' + tmp).onclick = submit;
+    document.getElementById('submit-buttonio_timer_' + tmp).disabled = true;
+    document.getElementById('output-fileio_timer_' + tmp).disabled = true;
     document.getElementById('dsb-hide-submissionio_timer_' + tmp).onclick = hide;
   }
 }
-
-function initSubmitButtons() {
-  
-}
-
-
 
 
 

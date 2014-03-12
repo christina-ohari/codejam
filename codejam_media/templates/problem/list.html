@@ -21,11 +21,20 @@
 						<span class="dsb-input-table-caption" id="dsb-resubmit-caption{{ forloop.counter0 }}-0" style="display: none;">Your submission was received. You can still <span class="dsb-input-link-text" id="dsb-resubmit-link{{ forloop.counter0 }}-0">resubmit</span> for <span id="dsb-resubmit-timer{{ forloop.counter0 }}-0"></span>.<br>Only your last submission counts. <span class="dsb-input-link-text" id="dsb-resubmit-view-sub-link{{ forloop.counter0 }}-0">View your last submission</span>.</span>
 						<div>
 							<div class="dsb-submit-form-div" id="dsb-submit-form-div{{ forloop.counter0 }}-0" style="display: none;">
-								<div style="display:none"><b>Time Remaining:</b> <span id="io_timer_0"></span>&nbsp;&nbsp;</div>
+								<div style="display:none"><b>Time Remaining:</b> <span id="io_timer_{{ forloop.counter0|suffix_small }}"></span>&nbsp;&nbsp;</div>
 								<div style="display:none"><b>Input:</b> A-small-practice.in.</div>
-								<form id="submit-formio_timer_0" action="/codejam/contest/351101/dashboard/do" enctype="multipart/form-data" method="post">
-									<input type="hidden" name="csrfmiddlewaretoken" value="ZTM1OWE1Y2MzYjNmY2U2OWZkYzVhNmY0NDVhZDJkNjl8fDEzOTQ1MDU1MjU4NzM5Njk=">
-									<div class="dsb-submit-form-separator">your output file:<input id="output-fileio_timer_0" type="file" name="answer" class="submitFormFile"></div>
+								<form id="submit-formio_timer_{{ forloop.counter0|suffix_small }}" action="/codejam/contest/351101/dashboard/do" enctype="multipart/form-data" method="post">
+									<!-- <input type="hidden" name="csrfmiddlewaretoken" value="ZTM1OWE1Y2MzYjNmY2U2OWZkYzVhNmY0NDVhZDJkNjl8fDEzOTQ1MDU1MjU4NzM5Njk="> -->
+									<!-- <div class="dsb-submit-form-separator">your output file:<input id="output-fileio_timer_0" type="file" name="answer" class="submitFormFile"></div> -->
+									{% csrf_token %}
+									<div class="dsb-submit-form-separator">
+										<table>
+											<tr>
+												<td style="vertical-align: top;">your output:&nbsp;</td>
+												<td><textarea id="output-fileio_timer_{{ forloop.counter0|suffix_small }}" name="answer" class="submitFormFile" style="width:250px; min-width:250px; min-height:100px;"></textarea></td>
+											</tr>
+										</table>
+									</div>
 									<div style="display: none">
 										<table class="dsb-source-code-table">
 											<tbody>
@@ -44,17 +53,20 @@
 											</tbody>
 										</table>
 									</div>
-									<div class="dsb-submit-form-separator" style="color:gray">source file(s): &nbsp;&nbsp;&nbsp;not needed for the practice contest</div>
+									<!-- <div class="dsb-submit-form-separator" style="color:gray">source file(s): &nbsp;&nbsp;&nbsp;not needed for the practice contest</div> -->
 									<div class="dsb-submit-form-separator" style="text-align:center">
-										<input id="submit-buttonio_timer_{{ forloop.counter0|suffix_small }}" type="button" value="Submit file">&nbsp;&nbsp;
+										<input id="submit-buttonio_timer_{{ forloop.counter0|suffix_small }}" type="button" value="Submit">&nbsp;&nbsp;
 										<input id="dsb-hide-submissionio_timer_{{ forloop.counter0|suffix_small }}" type="button" value="Hide">
 									</div>
 									<div id="source-file-namesio_timer_0"></div>
-									<input type="hidden" name="cmd" value="SubmitAnswer">
+									<!-- <input type="hidden" name="cmd" value="SubmitAnswer">
 									<input type="hidden" name="problem" value="374101">
 									<input type="hidden" name="input_id" value="0">
 									<input type="hidden" name="num_source_files" id="num-source-filesio_timer_0" value="1">
-									<input type="hidden" name="agent" value="website">
+									<input type="hidden" name="agent" value="website"> -->
+									<input type="hidden" name="input" value="">
+									<input type="hidden" name="type" value="small">
+                  <input type="hidden" name="problem" value="{{ p.id }}">
 								</form>
 							</div>
 						</div>
@@ -75,16 +87,25 @@
 						<span class="dsb-input-table-caption" id="dsb-input-table-caption{{ forloop.counter0 }}-1" style="display: none;"></span>
 						<span class="dsb-input-table-caption" id="dsb-resubmit-caption{{ forloop.counter0 }}-1" style="display: none;">Your submission was received. You can still 
 							<span class="dsb-input-link-text" id="dsb-resubmit-link{{ forloop.counter0 }}-1">resubmit</span> for 
-							<span id="dsb-resubmit-timer{{ forloop.counter0 }}-"></span>.<br>Only your last submission counts. 
+							<span id="dsb-resubmit-timer{{ forloop.counter0 }}-1"></span>.<br>Only your last submission counts. 
 							<span class="dsb-input-link-text" id="dsb-resubmit-view-sub-link{{ forloop.counter0 }}-1">View your last submission</span>.
 						</span>
 						<div>
 							<div class="dsb-submit-form-div" id="dsb-submit-form-div{{ forloop.counter0 }}-1" style="display: none;">
-								<div style="display:none"><b>Time Remaining:</b> <span id="io_timer_1"></span>&nbsp;&nbsp;</div>
+								<div style="display:none"><b>Time Remaining:</b> <span id="io_timer_{{ forloop.counter0|suffix_large }}"></span>&nbsp;&nbsp;</div>
 								<div style="display:none">You may resubmit this multiple times within the remaining time-frame. Only your last submission will count.</div>
-								<form id="submit-formio_timer_1" action="/codejam/contest/351101/dashboard/do" enctype="multipart/form-data" method="post">
-									<input type="hidden" name="csrfmiddlewaretoken" value="ZTM1OWE1Y2MzYjNmY2U2OWZkYzVhNmY0NDVhZDJkNjl8fDEzOTQ1MDU1MjU4NzM5Njk=">
-									<div class="dsb-submit-form-separator">your output file:<input id="output-fileio_timer_1" type="file" name="answer" class="submitFormFile"></div>
+								<form id="submit-formio_timer_{{ forloop.counter0|suffix_large }}" action="/codejam/contest/351101/dashboard/do" enctype="multipart/form-data" method="post">
+									<!-- <input type="hidden" name="csrfmiddlewaretoken" value="ZTM1OWE1Y2MzYjNmY2U2OWZkYzVhNmY0NDVhZDJkNjl8fDEzOTQ1MDU1MjU4NzM5Njk="> -->
+									<!-- <div class="dsb-submit-form-separator">your output file:<input id="output-fileio_timer_1" type="file" name="answer" class="submitFormFile"></div> -->
+									{% csrf_token %}
+									<div class="dsb-submit-form-separator">
+										<table>
+											<tr>
+												<td style="vertical-align: top;">your output:&nbsp;</td>
+												<td><textarea id="output-fileio_timer_{{ forloop.counter0|suffix_large }}" name="answer" class="submitFormFile"  style="width:250px; min-width:250px; min-height:100px;"></textarea></td>
+											</tr>
+										</table>
+									</div>
 									<div style="display: none">
 										<table class="dsb-source-code-table">
 											<tbody>
@@ -103,17 +124,20 @@
 											</tbody>
 										</table>
 									</div>
-									<div class="dsb-submit-form-separator" style="color:gray">source file(s): &nbsp;&nbsp;&nbsp;not needed for the practice contest</div>
+									<!-- <div class="dsb-submit-form-separator" style="color:gray">source file(s): &nbsp;&nbsp;&nbsp;not needed for the practice contest</div> -->
 									<div class="dsb-submit-form-separator" style="text-align:center">
-										<input id="submit-buttonio_timer_{{ forloop.counter0|suffix_large }}" type="button" value="Submit file">&nbsp;&nbsp;
+										<input id="submit-buttonio_timer_{{ forloop.counter0|suffix_large }}" type="button" value="Submit">&nbsp;&nbsp;
 										<input id="dsb-hide-submissionio_timer_{{ forloop.counter0|suffix_large }}" type="button" value="Hide">
 									</div>
 									<div id="source-file-namesio_timer_1"></div>
-									<input type="hidden" name="cmd" value="SubmitAnswer">
+									<!-- <input type="hidden" name="cmd" value="SubmitAnswer">
 									<input type="hidden" name="problem" value="374101">
 									<input type="hidden" name="input_id" value="1">
 									<input type="hidden" name="num_source_files" id="num-source-filesio_timer_1" value="1">
-									<input type="hidden" name="agent" value="website">
+									<input type="hidden" name="agent" value="website"> -->
+									<input type="hidden" name="input" value="">
+									<input type="hidden" name="type" value="large">
+                  <input type="hidden" name="problem" value="{{ p.id }}">
 								</form>
 							</div>
 						</div>

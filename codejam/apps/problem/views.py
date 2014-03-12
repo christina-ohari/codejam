@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
+import random
+from datetime import datetime, timedelta
+from django.db.models import Sum
 from django.core.serializers import serialize
 from django.utils import simplejson as json
 from django.http import HttpResponse, HttpResponseRedirect, Http404, HttpResponseBadRequest
@@ -9,18 +12,105 @@ from django.views.decorators.http import require_GET, require_POST
 from django.contrib.auth.decorators import login_required
 
 from codejam.settings import MEDIA_ROOT
-from codejam.apps.problem.models import Problem
+from codejam.apps.contest.models import Score
+from codejam.apps.problem.models import Problem, IO, TempDataSet, Answer
 #from codejam.apps.problem.models import IO
 
 
 
+@require_POST
+@login_required
+def ajax_answer(request):
+  
+  update_score = False
+  variables = { 'ok': False }
+  post = request.POST.copy()
+
+  try:
+    p = Problem.objects.get(id=post['problem'])
+    t = TempDataSet.objects.get(id=post['input']
+                                , owner=request.user
+                                , expired_at__gte=datetime.now())
+
+    lhs = post['answer'].replace('\r', ' ').replace('\n', ' ').split(' ')
+    rhs = t.output.replace('\r', ' ').replace('\n', ' ').split(' ')
+    
+    is_large = (post['type'] == 'large')
+    a = Answer.objects.get_or_create(owner=request.user
+                                     , problem=p
+                                     , is_large=is_large)[0]
+    a.try_count = a.try_count + 1
+    if a.complete_at == None:
+      if lhs == rhs:
+        a.complete_at = datetime.now()
+        if is_large:
+          a.points = p.large_point
+        else:
+          a.points = p.small_point
+        update_score = True
+      else:
+        a.failed_count = a.failed_count + 1
+    a.save()
+    
+    userdata = json.loads(t.userdata)
+    userdata.append({ 'ok': lhs == rhs, 'timestamp': str(datetime.now()), 'output': post['answer'] })
+    t.userdata = json.dumps(userdata)
+    t.save()
+
+    if lhs == rhs:
+      variables['ok'] = True
+    else:
+      variables['error'] = 'wrong answer.'
+      
+    if update_score:
+      c = p.contest
+      s = Score.objects.get_or_create(owner=request.user, contest=c)[0]
+      t = Answer.objects.filter(owner=request.user, problem__contest=c).aggregate(Sum('points'), Sum('failed_count'))
+      s.points = t['points__sum']
+      s.failed = t['failed_count__sum']
+      s.save()
+
+  except Problem.DoesNotExist:
+    return HttpResponseBadRequest()
+  except TempDataSet.DoesNotExist:
+    return HttpResponseBadRequest()
+
+  return HttpResponse(json.dumps(variables), content_type='application/json')
+
+
+
+@require_POST
+@login_required
+def ajax_get_input_id(request):
+
+  post = request.POST.copy()
+
+  pid = post['problem']
+  is_large = post['type'] == 'large'
+
+  ds = IO.objects.filter(problem_id=pid, is_large=is_large)
+  idx = random.randint(0, len(ds)-1)
+  d = ds[idx]
+
+  expired  = datetime.now() + timedelta(minutes=10)
+  d = TempDataSet.objects.create(owner        = request.user
+                                 , problem_id = pid
+                                 , is_large   = is_large
+                                 , input      = d.input
+                                 , output     = d.output
+                                 , expired_at = expired)
+
+  return HttpResponse(d.id, content_type='plain/text')
+
+  
+
 @require_GET
 @login_required
-def ajax_get_problem_list(request, contest):
-  pl = Problem.objects.filter(contest__id=contest).values('id', 'kr_name', 'en_name', 'small_point', 'large_point')
-  variables = {'problems': pl}
-  return render(request, 'problem/list.html', variables)
-
+def download_input(request, id, name):
+  t = TempDataSet.objects.get(id=id)
+  r = HttpResponse(t.input, content_type='application/octet-stream')
+  r['Content-Disposition'] = 'attachment; filename="%s"' % name
+  return r
 
 
 """

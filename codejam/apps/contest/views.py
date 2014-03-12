@@ -17,8 +17,8 @@ from codejam.apps.contest.models import Contest
 
 
 def __get_problem_info__(p):
-  print p
   return {
+      'id': p['id'],
       'kr_name': p['kr_name'],
       'kr_pdf': os.path.split(p['kr_pdf'])[1],
       'kr_url': '',

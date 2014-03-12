@@ -25,7 +25,8 @@ class Score(models.Model):
   owner   = models.ForeignKey(User)
   contest = models.ForeignKey(Contest)
   points  = models.IntegerField(default=0)
-  created = models.DateTimeField(auto_now=True)
+  failed  = models.IntegerField(default=0)
+  created = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
   class Meta:
     app_label = u'contest'

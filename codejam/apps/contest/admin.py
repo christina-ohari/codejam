@@ -34,9 +34,16 @@ class ContestForm(forms.ModelForm):
 
 
 
-class Score_Inline(admin.StackedInline):
+class Score_Inline(admin.TabularInline):
   model = Score
-  extra = 1
+  readonly_fields = ('owner', 'points', 'updated', 'failed')
+  ordering = ['-points', '-updated', 'failed']
+  can_delete = False
+  extra = 0
+  def has_add_permission(self, request):
+    return False
+  def get_owner(self):
+    return 'a'
 
 class ContestAdmin(admin.ModelAdmin):
   list_display = ['title', 'visible', 'opened_at', 'expired_at', 'closed_at']

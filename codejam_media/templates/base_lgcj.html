@@ -7,13 +7,13 @@
     Dashboard - LGE Public Code Jam 2013
   </title>
   <link rel="stylesheet" type="text/css"
-      href="/static/css/base.css" />
+      href="{{ STATIC_URL }}css/base.css" />
   <link rel="stylesheet" type="text/css"
-      href="/static/css/dashboard.css" />
+      href="{{ STATIC_URL }}css/dashboard.css" />
 
-  <link rel="stylesheet" type="text/css" href="/static/css/codejam.css" />
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/codejam.css" />
   
-  <script type="text/javascript" src="/static/third_party/jquery/jquery-2.1.0.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
   <!-- head scripts -->
   {% block head_scripts %}

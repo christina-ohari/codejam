@@ -37,8 +37,10 @@ urlpatterns = patterns('',
     url(r'^codejam/terms/$',    'codejam.apps.terms'),
     
     url(r'^codejam/dashboard$', Contest.dashboard),
-    
-    url(r'^codejam/(?P<contest>\d+?)/problem/list$', Problem.ajax_get_problem_list),
+
+    url(r'^codejam/problem/answer$', Problem.ajax_answer),
+    url(r'^codejam/problem/get/input/id$', Problem.ajax_get_input_id),
+    url(r'^codejam/problem/download/input/(?P<id>\d+?)/(?P<name>[A-Z]-(small|large).in?)$', Problem.download_input),
     
     #url(r'^codejam/contest/(?P<id>\d+?)/dashboard$', Contest.dashboard),
     #url(r'^codejam/contest/(?P<id>\d+?)/dashboard/do$', Contest.dashboard_do),
