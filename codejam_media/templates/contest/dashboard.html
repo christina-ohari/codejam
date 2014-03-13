@@ -17,6 +17,14 @@ textarea:disabled {
   </span>
 </h3>
 
+<h3 id="dsb-problem-title-area">
+  <span id="dsb-problem-title-div" class="problem-title after-start-only" style="display: block;">
+    <span style="color:#666">입력 파일을 다운로드 받은 후 <span style="color:red">5분 내에 결과를 제출</span>하셔야 합니다.<br/>
+      성공 메세지를 보신 후 <span style="color:red">5분 내로 lge-codejam@lge.com으로 소스코드를 제출</span>하셔야 채점이 완료됩니다.
+    </span>
+  </span>
+</h3>
+
 <div id="dsb-problem-pages">
   {% include "problem/list.html" %}
 </div>
@@ -113,14 +121,14 @@ function Timer(index) {
   var index = index
     , node = document.getElementById('io_timer_' + index)
     , timer = false
-    , interval = 10 * 60;
+    , interval = 5 * 60;
 
   function loop() {
     var min, sec;
 
     --interval;
     
-    if (interval < 3*60) {
+    if (interval < 2*60) {
       node.style.color = 'red';
     }
 

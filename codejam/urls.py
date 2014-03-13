@@ -41,6 +41,7 @@ urlpatterns = patterns('',
     url(r'^codejam/problem/answer$', Problem.ajax_answer),
     url(r'^codejam/problem/get/input/id$', Problem.ajax_get_input_id),
     url(r'^codejam/problem/download/input/(?P<id>\d+?)/(?P<name>[A-Z]-(small|large).in?)$', Problem.download_input),
+    url(r'^codejam/problem/download/pdf/(?P<id>\d+?)/(?P<language>(kr|en)?)$', Problem.download_pdf),
     
     #url(r'^codejam/contest/(?P<id>\d+?)/dashboard$', Contest.dashboard),
     #url(r'^codejam/contest/(?P<id>\d+?)/dashboard/do$', Contest.dashboard_do),

@@ -11,10 +11,11 @@
 				<td class="dsb-input-table-linktd">
 					<div id="dsb-action-box-wrap{{ forloop.counter0 }}-0" class="">
 						<div id="dsb-input-wrapper{{ forloop.counter0 }}-0" class="dsb-input-wrapper" style="display: inline;">
-							<button class="dsb-input-start-button" id="dsb-input-start-button{{ forloop.counter0 }}-0" style="display: inline;">Solve A-small</button>
+							<button class="dsb-input-start-button" id="dsb-input-start-button{{ forloop.counter0 }}-0" style="display: inline;">Solve {{ forloop.counter0|deco }}-small</button>
 							<span class="dsb-input-link-span" id="dsb-input-link-plain{{ forloop.counter0 }}-0" style="display: none;">
 								<img class="dsb-input-link-img" src="/static/images/file.gif">
-								<span class="dsb-input-link-text" id="dsb-input-link-plain-text{{ forloop.counter0 }}-0">Download A-small-practice.in</span>
+								<!-- <span class="dsb-input-link-text" id="dsb-input-link-plain-text{{ forloop.counter0 }}-0">Download A-small-practice.in</span> -->
+								<span class="dsb-input-link-text" id="dsb-input-link-plain-text{{ forloop.counter0 }}-0">Download {{ forloop.counter0|deco }}-small.in</span>
 							</span>
 						</div>
 						<span class="dsb-input-table-caption" id="dsb-input-table-caption{{ forloop.counter0 }}-0" style="display: none;"></span>
@@ -78,10 +79,11 @@
 				<td class="dsb-input-table-linktd">
 					<div id="dsb-action-box-wrap{{ forloop.counter0 }}-1" class="">
 						<div id="dsb-input-wrapper{{ forloop.counter0 }}-1" class="dsb-input-wrapper" style="display: inline;">
-							<button class="dsb-input-start-button" id="dsb-input-start-button{{ forloop.counter0 }}-1" style="display: inline;">Solve A-large</button>
+							<button class="dsb-input-start-button" id="dsb-input-start-button{{ forloop.counter0 }}-1" style="display: inline;">Solve {{ forloop.counter0|deco }}-large</button>
 							<span class="dsb-input-link-span" id="dsb-input-link-plain{{ forloop.counter0 }}-1" style="display: none;">
 								<img class="dsb-input-link-img" src="/static/images/file.gif">
-								<span class="dsb-input-link-text" id="dsb-input-link-plain-text{{ forloop.counter0 }}-1">Download A-large-practice.in</span>
+								<!-- <span class="dsb-input-link-text" id="dsb-input-link-plain-text{{ forloop.counter0 }}-1">Download A-large-practice.in</span> -->
+								<span class="dsb-input-link-text" id="dsb-input-link-plain-text{{ forloop.counter0 }}-1">Download {{ forloop.counter0|deco }}-large.in</span>
 							</span>
 						</div>
 						<span class="dsb-input-table-caption" id="dsb-input-table-caption{{ forloop.counter0 }}-1" style="display: none;"></span>
@@ -161,7 +163,7 @@
 						<br>
 							<span class="problem-item-gray">
 								<img class="dsb-input-link-img" src="/static/images/pdf.png">
-								<a id="problem_kr" href="#" target="_blank">{{ p.kr_pdf }}</a>
+								<a id="problem_kr" href="/codejam/problem/download/pdf/{{ p.id }}/kr" target="_blank">{{ p.kr_pdf }}</a>
 							</span>
 						<br>
 					</td>
@@ -174,7 +176,7 @@
 						<br>
 							<span class="problem-item-gray">
 								<img class="dsb-input-link-img" src="/static/images/pdf.png">
-								<a id="problem_en" href="#" target="_blank">{{ p.en_pdf }}</a>
+								<a id="problem_en" href="/codejam/problem/download/pdf/{{ p.id }}/en" target="_blank">{{ p.en_pdf }}</a>
 							</span>
 						<br>
 					</td>

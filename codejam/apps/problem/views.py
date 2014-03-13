@@ -113,6 +113,24 @@ def download_input(request, id, name):
   return r
 
 
+
+@require_GET
+@login_required
+def download_pdf(request, id, language):
+  p = Problem.objects.get(id=id)
+
+  if language == 'kr':
+    f = p.kr_pdf
+  elif language == 'en':
+    f = p.en_pdf
+  else:
+    return HttpResponseBadRequest()
+
+  r = HttpResponse(f.file.read(), content_type='application/octet-stream')
+  r['Content-Disposition'] = 'attachment; filename="%s"' % os.path.split(f.name)[1].encode('utf-8')
+  return r
+
+
 """
 @login_required
 def list(request):
