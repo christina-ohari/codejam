@@ -6,7 +6,7 @@ from django.shortcuts import render
 def index(request):
   if request.user.is_authenticated():
     from django.http import HttpResponseRedirect
-    return HttpResponseRedirect('/codejam/terms/')
+    return HttpResponseRedirect('/codejam/dashboard')
   return render(request, 'index.html')
 
 

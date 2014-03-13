@@ -48,7 +48,7 @@
 
 <div class="common-nav-links">
   <div id="common-links-home">
-    <a href="/codejam">Code Jam Home</a>
+    <a href="/codejam/dashboard">Code Jam Home</a>
   </div>
   <div id="common-links-schedule">
     <a href="/codejam/schedule/">일정</a>
@@ -207,7 +207,7 @@
     	<a target="new" href="/admin">Admin</a> |
     	{% endif %}
     	{% if user.is_superuser or user.is_staff %}
-    	<a target="new" href="/codejam/contest/0/score">Staff: Score</a> |
+    	<a target="new" href="/admin/contest/contest/{{ contest.id }}/">Staff: Contest</a> |
     	<a target="new" href="/codejam/contest/0/answer">Staff: Answers</a> | 
     	<a target="new" href="/admin/contest/problem/">Staff: Problems</a> | 
     	{% endif %}
