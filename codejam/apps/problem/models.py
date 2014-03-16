@@ -50,6 +50,7 @@ class TempDataSet(models.Model):
   updated_at = models.DateTimeField(auto_now=True)
   expired_at = models.DateTimeField(null=True)
   class Meta:
+    app_label = u'problem'
     db_table = u'codejam_temp_dataset'
 
 
@@ -66,5 +67,5 @@ class Answer(models.Model):
     app_label = u'problem'
     db_table  = u'codejam_answer'
     #order_with_respect_to = 'contest'
-    verbose_name = u'Answer'
-    verbose_name_plural = u'03 Answer List'
+    verbose_name = u"Competition's Answer"
+    verbose_name_plural = u"03 Competition's Answer List"

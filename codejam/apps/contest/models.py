@@ -18,6 +18,8 @@ class Contest(models.Model):
     #order_with_respect_to = 'contest'
     verbose_name = u'Contest'
     verbose_name_plural = u'01 Contest List'
+  def __str__(self):
+    return self.title
 
 
 
@@ -34,3 +36,5 @@ class Score(models.Model):
     #order_with_respect_to = 'contest'
     verbose_name = u'Score'
     verbose_name_plural = u'02 Score List'
+  def __str__(self):
+    return '%s (%s)' % (self.owner.email, self.contest.title)

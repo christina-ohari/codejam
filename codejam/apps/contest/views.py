@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from codejam.apps.contest.models import Contest
-#from codejam.apps.contest.models import Answer
+from codejam.apps.problem.models import Answer
 #from codejam.apps.contest.models import Score
 #from codejam.apps.problem.models import Problem
 #from codejam.apps.problem.models import IO
@@ -35,29 +35,47 @@ def __get_problem_info__(p):
 @require_GET
 @login_required
 def dashboard(request):
-  
-  variables = {}
-  
+
+  now = datetime.now()
+
+  # contest is opened  
   try:
-    today = datetime.today()
-    q = Q(opened_at__lte=today) & Q(expired_at__gte=today)
+    q = Q(opened_at__lte=now) & Q(expired_at__gte=now)
     contest = Contest.objects.get(q)
     problem_list = contest.problem_set.all().values()
     
     ps = []
     for p in problem_list:
-      ps.append(__get_problem_info__(p))
-    
-    variables.update({
-        'contest': contest,
-        'problems': ps
-      })
-    
-  except Contest.DoesNotExist:
-    print 'no-contest'
-    pass
+      info = __get_problem_info__(p)
+      alist = Answer.objects.filter(owner=request.user, problem__id=p['id'], complete_at__isnull=False).values('is_large')
+      print alist
+      for a in alist:
+        if a['is_large']:
+          info['large_success'] = True
+        else:
+          info['small_success'] = True
+      ps.append(info)
+    return render(request, 'contest/dashboard.html', {'contest': contest, 'problems': ps})
 
-  return render(request, 'contest/dashboard.html', variables)
+  except Contest.DoesNotExist:
+    pass
+  
+  variables = {}
+  # contest is ready
+  try:
+    q = Q(opened_at__gte=now) & Q(visible=True)
+    contest = Contest.objects.get(q)
+
+    variables['contest'] = {'title': contest.title, 'opened': contest.opened_at.strftime('%Y-%m-%d %H:%M UTC')}
+
+  except Contest.DoesNotExist:
+    pass
+  
+  # practice
+  
+  return render(request, 'contest/dashboard_wait.html', variables)  
+
+  
 
 
 """

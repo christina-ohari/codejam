@@ -8,11 +8,12 @@ from codejam.apps.contest.models import Contest, Score
 
 class ContestForm(forms.ModelForm):
   
+  visible = forms.BooleanField(required=False)
   closed_at = forms.BooleanField(required=False)
 
   def clean_visible(self):
     data = self.cleaned_data['visible']
-    if data and Contest.objects.filter(visible=True).exists:
+    if data and Contest.objects.filter(visible=True).exclude(id=self.instance.id).exists():
       raise forms.ValidationError('이미 활성화 된 코드잼이 존재합니다.')
     return data
 
@@ -42,12 +43,12 @@ class Score_Inline(admin.TabularInline):
   extra = 0
   def has_add_permission(self, request):
     return False
-  def get_owner(self):
-    return 'a'
 
 class ContestAdmin(admin.ModelAdmin):
   list_display = ['title', 'visible', 'opened_at', 'expired_at', 'closed_at']
+  list_filter = ('visible', 'opened_at', 'expired_at')
   ordering = ['opened_at']
+  search_fields = ['title']
   fieldsets = [
       (None, {'fields': ['title', 'visible']})
       , ('코드잼 기간' , {'fields': ['opened_at', 'expired_at']})
@@ -64,7 +65,22 @@ admin.site.register(Contest, ContestAdmin)
 
 
 class ScoreAdmin(admin.ModelAdmin):
-  pass
+  list_display = ['get_contest', 'owner', 'points', 'failed', 'updated']
+  readonly_fields = ['get_contest', 'owner', 'points', 'failed', 'updated']
+  exclude = ('contest',)
+  list_filter = ('contest', 'owner')
+  ordering = ['-contest', '-points', '-updated', 'failed']
+
+  def has_add_permission(self, request):
+    return False
+  #def has_change_permission(self, request, obj=None):
+  #  return False
+  def has_delete_permission(self, request, obj=None):
+    return False
+
+  def get_contest(self, obj):
+    return obj.contest.title
+  get_contest.short_description = 'Contest'
 
 
 admin.site.register(Score, ScoreAdmin)

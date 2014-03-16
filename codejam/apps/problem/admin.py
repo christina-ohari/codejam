@@ -3,7 +3,7 @@ import os.path
 from django import forms
 from django.contrib import admin
 from codejam.apps.contest.models import Contest
-from codejam.apps.problem.models import Problem, IO
+from codejam.apps.problem.models import Problem, IO, Answer
 
 
 
@@ -51,7 +51,9 @@ class IO_Inline(admin.StackedInline):
     
 class ProblemAdmin(admin.ModelAdmin):
   list_display = ['get_contest', 'kr_name', 'en_name', 'small_point', 'large_point', 'created_at']
+  list_filter = ('contest', 'kr_name', 'en_name')
   ordering = ['small_point']
+  search_fields = ['contest__title', 'kr_name', 'en_name']
   fieldsets = [
       (None, {'fields': ['contest', 'small_point', 'large_point']})
       , (u'한국어 (이름을 입력하지 않으면 파일 이름이 자동으로 입력 됩니다.)' , {'fields': ['kr_name', 'kr_pdf']})
@@ -102,7 +104,29 @@ admin.site.register(IO, IOAdmin)
 
 
 
+class AnswerAdmin(admin.ModelAdmin):
+  list_display = ['get_owner', 'get_contest', 'get_problem', 'is_large', 'complete_at', 'failed_count', 'points']
+  readonly_fields = list_display
+  exclude = ('owner', 'problem', 'try_count')
+  ordering = ['-problem__contest', 'problem__created_at', 'is_large', '-points']
+  
+  def has_add_permission(self, request):
+    return False
+  #def has_change_permission(self, request, obj=None):
+  #  return False
+  def has_delete_permission(self, request, obj=None):
+    return False
+  
+  def get_owner(self, obj):
+    return '%s, %s (%s)' % (obj.owner.last_name, obj.owner.first_name, obj.owner.email)
+  get_owner.short_description = 'Competition'
+  
+  def get_contest(self, obj):
+    return obj.problem.contest.title
+  get_contest.short_description = 'Contest'
+  
+  def get_problem(self, obj):
+    return '%s (%s)' % (obj.problem.kr_name, obj.problem.en_name)
+  get_problem.short_description = 'Problem'
 
-
-
-
+admin.site.register(Answer, AnswerAdmin)

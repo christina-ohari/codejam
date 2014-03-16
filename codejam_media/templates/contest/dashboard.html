@@ -117,11 +117,13 @@ textarea:disabled {
 var timerList = {};
 
 function Timer(index) {
-  
+
   var index = index
     , node = document.getElementById('io_timer_' + index)
     , timer = false
     , interval = 5 * 60;
+    
+  node.style.fontSize = '2.5em';
 
   function loop() {
     var min, sec;
@@ -138,7 +140,7 @@ function Timer(index) {
     } else {
       min = Math.floor(interval / 60);
       sec = interval % 60;
-      node.textContent = min + ':' + (sec < 10 ? '0' : '') + sec;
+      node.innerHTML = '&nbsp;&nbsp;&nbsp;' + min + ':' + (sec < 10 ? '0' : '') + sec;
     }
     
   }
@@ -149,6 +151,7 @@ function Timer(index) {
     }
     node.style.color = 'green';
     node.parentNode.style.display = 'inline';
+    node.innerHTML = '&nbsp;&nbsp;&nbsp;' + '5:00';
     document.getElementById('output-fileio_timer_' + index).disabled = false;
     document.getElementById('submit-buttonio_timer_' + index).disabled = false;
     timer = setInterval(loop, 1000);
@@ -188,6 +191,7 @@ function initSolveButtons() {
   // show input/output data box
   function show() {
     var suffix = this.id.slice(keyword.length);
+
     document.getElementById('dsb-input-start-button' + suffix).style.display = 'none';
     document.getElementById('dsb-input-link-plain' + suffix).style.display = 'inline';
     document.getElementById('dsb-action-box-wrap' + suffix).className = 'dsb-action-box-open';
@@ -207,6 +211,7 @@ function initSolveButtons() {
     function doDownload() {
       var name = String.fromCharCode(65 + Math.floor(index/2)) + '-' + (index%2 == 0 ? 'small' : 'large') + '.in'
         , timer = timerList[index];
+
       document.location = '/codejam/problem/download/input/' + inputId + '/' + name;
       
       if (!timer) {
@@ -219,6 +224,7 @@ function initSolveButtons() {
     // get id to download input data
     function doGetInputId() {
       var xhr = new XMLHttpRequest();
+
       xhr.onreadystatechange = function () {
         if (xhr.readyState === xhr.DONE) {
           if (xhr.status === 200) {
@@ -303,7 +309,6 @@ function initSolveButtons() {
 
 
 function selectProblem(index, title) {
-  
   var nodes, noed, i, len, tag;
   
   // side menu
@@ -331,11 +336,13 @@ function selectProblem(index, title) {
 
 
 function initSelector() {
-  var nodes = document.getElementsByClassName('dynamic-link');
+  var nodes = document.getElementsByClassName('dynamic-link')
+    ,node, id, keyword = 'dsb-problem-title';
+
   for (var i = 0, len = nodes.length; i < len; ++i) {
-    var node = nodes[i]
-        , id = node.id
-        , keyword = 'dsb-problem-title';
+    node = nodes[i];
+    id = node.id;
+
     if (id && id.slice(0, keyword.length) === keyword) {
       node.onclick = function () {
         selectProblem(Number(this.id.slice(keyword.length)));
@@ -347,9 +354,20 @@ function initSelector() {
 
 
 window.onload = function () {
+
+  var match = window.location.href.match(/#([^?]+&|)p=([^?#&=]+)/)
+    , index = 0;
+  
   initSelector();
   initSolveButtons();
-	selectProblem(0);
+  
+  console.log(window.location.href, match);
+
+  if (match && match.length > 2) {
+    index = Number(match[2]);
+  }
+  
+	selectProblem(index);
 };
 </script>
 {% endblock %}

@@ -11,12 +11,16 @@
 				<td class="dsb-input-table-linktd">
 					<div id="dsb-action-box-wrap{{ forloop.counter0 }}-0" class="">
 						<div id="dsb-input-wrapper{{ forloop.counter0 }}-0" class="dsb-input-wrapper" style="display: inline;">
+						  {% if p.small_success %}
 							<button class="dsb-input-start-button" id="dsb-input-start-button{{ forloop.counter0 }}-0" style="display: inline;">Solve {{ forloop.counter0|deco }}-small</button>
 							<span class="dsb-input-link-span" id="dsb-input-link-plain{{ forloop.counter0 }}-0" style="display: none;">
 								<img class="dsb-input-link-img" src="/static/images/file.gif">
 								<!-- <span class="dsb-input-link-text" id="dsb-input-link-plain-text{{ forloop.counter0 }}-0">Download A-small-practice.in</span> -->
 								<span class="dsb-input-link-text" id="dsb-input-link-plain-text{{ forloop.counter0 }}-0">Download {{ forloop.counter0|deco }}-small.in</span>
 							</span>
+							{% else %}
+							<span style="font-size: xx-large; color: green;"><b>&nbsp;You did it !!</b></span>
+							{% endif %}
 						</div>
 						<span class="dsb-input-table-caption" id="dsb-input-table-caption{{ forloop.counter0 }}-0" style="display: none;"></span>
 						<span class="dsb-input-table-caption" id="dsb-resubmit-caption{{ forloop.counter0 }}-0" style="display: none;">Your submission was received. You can still <span class="dsb-input-link-text" id="dsb-resubmit-link{{ forloop.counter0 }}-0">resubmit</span> for <span id="dsb-resubmit-timer{{ forloop.counter0 }}-0"></span>.<br>Only your last submission counts. <span class="dsb-input-link-text" id="dsb-resubmit-view-sub-link{{ forloop.counter0 }}-0">View your last submission</span>.</span>
@@ -79,12 +83,16 @@
 				<td class="dsb-input-table-linktd">
 					<div id="dsb-action-box-wrap{{ forloop.counter0 }}-1" class="">
 						<div id="dsb-input-wrapper{{ forloop.counter0 }}-1" class="dsb-input-wrapper" style="display: inline;">
+						  {% if p.large_success %}
 							<button class="dsb-input-start-button" id="dsb-input-start-button{{ forloop.counter0 }}-1" style="display: inline;">Solve {{ forloop.counter0|deco }}-large</button>
 							<span class="dsb-input-link-span" id="dsb-input-link-plain{{ forloop.counter0 }}-1" style="display: none;">
 								<img class="dsb-input-link-img" src="/static/images/file.gif">
 								<!-- <span class="dsb-input-link-text" id="dsb-input-link-plain-text{{ forloop.counter0 }}-1">Download A-large-practice.in</span> -->
 								<span class="dsb-input-link-text" id="dsb-input-link-plain-text{{ forloop.counter0 }}-1">Download {{ forloop.counter0|deco }}-large.in</span>
 							</span>
+							{% else %}
+							<span style="font-size: xx-large; color: green;"><b>&nbsp;You did it !!</b></span>
+							{% endif %}
 						</div>
 						<span class="dsb-input-table-caption" id="dsb-input-table-caption{{ forloop.counter0 }}-1" style="display: none;"></span>
 						<span class="dsb-input-table-caption" id="dsb-resubmit-caption{{ forloop.counter0 }}-1" style="display: none;">Your submission was received. You can still 
