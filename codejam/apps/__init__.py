@@ -12,9 +12,9 @@ def index(request):
 
 
 def schedule(request):
-    return render(request, '2014_schedule.html')
+  return render(request, '2014_schedule.html')
 
 
 
 def terms(request):
-    return render(request, '2014_terms.html')
+  return render(request, '2014_terms.html')

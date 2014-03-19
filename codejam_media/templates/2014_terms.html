@@ -1,11 +1,13 @@
+{% load i18n %}
+{% load staticfiles %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head><meta http-equiv="refresh" content="172795" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Terms and Conditions - Google Code Jam</title>
-  <link href="{{ STATIC_URL }}css/base.css" type="text/css" rel="stylesheet" />
-  <link href="{{ STATIC_URL }}css/index2.css" type="text/css" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}" />
+  <link rel="stylesheet" type="text/css" href="{% static "css/index2.css" %}" />
   </script>
 </head>
 <body onload="GCJ.renderNavPanel();">
@@ -14,7 +16,7 @@
 
 <div id="logo-div">
   <a href="/codejam">
-    <img src="/static/images/logo_lge.png" id="logo"
+    <img src="{% static "images/logo_lge.png" %}" id="logo"
          alt="Google Code Jam" />
   </a>
 </div>
@@ -37,6 +39,19 @@
     <a href="mailto:codejam@google.com">Send feedback</a> |
     
     <a href="https://code.google.com/_ah/logout?continue=https://www.google.com/accounts/Logout%3Fcontinue%3Dhttps://appengine.google.com/_ah/logout%253Fcontinue%253Dhttps://code.google.com/codejam%26service%3Dah">Sign out</a>
+    
+    <form action="/i18n/setlang/" method="post">
+      {% csrf_token %}
+      <input name="next" type="hidden" value="{{ redirect_to }}" />
+      <select name="language" onchange="this.form.submit();">
+      {% get_language_info_list for LANGUAGES as languages %}
+      {% for language in languages %}
+      <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+        {{ language.name_local }}
+      </option>
+      {% endfor %}
+      </select>
+      </form>
   
 </div>
 
@@ -126,7 +141,7 @@
                 </ul>
               </li>
               <br/>
-              <li>Result Announcement:
+              <li>{% trans "Result Announcement:" %}
                 <ul>
                   <li>The result will be announced in collab site with source code.</li>
                   <li>Participants with high score will have a chance of coding experts, who will be selected in October.</li>

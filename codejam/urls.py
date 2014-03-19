@@ -25,7 +25,8 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^$', 'codejam.apps.index'),
-
+    url(r'^codejam/$', 'codejam.apps.index'),
+    
     url(r'^accounts/signup/$',  Account.signup),
     url(r'^accounts/login/$',   Account.signin),
     url(r'^accounts/logout/$',  'django.contrib.auth.views.logout_then_login', {'login_url': '/'}),
@@ -42,6 +43,8 @@ urlpatterns = patterns('',
     url(r'^codejam/problem/get/input/id$', Problem.ajax_get_input_id),
     url(r'^codejam/problem/download/input/(?P<id>\d+?)/(?P<name>[A-Z]-(small|large).in?)$', Problem.download_input),
     url(r'^codejam/problem/download/pdf/(?P<id>\d+?)/(?P<language>(kr|en)?)$', Problem.download_pdf),
+    
+    url(r'^i18n/', include('django.conf.urls.i18n')),
     
     #url(r'^codejam/contest/(?P<id>\d+?)/dashboard$', Contest.dashboard),
     #url(r'^codejam/contest/(?P<id>\d+?)/dashboard/do$', Contest.dashboard_do),
