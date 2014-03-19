@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head><meta http-equiv="refresh" content="172795" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>LGE Code Jam</title>
+    
+    
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/base.css" />
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/index2.css" />
+  <!--<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/dashboard.css" />-->
+
+  <script type="text/javascript">
+  </script>
+  </head>
+
+<body>
+
+<div id="logo-div">
+  <a href="/codejam/dashboard">
+    <img src="{{ STATIC_URL }}images/logo_lge.png" id="logo"
+         alt="Google
+         Code Jam" />
+  </a>
+</div>
+
+<div id="guser">
+  
+    <b>ghilbut@gmail.com</b> |
+    
+    
+    <a href="/codejam/contest/registration?cmd=Update&t=5708131929686016">
+      Update profile</a> |
+    
+    
+    
+    <a href="mailto:codejam@google.com">Send feedback</a> |
+    
+    <a href="https://code.google.com/_ah/logout?continue=https://www.google.com/accounts/Logout%3Fcontinue%3Dhttps://appengine.google.com/_ah/logout%253Fcontinue%253Dhttps://code.google.com/codejam%26service%3Dah">Sign out</a>
+  
+</div>
+
+
+<div id="welcome-bar">&nbsp;</div>
+
+<div id="common-body">
+
+
+
+
+  <div id="common-nav-div">
+    <div id="logo-padder">&nbsp;</div>
+    <div id="common-nav-wrapper">
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      <div class="common-nav-section-title">
+        Code Jam 2014
+      </div>
+      <div class="common-nav-links">
+        <div id="common-links-home">
+          <a href="/codejam/dashboard">Code Jam Home</a>
+        </div>
+        <div id="common-links-schedule">
+          <a href="/codejam/schedule.html">Schedule</a>
+        </div>
+        <div id="common-links-rules">
+          <a href="/codejam/terms.html">Terms and Conditions</a>
+        </div>
+        <!--<div id="common-links-faq">
+          <a href="/codejam/faq.html">Frequently Asked Questions</a>
+        </div>
+        <div id="common-links-quickstart">
+          <a href="/codejam/quickstart.html">Quick-Start Guide</a>
+        </div>-->
+     </div>
+     <div>&nbsp;</div>
+     <div>&nbsp;</div>
+      <!--<div class="common-nav-section-title">
+        Archive
+      </div>
+      <div class="common-nav-links">
+        <div id="common-links-problems">
+          <a href="/codejam/contests.html">
+            Practice and Learn
+          </a>
+        </div>
+        <div id="common-links-history">
+          <a href="/codejam/archive.html">
+            Code Jam History
+          </a>
+        </div>
+      </div>-->
+     <div>&nbsp;</div>
+     <div>&nbsp;</div>
+     <div>&nbsp;</div>
+     <div>&nbsp;</div>
+    </div>
+  </div>
+
+
+<div id="common-content-div">
+<div>
+
+<div class="semi-block" style="border-top: 0">
+  <div style="float:left">
+    <h1 style="font-size:2.5em;">LGE Code Jam 2014</h1>
+  </div>
+</div>
+
+<div class="semi-block">
+  <div id="magic-area-wrap">
+  <div id="magic-area" style="display: block;">
+    <div id="magic-area-title" style="display: block;">{{ contest.title }}</div>
+    <!-- g-button-sparrow.css requires this monstrosity. -->
+    <div class="g-button-basic"><div><span><span><span id="action-button"><a>Compete in 0 days 0 hours</a></span></span></span></div></div>
+    <div id="magic-area-buttoninfo" style="display: block;">The contest has not started yet.</div>
+    <!--<div class="under-button">
+      <span id="link-under-action-button-0"><a href="/codejam/contests.html">Practice</a> on previous contests.</span>
+      <span id="link-under-action-button-1"></span>
+      <span id="link-under-action-button-2"></span>
+    </div>-->
+  </div>
+  <div id="magic-prev-contest-div" style="display: none;">
+  </div>
+  </div>
+  <div>
+    <div style="margin-right:25em;">
+      <p>
+      <ul>
+        <li>경연 기간: 3월 28일(금) 13:00 ~ 3월 31일(월) 13:00 (KST 기준)</li>
+        <li>경연 방식:
+          <ul> 
+            <li>문제를 구현하여, 결과를 사이트에 업로드하고 PASS 여부를 확인한다.</li> 
+            <li>PASS 확인 후 바로(5분 이내) 소스 코드를 lge-codejam@lge.com으로 제출한다.</li> 
+            <li>메일 제목에, 이름, 소속, 문제 번호 을 같이 적어 보내주세요.
+              <ul><li>Ex) 홍길동_MC_Problem1_Source</li></ul>
+            </li>
+            <li>구현 언어는 제한 없습니다.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul>
+        <li>Competition Period: 3.28(Fri) 13:00 ~ 3.31(Mon) 13:00 (KST Time Zone)</li>
+        <li>Competition Rules:
+          <ul>
+            <li>Upload output files to the Code Jam site after solving a problem</li> 
+            <li>Check for pass/fail, and then within 5 minutes send source code to lge-codejam@lge.com
+            <li>Include your name, department and problem number when writing email subject
+              <ul><li>ex) BradPit_LGSI_Problem1_Source</li></ul>
+             </li>
+            <li>Any program language or languages are allowed</li>
+          </ul>
+        </li>
+      </ul>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="block">
+  <span class="column">
+     <div id="index-moreinfo">
+       <div>
+         If you have any questions or comments, please
+         <a href="mailto:lge-codejam@lge.com">contact us</a>.
+       </div>
+     </div>
+  </span>
+</div>
+
+</div>
+</div>
+</div>
+&nbsp;<br/>
+&nbsp;<br/>
+
+
+
+
+
+<div id=footer>
+  <p>
+    All problem statements, input data and contest analyses are
+    licensed under the
+    <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution License</a>.
+  </p>
+  <span id="copyright">&copy; 2012-2014 LG Coding-Expert</span>
+  <a href="http://www.lge.com/">LG Electronics Home</a> -
+  <a href="/codejam/terms/">Terms and Conditions</a><br/><br/>
+  <a href="http://www.djangoproject.com/"><img src="https://www.djangoproject.com/m/img/badges/djangomade124x25.gif" border="0" alt="Made with Django." title="Made with Django." /></a>
+</div>
+
+<script type="text/javascript">
+var opened = new Date(Date.parse('{{ contest.opened }}'))
+  , node = document.getElementById('action-button');
+
+window.onload = function () {
+
+  function setCountdown() {
+
+    var offset = opened - (new Date())
+      , sec  = (offset > 0 ? Math.floor(offset / 1000) : 0)
+      , min  = (sec > 0 ? Math.floor(sec / 60) : 0)
+      , hour = (min > 0 ? Math.floor(min / 60) : 0)
+      , day  = (hour > 0 ? Math.floor(hour / 24) : 0)
+      , tag;
+
+      if (sec > 0) {
+        
+        tag = sec + ' second' + (sec > 1 ? 's' : '');
+        
+        if (min > 0) {
+          sec -= (min * 60);
+          tag = min + ' min' + (min > 1 ? 's' : '') + ' ' + sec + ' sec' + (sec > 1 ? 's' : '');
+        }
+        if (hour > 0) {
+          min -= (hour * 60);
+          tag = hour + ' hour' + (hour > 1 ? 's' : '') + ' ' + min + ' min' + (min > 1 ? 's' : '');
+        }
+        if (day > 0) {
+          hour -= (day * 24);
+          tag = day + ' day' + (day > 1 ? 's' : '') + ' ' + hour + ' hour' + (hour > 1 ? 's' : '');
+        }
+        node.innerHTML = ('<a>Compete in ' + tag + '</a>');
+        setTimeout(setCountdown, 1000);
+      } else {
+        alert('TODO refresh page.')
+      }
+  }
+
+  setCountdown();
+};
+</script>
+
+</body>
+</html>
+

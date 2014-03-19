@@ -33,8 +33,8 @@ urlpatterns = patterns('',
     url(r'^accounts/recover/$', Account.recover),
     url(r'^accounts/password/(?P<username>[a-zA-Z0-9]{10}?)/$', Account.change_password),
     
-    url(r'^codejam/schedule/$', 'codejam.apps.schedule'),
-    url(r'^codejam/terms/$',    'codejam.apps.terms'),
+    url(r'^codejam/schedule.html$', 'codejam.apps.schedule'),
+    url(r'^codejam/terms.html$',    'codejam.apps.terms'),
     
     url(r'^codejam/dashboard$', Contest.dashboard),
 

@@ -1,73 +1,182 @@
-{% extends "base_lgcj.html" %}
 
-{% block head_scripts %}
-<style>
-#schedule_table {
-  margin-left: 30px;
-}
-#schedule_table th {
-  background-color: #ddd;
-}
-#schedule_table th
-, #schedule_table td {
-  padding: 10px 30px;
-  border: #bbb solid 3px;
-  text-align: center;
-  font-size: large;
-}
-#schedule_table tfoot td {
-  padding-top: 30px;
-  border: none;
-  font-size: medium;
-}
-#result_notify {
-  padding: 5px 10px;
-  font-size: medium;
-}
-</style>
-{% endblock %}
 
-{% block content %}
-<!-- Problem Title -->
-<h3 id="dsb-problem-title-area">
-  <span id="dsb-problem-title-div" class="problem-title after-start-only" style="display: block;">
-  	<span style="color:#666">2014년도 공개 코드잼 일정</span>
-  </span>
-</h3>
 
-<br />
-<table id="schedule_table">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head><meta http-equiv="refresh" content="172795" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Schedule - LGE Code Jam</title>
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/base.css" />
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/index2.css" />
+  </head>
+
+<body>
+
+<script type="text/javascript">
+  // A shorthand for links to timeanddate.com
+  GCJ = {};
+  GCJ.timeAndDateLink = function(year, month, day, hour, minute) {
+    window.location = [
+      "http://www.timeanddate.com/worldclock/fixedtime.html?p1=235",
+      "year=" + year,
+      "month=" + month,
+      "day=" + day,
+      "hour=" + hour,
+      "min=" + minute,
+      "sec=0"
+    ].join("&");
+  };
+</script>
+
+<div id="logo-div">
+  <a href="/codejam/dashboard">
+    <img src="{{ STATIC_URL }}images/logo_lge.png" id="logo"
+         alt="Google
+         Code Jam" />
+  </a>
+</div>
+
+
+<div id="guser">
+  
+    <b>ghilbut@gmail.com</b> |
+    
+    
+    <a href="/codejam/contest/registration?cmd=Update&t=5708131929686016">
+      Update profile</a> |
+    
+    
+    
+    <a href="mailto:codejam@google.com">Send feedback</a> |
+    
+    <a href="https://code.google.com/_ah/logout?continue=https://www.google.com/accounts/Logout%3Fcontinue%3Dhttps://appengine.google.com/_ah/logout%253Fcontinue%253Dhttps://code.google.com/codejam%26service%3Dah">Sign out</a>
+  
+</div>
+
+
+<div id="welcome-bar">&nbsp;</div>
+
+<div id="common-body">
+
+
+
+
+  <div id="common-nav-div">
+    <div id="logo-padder">&nbsp;</div>
+    <div id="common-nav-wrapper">
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      <div class="common-nav-section-title">
+        Code Jam 2014
+      </div>
+      <div class="common-nav-links">
+        <div id="common-links-home">
+          <a href="/codejam/dashboard">Code Jam Home</a>
+        </div>
+        <div id="common-links-schedule">
+          <a href="/codejam/schedule.html">Schedule</a>
+        </div>
+        <div id="common-links-rules">
+          <a href="/codejam/terms.html">Terms and Conditions</a>
+        </div>
+        <!--<div id="common-links-faq">
+          <a href="/codejam/faq.html">Frequently Asked Questions</a>
+        </div>
+        <div id="common-links-quickstart">
+          <a href="/codejam/quickstart.html">Quick-Start Guide</a>
+        </div>-->
+     </div>
+     <div>&nbsp;</div>
+     <div>&nbsp;</div>
+      <!--<div class="common-nav-section-title">
+        Archive
+      </div>
+      <div class="common-nav-links">
+        <div id="common-links-problems">
+          <a href="/codejam/contests.html">
+            Practice and Learn
+          </a>
+        </div>
+        <div id="common-links-history">
+          <a href="/codejam/archive.html">
+            Code Jam History
+          </a>
+        </div>
+      </div>-->
+     <div>&nbsp;</div>
+     <div>&nbsp;</div>
+     <div>&nbsp;</div>
+     <div>&nbsp;</div>
+    </div>
+  </div>
+
+<div id="common-content-div">
+<div style="width:51em;">
+<h1>Schedule: LGE Code Jam 2014</h1>
+
+<table id="schedule">
   <thead>
-    <tr>
-      <th>차수</th>
-      <th>경연 일시</th>
-      <th>결과 공지</th>
-    </tr>
+  <tr>
+    <th class="desc">차수</th>
+    <th class="date">경연 일시</th>
+    <th class="time">결과 공지</th>
+  </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>03.28 17:00 ~ 03.30 17:00</td>
-      <td>04.04 12:00</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>06.14 17:00 ~ 06.16 17:00</td>
-      <td>06.20 12:00</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>08.29 17:00 ~ 08.31 17:00</td>
-      <td>09.04 12:00</td>
-    </tr>
+  <tbody class="block">
+  <tr>
+    <td class="desc">1</td>
+    <td class="date" style="width: 350px;">3.28(Fri) <a
+        href="javascript:GCJ.timeAndDateLink(2014, 3, 28, 13, 0);"
+        >13:00 KST</a> ~ 3.31(Mon) <a
+        href="javascript:GCJ.timeAndDateLink(2014, 3, 31, 13, 0);"
+        >13:00 KST</a></td>
+    <td class="time">4.4(Fri) <a
+        href="javascript:GCJ.timeAndDateLink(2014, 4, 4, 12, 0);"
+        >12:00 KST</a></td>
+  </tr>
+  <tr>
+    <td class="desc">2</td>
+    <td class="date" style="width: 350px;">6.20(Fri) <a
+        href="javascript:GCJ.timeAndDateLink(2014, 6, 20, 13, 0);"
+        >13:00 KST</a> ~ 6.23(Mon) <a
+        href="javascript:GCJ.timeAndDateLink(2014, 6, 23, 13, 0);"
+        >13:00 KST</a></td>
+    <td class="time">6.27(Fri) <a
+        href="javascript:GCJ.timeAndDateLink(2014, 6, 27, 12, 0);"
+        >12:00 KST</a></td>
+  </tr>
+  <tr>
+    <td class="desc">3</td>
+    <td class="date" style="width: 350px;">8.29(Fri) <a
+        href="javascript:GCJ.timeAndDateLink(2014, 8, 29, 13, 0);"
+        >13:00 KST</a> ~ 9.1(Mon) <a
+        href="javascript:GCJ.timeAndDateLink(2014, 9, 1, 13, 0);"
+        >13:00 KST</a></td>
+    <td class="time">9.5(Fri) <a
+        href="javascript:GCJ.timeAndDateLink(2014, 9, 5, 12, 0);"
+        >12:00 KST</a></td>
+  </tr>
   </tbody>
-  <tfoot>
-    <tr>
-      <td colspan="3">
-        결과는 collab 사이트의 <a href="http://collab.lge.com/main/x/Ktk7B" target="_blank">코딩 전문가 페이지</a>에 게시됩니다.
-      </td>
-    </tr>
-  </tfoot>
 </table>
+<p>* All times are 24-hour Coordinated Universal Time (UTC).
+<a href="http://www.timeanddate.com/worldclock/converter.html"
+  target="_blank" rel="nofollow"
+  >Here's how to convert UTC into your local time.</a></p>
+<p>* 결과는 collab 사이트의 <a href="http://collab.lge.com/main/x/Ktk7B" target="_blank">코딩 전문가 페이지</a>에 게시됩니다.</p>
+&nbsp;<br/>
 
-{% endblock %}
+<div id=footer>
+  <p>
+    All problem statements, input data and contest analyses are
+    licensed under the
+    <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution License</a>.
+  </p>
+  <span id="copyright">&copy; 2012-2014 LG Coding-Expert</span>
+  <a href="http://www.lge.com/">LG Electronics Home</a> -
+  <a href="/codejam/terms/">Terms and Conditions</a><br/><br/>
+  <a href="http://www.djangoproject.com/"><img src="https://www.djangoproject.com/m/img/badges/djangomade124x25.gif" border="0" alt="Made with Django." title="Made with Django." /></a>
+</div>
+
+</body>
+</html>

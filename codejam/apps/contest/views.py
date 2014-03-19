@@ -73,7 +73,8 @@ def dashboard(request):
   
   # practice
   
-  return render(request, 'contest/dashboard_wait.html', variables)  
+  return render(request, 'home.html', variables)
+  #return render(request, 'contest/dashboard_wait.html', variables)  
 
   
 

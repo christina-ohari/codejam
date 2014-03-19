@@ -1,0 +1,252 @@
+@import url('//www.google.com/css/modules/buttons/g-button-sparrow.css');
+a {
+  color: #00c;
+}
+
+a:active {
+  color: #f00;
+}
+
+a:visited {
+  color: #551a8b;
+}
+
+q {
+  quotes: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-width: 0;
+  empty-cells: show;
+}
+
+input, select, textarea, option {
+  font-family: arial,sans-serif;
+  font-size: inherit;
+}
+
+ul {
+  margin: 0 0 1em 1em;
+}
+
+ol {
+  margin: 0 0 1em 1.8em;
+}
+
+dt {
+  font-weight: bold;
+}
+
+.none {
+  list-style-type: none;
+}
+
+.list {
+  list-style-image: url('../images/bg_red_arrow.gif');
+  margin: 0 0 1em 1.3em;
+}
+
+.list li {
+  margin: .5em 0;
+}
+
+a.arrow-link {
+  display: block;
+  padding-left: 20px;
+  padding-top: 10px;
+  background: url("../images/bg_red_arrow.gif") no-repeat 0px 14px;
+}
+
+a.license-link {
+  text-decoration: none;
+}
+
+p.arrow-p {
+  display: block;
+  padding-left: 20px;
+  padding-top: 10px;
+  margin: 0;
+  background: url("../images/bg_red_arrow.gif") no-repeat 0px 14px;
+}
+
+img.flag {
+  border: 1px solid #ddd;
+}
+
+#magic-area-wrap {
+  float: right;
+}
+
+#magic-area {
+  border: 1px solid #ccc;
+  width: 20em;
+  padding: 1em;
+  margin-top: 10px;
+  display: none;
+}
+
+#magic-area div.under-button {
+  text-align: left;
+}
+
+#magic-area div.under-button span,
+#magic-prev-contest-div {
+  display: block;
+  padding-left: 20px;
+  padding-top: 10px;
+  background: url("../images/bg_red_arrow.gif") no-repeat 5px 15px;
+}
+
+#magic-area div.under-button span a {
+  margin: 5px 0 0 0;
+}
+
+#magic-area > span {
+  display: block;
+  padding: 5px;
+}
+
+.block {
+  border: 1px solid #666;
+  border-width: 1px 0 3px 0;
+  padding: 1em 0;
+  margin: 0 0 1em 0;
+  overflow: auto;
+}
+
+.semi-block {
+  border: 1px solid #666;
+  border-width: 1px 0 0 0;
+  padding: 1em 0;
+  margin: 0 0 1em 0;
+  overflow: auto;
+}
+
+.column {
+  float: left;
+  margin: 5px;
+}
+
+.column + .column {
+  margin-left: auto;
+}
+
+.column table {
+  margin-bottom: 10px;
+}
+
+.column table tr td {
+  border: 1px solid black;
+  padding: 4px;
+}
+
+#header2 {
+  overflow: auto;
+  position: relative;
+}
+
+#guser {
+  font-size: 13px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px 10px 7px 0;
+  z-index: 100;
+}
+
+#logo {
+  float: left;
+  display: block;
+  margin: 0 0 1em 0;
+}
+
+#by-google {
+  font-size: .7em;
+  float: left;
+  width: 70px;
+  margin: 13px 0 0 8px;
+}
+
+#nav {
+  float: left;
+  list-style-type: none;
+  margin: 34px 0 0 50px;
+  width: 640px;
+  height: 1em;
+}
+
+#nav li {
+  float: left;
+  width: 125px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#footer {
+  color: #333;
+  padding: 5px 0 10px 0;
+  font-size: .9em;
+  text-align: center;
+}
+
+#appengine-button {
+  float: right;
+  margin: -35px 0 0;
+}
+
+#schedule {
+  width: 50em;
+  margin: auto;
+}
+
+#schedule td {
+  vertical-align: top;
+  padding: 5px 0;
+}
+
+#schedule tr {
+  border-bottom: 1px solid #aaa;
+}
+
+#schedule th {
+  font-size: 1.2em;
+  padding: 0 0 5px 0;
+}
+
+#schedule .date, #schedule .time {
+  text-align: left;
+}
+
+#schedule .date {
+  width: 15em;
+}
+
+#magic-area-title {
+  font-weight: bold;
+  text-align: center;
+  padding-bottom: 0.5em;
+}
+
+#magic-area-buttoninfo {
+  padding-top: 0.5em;
+  padding-left: 20px;
+  padding-top: 10px;
+  background: url("../images/bg_red_arrow_up.gif") no-repeat 5px 15px;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+h4, h5 {
+  font-size: 1em;
+}

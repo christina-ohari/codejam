@@ -432,7 +432,7 @@ div.dynamic-link a:visited {
 
 #index-moreinfo > div {
   width: 100%;
-  background: url("../../static/bg_red_arrow.gif") no-repeat 5px 5px;
+  background: url("../images/bg_red_arrow.gif") no-repeat 5px 5px;
   padding-left: 20px;
 }
 

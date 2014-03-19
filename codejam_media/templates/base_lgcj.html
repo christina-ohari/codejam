@@ -4,7 +4,7 @@
 <head><meta http-equiv="refresh" content="172795" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>
-    Dashboard - LGE Public Code Jam 2013
+    Dashboard - {{ contest.title }}
   </title>
   <link rel="stylesheet" type="text/css"
       href="{{ STATIC_URL }}css/base.css" />
@@ -23,7 +23,7 @@
 <body onLoad="LGCJ.main()">
 
 <div id="logo-div">
-  <a href="/codejam/">
+  <a href="/codejam/dashboard">
     <!--<img src="/static/images/logo_image3.gif" id="logo"
          alt="Google Code Jam" />-->
     <img src="/static/images/logo_lge.png" id="logo"
@@ -40,7 +40,7 @@
   <div class="v-divider"></div>
   <div class="v-divider"></div>
   <!-- Problem Selection Panel -->
-  <div id="dsb-contest-title">LGE Code Jam 2014</div>
+  <div id="dsb-contest-title">Code Jam 2014</div>
 
 
 
@@ -51,10 +51,10 @@
     <a href="/codejam/dashboard">Code Jam Home</a>
   </div>
   <div id="common-links-schedule">
-    <a href="/codejam/schedule/">일정</a>
+    <a href="/codejam/schedule.html">일정</a>
   </div>
   <div id="common-links-rules">
-    <a href="/codejam/terms/">규칙 및 이용약관</a>
+    <a href="/codejam/terms.html">규칙 및 이용약관</a>
   </div>
 </div>
 
@@ -237,7 +237,7 @@
   </p>
   <span id="copyright">&copy; 2012-2013 LG Coding-Expert</span>
   <a href="http://www.lge.com/">LG Electronics Home</a> -
-  <a href="/codejam/terms.html">Terms and Conditions</a><br/><br/>
+  <a href="/codejam/terms/">Terms and Conditions</a><br/><br/>
   <a href="http://www.djangoproject.com/"><img src="https://www.djangoproject.com/m/img/badges/djangomade124x25.gif" border="0" alt="Made with Django." title="Made with Django." /></a>
 </div>
 
