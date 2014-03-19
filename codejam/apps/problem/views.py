@@ -32,8 +32,8 @@ def ajax_answer(request):
                                 , owner=request.user
                                 , expired_at__gte=datetime.now())
 
-    lhs = post['answer'].replace('\r', ' ').replace('\n', ' ').split(' ')
-    rhs = t.output.replace('\r', ' ').replace('\n', ' ').split(' ')
+    lhs = post['answer'].replace('\r\n', ' ').replace('\n\r', ' ').replace('\n', ' ').replace('\r', ' ').strip().split(' ')
+    rhs = t.output.replace('\r\n', ' ').replace('\n\r', ' ').replace('\n', ' ').replace('\r', ' ').strip().split(' ')
     
     is_large = (post['type'] == 'large')
     a = Answer.objects.get_or_create(owner=request.user

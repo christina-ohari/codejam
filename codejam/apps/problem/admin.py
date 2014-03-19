@@ -45,9 +45,29 @@ class ProblemForm(forms.ModelForm):
 
 
 
+class IOForm(forms.ModelForm):
+
+  output = forms.CharField(widget=forms.Textarea)
+
+  def clean_output(self):
+    import string 
+    data = self.cleaned_data['output']
+    data = filter(lambda x: x in string.printable, data) 
+    return data
+
+  def __init__(self, *args, **kwargs):
+    super(IOForm, self).__init__(*args, **kwargs)
+    self.fields['problem'] = ProblemChoiceField(queryset=Problem.objects.all())
+    
+  class Meta:
+    model = IO
+
+
+
 class IO_Inline(admin.StackedInline):
   model = IO
   extra = 1
+  form = IOForm
     
 class ProblemAdmin(admin.ModelAdmin):
   list_display = ['get_contest', 'kr_name', 'en_name', 'small_point', 'large_point', 'created_at']
@@ -77,15 +97,6 @@ class ProblemChoiceField(forms.ModelChoiceField):
   def label_from_instance(self, obj):
     return '%s (%s)' % (obj.kr_name, obj.en_name)
 
-
-
-class IOForm(forms.ModelForm):
-  def __init__(self, *args, **kwargs):
-    super(IOForm, self).__init__(*args, **kwargs)
-    self.fields['problem'] = ProblemChoiceField(queryset=Problem.objects.all())
-    
-  class Meta:
-    model = IO
 
 
 

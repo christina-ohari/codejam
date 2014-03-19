@@ -11,7 +11,7 @@
 				<td class="dsb-input-table-linktd">
 					<div id="dsb-action-box-wrap{{ forloop.counter0 }}-0" class="">
 						<div id="dsb-input-wrapper{{ forloop.counter0 }}-0" class="dsb-input-wrapper" style="display: inline;">
-						  {% if p.small_success %}
+						  {% if not p.small_success %}
 							<button class="dsb-input-start-button" id="dsb-input-start-button{{ forloop.counter0 }}-0" style="display: inline;">Solve {{ forloop.counter0|deco }}-small</button>
 							<span class="dsb-input-link-span" id="dsb-input-link-plain{{ forloop.counter0 }}-0" style="display: none;">
 								<img class="dsb-input-link-img" src="/static/images/file.gif">
@@ -83,7 +83,7 @@
 				<td class="dsb-input-table-linktd">
 					<div id="dsb-action-box-wrap{{ forloop.counter0 }}-1" class="">
 						<div id="dsb-input-wrapper{{ forloop.counter0 }}-1" class="dsb-input-wrapper" style="display: inline;">
-						  {% if p.large_success %}
+						  {% if not p.large_success %}
 							<button class="dsb-input-start-button" id="dsb-input-start-button{{ forloop.counter0 }}-1" style="display: inline;">Solve {{ forloop.counter0|deco }}-large</button>
 							<span class="dsb-input-link-span" id="dsb-input-link-plain{{ forloop.counter0 }}-1" style="display: none;">
 								<img class="dsb-input-link-img" src="/static/images/file.gif">
