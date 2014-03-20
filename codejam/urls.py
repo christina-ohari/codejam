@@ -30,6 +30,7 @@ urlpatterns = patterns('',
     
     url(r'^accounts/signup$',  Account.signup),
     url(r'^accounts/login$',   Account.signin),
+    url(r'^accounts/login/$',  Account.signin),
     url(r'^accounts/logout$',  'django.contrib.auth.views.logout_then_login', {'login_url': '/codejam'}),
     url(r'^accounts/profile$', Account.profile),
     url(r'^accounts/recover$', Account.recover),
@@ -43,7 +44,7 @@ urlpatterns = patterns('',
     url(r'^codejam/problem/answer$', Problem.ajax_answer),
     url(r'^codejam/problem/get/input/id$', Problem.ajax_get_input_id),
     url(r'^codejam/problem/download/input/(?P<id>\d+?)/(?P<name>[A-Z]-(small|large).in?)$', Problem.download_input),
-    url(r'^codejam/problem/download/pdf/(?P<id>\d+?)/(?P<language>(kr|en)?)$', Problem.download_pdf),
+    url(r'^codejam/problem/download/pdf/(?P<id>\d+?)/(?P<language>(kr|en)?)', Problem.download_pdf),
     
     url(r'^i18n/', include('django.conf.urls.i18n')),
     

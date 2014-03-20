@@ -253,7 +253,7 @@ function initSolveButtons() {
       var xhr = new XMLHttpRequest();
 
       xhr.onreadystatechange = function () {
-        if (xhr.readyState === xhr.DONE) {
+        if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             inputId = xhr.responseText;
             $('#'+formId + ' input[name=input]')[0].value = inputId;
@@ -282,7 +282,7 @@ function initSolveButtons() {
       , xhr = new XMLHttpRequest();
       
       xhr.onreadystatechange = function () {
-        if (xhr.readyState === xhr.DONE) {
+        if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             json = JSON.parse(xhr.responseText);
             if (json.ok) {
@@ -323,6 +323,7 @@ function initSolveButtons() {
 
     tmp = node.id.slice(keyword.length);
     document.getElementById('dsb-input-link-plain-text' + tmp).onclick = download;
+    console.log(document.getElementById('dsb-input-link-plain-text' + tmp).onclick);
     
     tmp = Number(tmp.slice(0,1)) * 2 + Number(tmp.slice(2));
     document.getElementById('io_timer_' + tmp).innerHTML = '';
@@ -387,8 +388,6 @@ window.onload = function () {
   
   initSelector();
   initSolveButtons();
-  
-  console.log(window.location.href, match);
 
   if (match && match.length > 2) {
     index = Number(match[2]);
