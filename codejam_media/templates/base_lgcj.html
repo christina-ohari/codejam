@@ -24,7 +24,7 @@
 <body onLoad="LGCJ.main()">
 
 <div id="logo-div">
-  <a href="/codejam/dashboard">
+  <a href="/codejam">
     <!--<img src="/static/images/logo_image3.gif" id="logo"
          alt="Google Code Jam" />-->
     <img src="{% static "images/logo_lge.png" %}" id="logo"
@@ -41,23 +41,7 @@
   <div class="v-divider"></div>
   <div class="v-divider"></div>
   <!-- Problem Selection Panel -->
-  <div id="dsb-contest-title">Code Jam 2014</div>
-
-
-
-
-
-<div class="common-nav-links">
-  <div id="common-links-home">
-    <a href="/codejam/dashboard">Code Jam Home</a>
-  </div>
-  <div id="common-links-schedule">
-    <a href="/codejam/schedule.html">일정</a>
-  </div>
-  <div id="common-links-rules">
-    <a href="/codejam/terms.html">규칙 및 이용약관</a>
-  </div>
-</div>
+  <div id="dsb-contest-title">{{ contest.title }}</div>
 
 
 

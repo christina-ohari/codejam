@@ -25,7 +25,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^$', 'codejam.apps.index'),
-    url(r'^codejam/$', 'codejam.apps.index'),
+    url(r'^codejam$', 'codejam.apps.index'),
     
     url(r'^accounts/signup/$',  Account.signup),
     url(r'^accounts/login/$',   Account.signin),
