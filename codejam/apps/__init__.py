@@ -11,7 +11,14 @@ def index(request):
     variables.update({'id': c.id, 'title': c.title, 'opened_at': c.opened_at.strftime('%Y-%m-%d %H:%M UTC')})
   except Contest.DoesNotExist:
     variables['is_opened'] = False
-  return render(request, 'home.html', variables)
+  return render(request, '2014_home.html', variables)
+
+
+def participate(request):
+  if request.user.is_authenticated():
+    from django.http import HttpResponseRedirect
+    return HttpResponseRedirect('/codejam')
+  return render(request, 'index.html')
 
 
 def schedule(request):

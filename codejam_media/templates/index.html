@@ -10,7 +10,7 @@
 
 
 {% block content %}
-<form id="login" method="post" action="/accounts/login/">
+<form id="login" method="post" action="/accounts/login">
 	{% csrf_token %}
 	<table>
 		<tbody>
@@ -24,7 +24,7 @@
 			</tr>
 			<tr>
 			  <td><input id="persist" name="persist" type="checkbox" tabindex="3"/><label>로그인 상태 유지</label></td>
-			  <td><a href="/accounts/recover/">로그인 정보를 잊으셨나요?</a></td>
+			  <td><a href="/accounts/recover">로그인 정보를 잊으셨나요?</a></td>
 			</tr>
 		</tbody>
 	</table>

@@ -104,36 +104,42 @@ window.onload = function () {
       , day  = (hour > 0 ? Math.floor(hour / 24) : 0)
       , tag;
 
-      if (sec > 0) {
-          
-        tag = sec + ' second' + (sec > 1 ? 's' : '');
+    if (sec > 0) {
         
-        if (min > 0) {
-          sec -= (min * 60);
-          tag = min + ' min' + (min > 1 ? 's' : '') + ' ' + sec + ' sec' + (sec > 1 ? 's' : '');
+      tag = sec + ' second' + (sec > 1 ? 's' : '');
+      
+      if (min > 0) {
+        sec -= (min * 60);
+        tag = min + ' min' + (min > 1 ? 's' : '');
+        if (sec > 0) {
+          sec  += ' ' + sec + ' sec' + (sec > 1 ? 's' : '');
         }
-        if (hour > 0) {
-          min -= (hour * 60);
-          tag = hour + ' hour' + (hour > 1 ? 's' : '') + ' ' + min + ' min' + (min > 1 ? 's' : '');
-        }
-        if (day > 0) {
-          hour -= (day * 24);
-          tag = day + ' day' + (day > 1 ? 's' : '') + ' ' + hour + ' hour' + (hour > 1 ? 's' : '');
-        }
-        node.innerHTML = ('<a>Compete in ' + tag + '</a>');
-        setTimeout(setCountdown, 1000);
-      } else {
-        {% if id %}
-        node.innerHTML = ('<a href="/codejam/dashboard">Start</a>');
-        desc.innerHTML = '';
-        {% endif %}
       }
+      if (hour > 0) {
+        min -= (hour * 60);
+        tag = hour + ' hour' + (hour > 1 ? 's' : '');
+        if (min > 0) {
+           tag += ' ' + min + ' min' + (min > 1 ? 's' : '');
+        }
+      }
+      if (day > 0) {
+        hour -= (day * 24);
+        tag = day + ' day' + (day > 1 ? 's' : '');
+        if (hour > 0) {
+          tag = + ' ' + hour + ' hour' + (hour > 1 ? 's' : '');
+        }
+      }
+      node.innerHTML = ('<a>Compete in ' + tag + '</a>');
+      setTimeout(setCountdown, 1000);
+    } else {
+      {% if id %}
+      node.innerHTML = ('<a href="/codejam/dashboard">Start</a>');
+      desc.innerHTML = '';
+      {% endif %}
+    }
   }
-  
-  console.log(opened_at - new Date());
 
-  
-    if (opened_at - new Date() > 0) {
+  if (opened_at - new Date() > 0) {
     setCountdown();
   } else {
     node.innerHTML = ('<a href="/codejam/dashboard">Go to problem page.</a>');
