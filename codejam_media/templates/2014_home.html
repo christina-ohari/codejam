@@ -126,7 +126,7 @@ window.onload = function () {
         hour -= (day * 24);
         tag = day + ' day' + (day > 1 ? 's' : '');
         if (hour > 0) {
-          tag = + ' ' + hour + ' hour' + (hour > 1 ? 's' : '');
+          tag += ' ' + hour + ' hour' + (hour > 1 ? 's' : '');
         }
       }
       node.innerHTML = ('<a>Compete in ' + tag + '</a>');

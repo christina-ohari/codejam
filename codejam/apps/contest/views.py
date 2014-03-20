@@ -73,7 +73,7 @@ def dashboard(request):
   
   # practice
   
-  return render(request, 'home.html', variables)
+  return render(request, '2014_home.html', variables)
 
 
 
