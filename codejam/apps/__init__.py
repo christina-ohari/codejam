@@ -8,7 +8,7 @@ def index(request):
   variables = {'is_opened': True}
   try:
     c = Contest.objects.get(visible=True, expired_at__gte=datetime.now())
-    variables.update({'id': c.id, 'title': c.title, 'opened_at': c.opened_at.strftime('%Y-%m-%d %H:%M UTC')})
+    variables.update({'id': c.id, 'title': c.title, 'opened_at': c.opened_at.strftime('%b %d %Y %H:%M:%S UTC')})
   except Contest.DoesNotExist:
     variables['is_opened'] = False
   return render(request, '2014_home.html', variables)
