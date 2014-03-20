@@ -59,7 +59,9 @@ def dashboard(request):
 
   except Contest.DoesNotExist:
     pass
-  
+
+  return HttpResponseRedirect('/codejam')
+"""  
   variables = {}
   # contest is ready
   try:
@@ -74,7 +76,7 @@ def dashboard(request):
   # practice
   
   return render(request, '2014_home.html', variables)
-
+"""
 
 
 
