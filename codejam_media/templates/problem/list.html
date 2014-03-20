@@ -1,4 +1,5 @@
 {% load extra %}
+{% load i18n %}
 
 {% autoescape off %}
 {% for p in problems %}
@@ -19,7 +20,7 @@
 								<span class="dsb-input-link-text" id="dsb-input-link-plain-text{{ forloop.counter0 }}-0">Download {{ forloop.counter0|deco }}-small.in</span>
 							</span>
 							{% else %}
-							<span style="font-size: xx-large; color: green;"><b>&nbsp;You did it !!</b></span>
+							<span style="font-size: xx-large; color: green;"><b>&nbsp;{% trans "You did it !!" %}</b></span>
 							{% endif %}
 						</div>
 						<span class="dsb-input-table-caption" id="dsb-input-table-caption{{ forloop.counter0 }}-0" style="display: none;"></span>

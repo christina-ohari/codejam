@@ -1,29 +1,30 @@
+{% load i18n %}
 <form id="signup" method="post" action="/accounts/signup">
   {% csrf_token %}
   <table>
     <tr>
-      <th><label for="last_name">성:</label></th>
+      <th><label for="last_name">{% trans "성:" %}</label></th>
       <td><input id="last_name" name="last_name" type="text" value="{{last_name}}"></input></td>
       <td>{{last_name_error}}</td>
     </tr>
     <tr>
-      <th><label for="first_name">이름(성은 제외):</label></th>
+      <th><label for="first_name">{% trans "이름(성은 제외):" %}</label></th>
       <td><input id="first_name" name="first_name" type="text" value="{{first_name}}"></input></td>
       <td>{{first_name_error}}</td>
     </tr>
     <tr>
-      <th><label for="reg_email1">이메일 주소:</label></th>
+      <th><label for="reg_email1">{% trans "이메일 주소:" %}</label></th>
       <td><input id="reg_email1" name="reg_email1" type="text" value="{{reg_email1}}"></input></td>
       <td>{{reg_email1_error}}</td>
     </tr>
     <tr>
-      <th><label for="reg_email2">이메일 다시 입력:</label></th>
+      <th><label for="reg_email2">{% trans "이메일 다시 입력:" %}</label></th>
       <td><input id="reg_email2" name="reg_email2" type="text" value="{{reg_email2}}"></input></td>
       <td>{{reg_email2_error}}</td>
     </tr>
     <tr>
       <td></td>
-      <td><button type="submit">가입하기</button></td>
+      <td><button type="submit">{% trans "가입하기" %}</button></td>
       <td></td>
     </tr>
   </table>

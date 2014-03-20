@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 
 
 <!-- head scripts -->
@@ -15,17 +15,17 @@
 	<table>
 		<tbody>
 			<tr>
-			  <td><label for="email">이메일</label></td>
-			  <td><label for="password">비밀번호</label></td>
+			  <td><label for="email">{% trans "이메일" %}</label></td>
+			  <td><label for="password">{% trans "비밀번호" %}</label></td>
 			</tr>
 			<tr>
 			  <td><input id="email" name="email" type="text" tabindex="1" value="{{email}}"/></td>
 			  <td><input id="password" name="password" type="password" tabindex="2"/></td>
-			  <td><button type="submit" tabindex="4">로그인</button></td>
+			  <td><button type="submit" tabindex="4">{% trans "로그인" %}</button></td>
 			</tr>
 			<tr>
-			  <td><input id="persist" name="persist" type="checkbox" tabindex="3" {% if persist %}checked{% endif %}/><label>로그인 상태 유지</label></td>
-			  <td><a href="/accounts/recover">로그인 정보를 잊으셨나요?</a></td>
+			  <td><input id="persist" name="persist" type="checkbox" tabindex="3" {% if persist %}checked{% endif %}/><label>{% trans "로그인 상태 유지" %}</label></td>
+			  <td><a href="/accounts/recover">{% trans "로그인 정보를 잊으셨나요?" %}</a></td>
 			</tr>
 		</tbody>
 	</table>
