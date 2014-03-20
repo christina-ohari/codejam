@@ -17,10 +17,10 @@ def __check_name(first_name, last_name):
   result = {}
 
   if len(first_name) < 1:
-    result['first_name_error'] = _('이름을 입력하세요.')
+    result['first_name_error'] = _(u'이름을 입력하세요.')
     ok = False
   if len(last_name) < 1:
-    result['last_name_error'] = _('성을 입력 하세요.')
+    result['last_name_error'] = _(u'성을 입력 하세요.')
     ok = False
     
   return ok, result
@@ -43,16 +43,16 @@ def __check_email(email1, email2):
     m = p.match(email1)
 
     if m == None:
-      result['reg_email1_error'] = _('LG전자의 이메일이 아닙니다.')
+      result['reg_email1_error'] = _(u'LG전자의 이메일이 아닙니다.')
     elif email1 != email2:
-      result['reg_email2_error'] = _('이메일이 일치하지 않습니다.')
+      result['reg_email2_error'] = _(u'이메일이 일치하지 않습니다.')
     elif User.objects.filter(email=email1).exists():
-      result['reg_email1_error'] = _('이미 존재하는 이메일 입니다.')
+      result['reg_email1_error'] = _(u'이미 존재하는 이메일 입니다.')
     else:
       result['username'] = m.group('name')
       ok = True
   except:
-      result['reg_email1_error'] = _('잘못된 형식의 이메일 입니다.')
+      result['reg_email1_error'] = _(u'잘못된 형식의 이메일 입니다.')
 
   return (ok, result)
 
@@ -63,11 +63,11 @@ def __check_password(password1, password2):
   result = {}
 
   if len(password1) < 6:
-    result['reg_password_error1'] = _('안전하지 않은 비밀번호 입니다.')
+    result['reg_password_error1'] = _(u'안전하지 않은 비밀번호 입니다.')
     ok = False
   
   if ok and (password1 != password2):
-    result['reg_password_error2'] = _('두 비밀번호가 일치하지 않습니다.')
+    result['reg_password_error2'] = _(u'두 비밀번호가 일치하지 않습니다.')
     ok = False
 
   return (ok, result)
@@ -124,7 +124,7 @@ def signup(request):
       user = __create_user(e1, f, l)
       host = request.META['HTTP_HOST']
       message = __get_reg_password_email_body(host, user.username)
-      subject = _('codejam 가입을 완료해 주세요.')
+      subject = _(u'codejam 가입을 완료해 주세요.')
       user.email_user(subject, message)
       return render(request, 'account/email_delivery_complete.html')
         
@@ -158,9 +158,9 @@ def signin(request):
         login(request, user)
         return HttpResponseRedirect('/')
       else:
-        result['error'] = _('비밀번호를 다시 확인해 주세요.')
+        result['error'] = _(u'비밀번호를 다시 확인해 주세요.')
     except User.DoesNotExist:
-      result['error'] = _('등록되지 않은 이메일 입니다.')
+      result['error'] = _(u'등록되지 않은 이메일 입니다.')
 
     result['email'] = post['email']
     result['persist'] = persist
@@ -190,7 +190,7 @@ def recover(request):
 
       host = request.META['HTTP_HOST']
       message = __get_reg_password_email_body(host, u.username, True)
-      subject = _('codejam 비밀번호를 변경해 주세요.')
+      subject = _(u'codejam 비밀번호를 변경해 주세요.')
       u.email_user(subject, message)
       
       return render(request, 'account/email_delivery_complete.html', result)
