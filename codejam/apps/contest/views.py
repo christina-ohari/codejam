@@ -40,7 +40,7 @@ def dashboard(request):
 
   # contest is opened  
   try:
-    q = Q(opened_at__lte=now) & Q(expired_at__gte=now)
+    q = Q(opened_at__lte=now) & Q(expired_at__gte=now) & Q(visible=True)
     contest = Contest.objects.get(q)
     problem_list = contest.problem_set.all().values()
     
