@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block head_scripts %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/dashboard.js"></script>
+<script type="text/javascript" src="{% static "third_party/json.js" %}"></script>
 <style>
 textarea:disabled {
   background-color: lightgray;
