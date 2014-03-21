@@ -12,11 +12,9 @@
 {% block content %}
 <p>
 {% if recover %}
-  {{email}}님의 비밀번호 변경 메일이 발송되었습니다.
-  메일 확인 후 비밀번호 변경 절차를 완료해 주세요.  
+  {{email}}님의 비밀번호 변경 메일이 발송되었습니다. 메일 확인 후 비밀번호 변경 절차를 완료해 주세요.  
 {% else %}
-  가입 승인 이메일이 발송되었습니다.
-  메일 확인 후 최종 승인 절차를 완료해 주세요.
+  {{email}}님의 가입 승인 이메일이 발송되었습니다. 메일 확인 후 최종 승인 절차를 완료해 주세요.
 {% endif %}
 </p>
 <a id="countdown_kr"></a> 초 후 홈으로 이동합니다. 바로 이동 하시려면, <a href="/codejam">이곳</a>을 클릭하세요.
@@ -25,14 +23,12 @@
 <br/>
 <p>
 {% if recover %}
-  Sent a link to set your new password to {{email}}.
-  After get your email, change your password.
+  A password modification email has been sent to {{email}}. You will be able to change your password using the link in the email.
 {% else %}
-  Sent a email to confirm your registration.
-  After get your email, set your password.
+  A confirmation email has been sent to {{email}}. You will be able to set your password using the link in the email.
 {% endif %}
 </p>
-After <a id="countdown_en"></a> seconds, you will go codejam homepage. if you want gp right now, click <a href="/codejam">here</a>.
+After <a id="countdown_en"></a> seconds, you will be transferred to the codejam homepage. Please click <a href="/codejam">here</a> to go directly.
 {% endblock %}
 
 
