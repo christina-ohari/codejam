@@ -164,6 +164,7 @@ function Timer(index) {
     if (interval === 0) {
       stop();
       node.innerHTML = '{% trans "<br>입력 파일이 변경되었습니다.<br>다시 다운로드 받으세요." %}';
+      node.parentNode.style.display = 'inline';
     } else {
       min = Math.floor(interval / 60);
       sec = interval % 60;
