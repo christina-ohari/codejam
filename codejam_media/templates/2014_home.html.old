@@ -43,9 +43,7 @@ LGE Code Jam
           <li>경연 기간: 3월 28일(금) 13:00 ~ 3월 31일(월) 13:00 (KST 기준)</li>
           <li>경연 방식:
             <ul> 
-              <li>원하는 순서대로 문제를 구현하여, 결과를 사이트에 업로드하고 Pass 여부를 확인한다.</li> 
-              <li>Pass하기 위해서는 테스트 세트를 다운 받으신 후에 5분 내에 프로그램을 돌려서 결과 값을 제출하셔야 합니다.</li> 
-              <li>5분 내로 pass하지 못하면 새로운 테스트 세트를 다운 받아서 다시 시도할 수 있습니다. 기존 데이터 세트는 유효하지 않은 점 유의하시기 바랍니다.</li> 
+              <li>문제를 구현하여, 결과를 사이트에 업로드하고 Pass 여부를 확인한다.</li> 
               <li>Pass 확인 후 바로(5분 이내) 소스 코드를 lge-codejam@lge.com으로 제출한다.</li> 
               <li>메일 제목에, 이름, 소속, 문제 번호를 같이 적어 보내주세요.
                 <ul><li>Ex) 홍길동_MC_Problem1_Source</li></ul>
@@ -60,8 +58,6 @@ LGE Code Jam
           <li>Competition Rules:
             <ul>
               <li>Solve each problem in any order, and upload the output files to determine if your output passes successfully.</li> 
-              <li>To pass successfully, download the test data set, run your program on the data, and copy and paste the output to the answer submit page.</li> 
-              <li>You must submit your answer within 5 minutes of downloading the test data set. If 5 minutes passes before you successfully submit your answer, you can download a new test data set. The previous data set will be invalid.</li> 
               <li>When your output has successfully passed the check, send your source code to lge-codejam@lge.com within 5 minutes.
               <li>Include your name, department and the problem number in the email subject
                 <ul><li>ex) BradPit_LGSI_Problem1_Source</li></ul>

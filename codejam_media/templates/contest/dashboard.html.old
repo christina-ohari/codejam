@@ -21,13 +21,10 @@ textarea:disabled {
       <ul>
         <li>경연 방식:
           <ul>
-            <li><span style="color:red">문제와 관련하여 누구와도 어떠한 얘기나 질문 혹은 상의를 해서는 안됩니다. 이렇게 할 경우 치팅으로 간주하여 탈락하게 되며, 향후 CodeJam 참가가 제한될 수 있습니다. 질문 사항이 있으시면 lge-codejam@lge.com으로 보내시면 됩니다.</span></li>
             <li>문제(PDF 파일)을 다운로드 하여 구현한다.</li>
             <li>입력 파일을 다운로드 받아 실행한다.</li> 
-            <li>입력 파일을 다운 받은지 5분 내로 결과를 사이트에 업로드하고 pass 여부를 확인한다. 5분이 경과하면 기존에 다운 받았던 입력 파일은 유효하지 않습니다.</li> 
-            <li>5분 내로 pass를 하지 못하는 경우 새로운 입력 파일을 다운 받아서 다시 시도하실 수 있습니다.</li> 
+            <li>결과를 사이트에 업로드하고 pass 여부를 확인한다.</li> 
             <li>Pass 확인 후 <span style="color:red">바로(5분 이내) 소스 코드를 lge-codejam@lge.com으로 제출</span>한다.</li> 
-            <li>Pass를 했다고 무조건 점수가 주어지는 것은 아닙니다. Pass는 여러분이 확인할 수 있도록 제공되는 기능이며, 소스코드가 다른 input data 처리에 성공을 해야 점수가 주어질 수도 있습니다.</li> 
             <li>메일 제목에, 이름, 소속, 문제 번호를 같이 적어 보내주세요.
               <ul><li>Ex) <span style="color:blue">홍길동_MC_Problem1_Source</span></li></ul>
             </li>
@@ -39,17 +36,14 @@ textarea:disabled {
       <ul>
         <li>Competition Rules:
           <ul>
-            <li><span style="color:red">Any discussion of the problems (including questions) with any other entity/person is not permitted. This is considered cheating, and will disqualify you from the competition, and you may be banned from future contests. Any questions may be sent to lge-codejam@lge.com .</span></li>
-            <li>Download the problem (PDF file) and solve.</li>
-            <li>Download the input file and execute your code.</li>
-            <li>Upload your result within 5 minutes of downloading the input file, and check whether for pass or fail.</li>
-            <li>If you do not pass within 5 minutes, you can download a new input file. The previous input file will be invalid after 5 minutes from download.</li>
-            <li>After you pass, <span style="color:red">send your source code to lge-codejam@lge.com within 5 minutes.</span></li>
-            <li>Passing does not assure you that your answer is correct. Your code may be tested on other data to check for correctness.</li>
+            <li>Download problem (PDF file) then solve it.</li>
+            <li>Download inout file and execute it using your code.</li>
+            <li>Upload your result and check whether it is passed.</li>  
+            <li>Check for pass/fail, and then <span style="color:red">within 5 minutes send source code to lge-codejam@lge.com</span></li>
             <li>Include your name, department and problem number when writing email subject
               <ul><li>ex) <span style="color:blue">BradPit_LGSI_Problem1_Source</span></li></ul>
              </li>
-            <li>Any program language or languages are allowed.</li>
+            <li>Any program language or languages are allowed</li>
           </ul>
         </li>
       </ul>

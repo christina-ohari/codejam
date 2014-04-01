@@ -84,12 +84,13 @@ def __make_username():
 
 
 
-def __create_user(email, first_name, last_name):
+def __create_user(email, first_name, last_name, pw):
   username = __make_username()
   user = User.objects.create_user(username, email)
   user.first_name = first_name
   user.last_name = last_name
-  user.set_unusable_password()
+  #user.set_unusable_password()
+  user.set_password(pw)
   user.is_active = True
   user.save()
   return user
@@ -116,17 +117,22 @@ def signup(request):
     l = post['last_name']
     e1 = post['reg_email1']
     e2 = post['reg_email2']
+    p1 = post['reg_pw1']
+    p2 = post['reg_pw2']
   
     ok, result = __check_name(f, l)
     if ok:
       ok, result = __check_email(e1, e2)
     if ok:
-      user = __create_user(e1, f, l)
+      ok, result = __check_password(p1, p2)
+    if ok:
+      user = __create_user(e1, f, l, p1)
       host = request.META['HTTP_HOST']
       message = __get_reg_password_email_body(host, user.username)
       subject = _(u'codejam 가입을 완료해 주세요.')
       user.email_user(subject, message)
-      return render(request, 'account/email_delivery_complete.html')
+      #return render(request, 'account/email_delivery_complete.html')
+      return HttpResponseRedirect('/')
         
     result['last_name'] = l
     result['first_name'] = f

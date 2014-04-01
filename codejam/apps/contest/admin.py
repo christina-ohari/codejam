@@ -38,7 +38,7 @@ class ContestForm(forms.ModelForm):
 class Score_Inline(admin.TabularInline):
   model = Score
   readonly_fields = ('owner', 'points', 'updated', 'failed')
-  ordering = ['-points', '-updated', 'failed']
+  ordering = ['-points', 'updated', 'failed']
   can_delete = False
   extra = 0
   def has_add_permission(self, request):
@@ -69,7 +69,7 @@ class ScoreAdmin(admin.ModelAdmin):
   readonly_fields = ['get_contest', 'owner', 'points', 'failed', 'updated']
   exclude = ('contest',)
   list_filter = ('contest', 'owner')
-  ordering = ['-contest', '-points', '-updated', 'failed']
+  ordering = ['-contest', '-points', 'updated', 'failed']
 
   def has_add_permission(self, request):
     return False
